@@ -3,6 +3,9 @@
  */
 package com.cmpt276.finddamatch.model;
 
+import android.os.SystemClock;
+import android.widget.Chronometer;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,7 +16,11 @@ public class GameLogic {
     private int numCardsPerSet = options.getNumCardsPerSet();
     private int numImagesPerCard = options.getNumImagesPerCard();
 
-    private int currentCard;
+    private Chronometer timer;
+    private boolean timerOn;
+
+    private int currentCardIndex;
+    private int[] card;
     private int[][] deck;
 
     // createDeck calls the cardGenerator and places cards into a 2d array of card x image index;
@@ -33,16 +40,37 @@ public class GameLogic {
     }
 
 
-    public GameLogic() {
+    public GameLogic(Chronometer timer) {
         deck = createDeck();
+        this.timer = timer;
     }
 
-    public int getCurrentCard() {
-        return currentCard;
+    // returns array of image indices for the card in deck at index;
+    public int[] getCard(int index) {
+        System.arraycopy(deck[index], 0, card, 0, deck[0].length);
+        return card;
     }
 
-    public void setCurrentCard(int currentCard) {
-        this.currentCard = currentCard;
+    public int getCurrentCardIndex() {
+        return currentCardIndex;
+    }
+
+    public void setCurrentCardIndex(int currentCardIndex) {
+        this.currentCardIndex = currentCardIndex;
+    }
+
+    // start timing the player
+    public void startTimer() {
+        if (!timerOn) {
+            timer.setBase(SystemClock.elapsedRealtime());
+            timer.start();
+            timerOn = true;
+        }
+    }
+
+    // stop timing and record score
+    public void stopTimer() {
+        timer.setBase(SystemClock.elapsedRealtime());
     }
 
     // takes deck array and returns the deck with rows swapped randomly
@@ -75,9 +103,14 @@ public class GameLogic {
         boolean hasMatch = false;
 
         for (int i = 0; i < numImagesPerCard; i++) {
-            if (input == deck[currentCard + 1][i]) {
+            if (input == deck[currentCardIndex + 1][i]) {
                 hasMatch = true;
-                currentCard++;
+                if (currentCardIndex < numCardsPerSet - 1) {
+
+                } else {
+                    currentCardIndex++;
+                }
+
                 break;
             }
         }
