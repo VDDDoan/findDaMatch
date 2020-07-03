@@ -75,7 +75,9 @@
         android:id="@+id/cloud"
         android:layout_width="178dp"
         android:layout_height="111dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cloud"
-        tools:layout_editor_absoluteX="-1dp" />
+        app:srcCompat="@drawable/cloud" />
 </androidx.constraintlayout.widget.ConstraintLayout>
