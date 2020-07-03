@@ -6,4 +6,6 @@
     <color name="colorYellow">#ffea00</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorDarkRed">#8B0000</color>
+    <color name="colorMagenta">#8B008B</color>
+    <color name="colorViolet">#EE82EE</color>
 </resources>
