@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Find daMatch</string>
     <string name="skip">skip</string>
+    <string name="David">David Doan</string>
+    <string name="James">James Wang</string>
+    <string name="Wei">Wei Yan</string>
+    <string name="Vinesh">Vinesh Reddy</string>
 </resources>
