@@ -3,8 +3,6 @@
  */
 package com.cmpt276.finddamatch.model;
 
-import android.graphics.drawable.Drawable;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,6 +10,7 @@ public class GameLogic {
     private Options options = Options.getInstance();
     private int numCardsPerSet = options.getNumCardsPerSet();
     private int numImagesPerCard = options.getNumImagesPerCard();
+    private int currentCard;
     private static final int NUM_SWAPS_IN_SHUFFLE = 50;
 
     // createDeck calls the cardGenerator and places cards into a 2d array of card x image index;
@@ -28,6 +27,11 @@ public class GameLogic {
             }
         }
         return deck;
+    }
+
+
+    public GameLogic() {
+
     }
 
     // takes deck array and returns the deck with rows swapped randomly
@@ -53,12 +57,18 @@ public class GameLogic {
         return deck;
     }
 
-    public GameLogic() {
+    // scans the next card in the deck for a matching image to the picked one
+    // returns true if there is and false otherwise
+    public boolean isMatch(int input) {
+        boolean hasMatch = false;
 
-    }
+        for (int i = 0; i < numImagesPerCard; i++) {
+            if (input == currentCard + 1) {
+                hasMatch = true;
+                break;
+            }
+        }
 
-    public boolean isMatch(Drawable image) {
-
-        return true;
+        return hasMatch;
     }
 }
