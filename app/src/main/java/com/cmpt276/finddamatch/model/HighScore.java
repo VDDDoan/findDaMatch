@@ -1,3 +1,6 @@
+/*
+    Class that represents a single High score
+ */
 package com.cmpt276.finddamatch.model;
 
 import androidx.annotation.NonNull;
@@ -6,8 +9,6 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 public class HighScore {
-    private final Calendar calendar = Calendar.getInstance();
-
     private long time;
     private String nickname;
     private String date;
@@ -17,7 +18,7 @@ public class HighScore {
     public HighScore() {
         time = 0;
         nickname = "John Doe";
-        date = DateFormat.getDateInstance().format(calendar.getTime());
+        date = DateFormat.getDateInstance().format(Calendar.getInstance().getTime());
     }
 
     public HighScore(int time, String nickname, String date) {

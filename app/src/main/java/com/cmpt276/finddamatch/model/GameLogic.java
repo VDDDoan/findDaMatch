@@ -12,14 +12,12 @@ import java.util.Random;
 public class GameLogic {
     private static final int NUM_SWAPS_IN_SHUFFLE = 50;
 
-    private Options options = Options.getInstance();
-    private int numCardsPerSet = options.getNumCardsPerSet();
-    private int numImagesPerCard = options.getNumImagesPerCard();
+    private int numCardsPerSet = Options.getInstance().getNumCardsPerSet();
+    private int numImagesPerCard = Options.getInstance().getNumImagesPerCard();
 
     private long time;
 
     private int currentCardIndex;
-    private int[] card;
     private int[][] deck;
 
     // createDeck calls the cardGenerator and places cards into a 2d array of card x image index;
@@ -45,6 +43,7 @@ public class GameLogic {
 
     // returns array of image indices for the card in deck at index;
     public int[] getCard(int index) {
+        int[] card = new int[numImagesPerCard];
         System.arraycopy(deck[index], 0, card, 0, deck[0].length);
         return card;
     }
@@ -98,20 +97,14 @@ public class GameLogic {
     }
 
     // scans the next card in the deck for a matching image to the picked one
-    // if there's a match increment currentCard
-    // returns true if there is and false otherwise
+    // if there's a match increment currentCard and return true, return false otherwise
     public boolean isMatch(int input) {
         boolean hasMatch = false;
 
         for (int i = 0; i < numImagesPerCard; i++) {
             if (input == deck[currentCardIndex + 1][i]) {
                 hasMatch = true;
-                if (currentCardIndex < numCardsPerSet - 1) {
-
-                } else {
-                    currentCardIndex++;
-                }
-
+                currentCardIndex++;
                 break;
             }
         }
