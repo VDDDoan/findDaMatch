@@ -5,7 +5,7 @@
     Translated into Java and modified for Find daMatch game
 */
 
-package com.cmpt276.finddamatch.gamelogic;
+package com.cmpt276.finddamatch.model;
 
 import java.util.ArrayList;
 import java.lang.Math;
