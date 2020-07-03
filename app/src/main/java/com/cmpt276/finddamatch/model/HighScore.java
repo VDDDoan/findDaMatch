@@ -6,32 +6,31 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 public class HighScore {
-    private static HighScore instance;
-    private Calendar calendar = Calendar.getInstance();
+    private final Calendar calendar = Calendar.getInstance();
 
-    private int time;
+    private long time;
     private String nickname;
     private String date;
 
-    public static HighScore getInstance() {
-        if (instance == null) {
-            instance = new HighScore();
-        }
-        return instance;
-    }
 
-    // set default high scores
+    // set default high score
     public HighScore() {
         time = 0;
         nickname = "John Doe";
         date = DateFormat.getDateInstance().format(calendar.getTime());
     }
 
-    public int getTime() {
+    public HighScore(int time, String nickname, String date) {
+        this.time = time;
+        this.nickname = nickname;
+        this.date = date;
+    }
+
+    public long getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(long time) {
         this.time = time;
     }
 

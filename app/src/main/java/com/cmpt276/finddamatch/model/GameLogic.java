@@ -16,8 +16,7 @@ public class GameLogic {
     private int numCardsPerSet = options.getNumCardsPerSet();
     private int numImagesPerCard = options.getNumImagesPerCard();
 
-    private Chronometer timer;
-    private boolean timerOn;
+    private long time;
 
     private int currentCardIndex;
     private int[] card;
@@ -40,9 +39,8 @@ public class GameLogic {
     }
 
 
-    public GameLogic(Chronometer timer) {
+    public GameLogic() {
         deck = createDeck();
-        this.timer = timer;
     }
 
     // returns array of image indices for the card in deck at index;
@@ -60,17 +58,20 @@ public class GameLogic {
     }
 
     // start timing the player
-    public void startTimer() {
-        if (!timerOn) {
-            timer.setBase(SystemClock.elapsedRealtime());
-            timer.start();
-            timerOn = true;
-        }
+    public void startTimer(Chronometer timer) {
+        timer.setBase(SystemClock.elapsedRealtime());
+        timer.start();
     }
 
-    // stop timing and record score
-    public void stopTimer() {
+    // stop timing and record time
+    public void stopTimer(Chronometer timer) {
+        timer.stop();
+        time = SystemClock.elapsedRealtime() - timer.getBase();
         timer.setBase(SystemClock.elapsedRealtime());
+    }
+
+    public long getTime() {
+        return time;
     }
 
     // takes deck array and returns the deck with rows swapped randomly
