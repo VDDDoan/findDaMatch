@@ -8,17 +8,26 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 import com.cmpt276.finddamatch.R;
 import com.cmpt276.finddamatch.model.GameLogic;
+import com.cmpt276.finddamatch.model.Options;
 
 public class GameActivity extends AppCompatActivity {
     private static final int TIME_FLIP_CARD_MS = 500;
     private static final int TIME_DEAL_CARD_MS = 500;
+    private static final String STRING_CARD_FACE = "face";
+    private static final String STRING_CARD_BACK = "back";
+
+    private GameLogic gameLogic;
+    private Chronometer timer;
+
     private float boardHeight;
     private float boardWidth;
 
@@ -27,10 +36,13 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        GameLogic gameLogic = new GameLogic();
+        gameLogic = new GameLogic();
 
         final ConstraintLayout gameBoard = findViewById(R.id.view_game_board);
         TextView txtNumCardsRemaining = findViewById(R.id.txt_num_cards_remaining);
+        timer = findViewById(R.id.timer_game);
+
+        txtNumCardsRemaining.setText("Cards Remaining: " + (Options.getInstance().getNumCardsPerSet() - gameLogic.getCurrentCardIndex()) );
 
         gameBoard.post(new Runnable() {
             @Override
@@ -41,43 +53,60 @@ public class GameActivity extends AppCompatActivity {
         });
 
         final CardCanvasView cardViewHand = findViewById(R.id.view_card_hand);
-        cardViewHand.setTag("back");
+        cardViewHand.setTag(STRING_CARD_BACK);
         cardViewHand.setBackgroundResource(R.drawable.menu_bg_card_back);
 
-        dealCard(cardViewHand);
+        dealFirstCard(cardViewHand);
+    }
+
+    // deals first card and starts the game
+    private void dealFirstCard(final CardCanvasView card) {
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (gameLogic.getCurrentCardIndex() == 0) {
+                    dealCard(card);
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            gameLogic.startTimer(timer);
+                        }
+                    }, TIME_DEAL_CARD_MS + TIME_FLIP_CARD_MS);
+                } else {
+                    flipCard(card);
+                }
+            }
+        });
     }
 
     // deals next card from deck to hand
     private void dealCard(final CardCanvasView card) {
-        card.setOnClickListener(new View.OnClickListener() {
+        ObjectAnimator dealAnimation = ObjectAnimator.ofFloat(card, "translationY", boardHeight/2);
+        dealAnimation.setDuration(TIME_DEAL_CARD_MS);
+        dealAnimation.addListener(new Animator.AnimatorListener() {
             @Override
-            public void onClick(View v) {
-                ObjectAnimator dealAnimation = ObjectAnimator.ofFloat(card, "translationY", boardHeight/2);
-                dealAnimation.setDuration(TIME_DEAL_CARD_MS);
-                dealAnimation.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
+            public void onAnimationStart(Animator animation) {
 
-                    }
+            }
 
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        flipCard(card);
-                    }
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                flipCard(card);
+            }
 
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
+            @Override
+            public void onAnimationCancel(Animator animation) {
 
-                    }
+            }
 
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
+            @Override
+            public void onAnimationRepeat(Animator animation) {
 
-                    }
-                });
-                dealAnimation.start();
             }
         });
+        dealAnimation.start();
     }
 
     // takes a card and flips it
@@ -90,16 +119,16 @@ public class GameActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (card.getTag() == "back") {
-                    card.setTag("face");
+                if (card.getTag() == STRING_CARD_BACK) {
+                    card.setTag(STRING_CARD_FACE);
                     card.setBackgroundResource(R.drawable.menu_bg_card_face);
-                } else if (card.getTag() == "face"){
-                    card.setTag("back");
+
+                } else if (card.getTag() == STRING_CARD_FACE){
+                    card.setTag(STRING_CARD_BACK);
                     card.setBackgroundResource(R.drawable.menu_bg_card_back);
                 }
             }
         }, TIME_FLIP_CARD_MS/2);
     }
-
 
 }
