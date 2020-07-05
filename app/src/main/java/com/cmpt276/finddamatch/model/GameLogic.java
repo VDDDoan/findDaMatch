@@ -52,6 +52,10 @@ public class GameLogic {
         return currentCardIndex;
     }
 
+    public void incrementCurrentCardIndex() {
+        currentCardIndex++;
+    }
+
     public void setCurrentCardIndex(int currentCardIndex) {
         this.currentCardIndex = currentCardIndex;
     }
