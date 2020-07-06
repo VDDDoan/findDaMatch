@@ -3,7 +3,7 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">@color/colorCharcoal</color>
     <color name="colorAccent">#03DAC5</color>
-<<<<<<< app/src/main/res/values/colors.xml
+    >>>>>>>  app/src/main/res/values/colors.xml
     
     <color name="colorMintCream">#f7fff7</color>
     <color name="colorCharcoal">#264653</color>
