@@ -74,7 +74,6 @@ public class GameLogic {
     public void stopTimer(Chronometer timer) {
         timer.stop();
         time = SystemClock.elapsedRealtime() - timer.getBase();
-        timer.setBase(SystemClock.elapsedRealtime());
     }
 
     public long getTime() {
