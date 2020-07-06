@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -48,45 +47,49 @@ public class GameActivity extends AppCompatActivity {
     private GameLogic gameLogic;
     private Chronometer timer;
     private TextView txtNumCardsRemaining;
-    private CardCanvasView[] deck;
+    private CardCanvasView[] uiDeck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        initGame();
+
+        handCardListener();
+        playCardListener();
+    }
+    private void initGame() {
         gameLogic = new GameLogic();
 
         isShuffled = false;
 
-        final ConstraintLayout gameBoard = findViewById(R.id.view_game_board);
         txtNumCardsRemaining = findViewById(R.id.txt_num_cards_remaining);
         timer = findViewById(R.id.timer_game);
 
         txtNumCardsRemaining.setText("Cards Remaining: " + (Options.getInstance().getNumCardsPerSet() - gameLogic.getCurrentCardIndex()));
 
-        deck = new CardCanvasView[NUM_CARDS_IN_ACTIVITY];
+        uiDeck = new CardCanvasView[NUM_CARDS_IN_ACTIVITY];
 
-        deck[CARD_HAND] = findViewById(R.id.view_card_hand);
-        deck[CARD_PLAY] = findViewById(R.id.view_card_play);
-        deck[CARD_DECK] = findViewById(R.id.view_card_deck);
+        uiDeck[CARD_HAND] = findViewById(R.id.view_card_hand);
+        uiDeck[CARD_PLAY] = findViewById(R.id.view_card_play);
+        uiDeck[CARD_DECK] = findViewById(R.id.view_card_deck);
 
         for (int i = 0; i < NUM_CARDS_IN_ACTIVITY; i++) {
-            deck[i].setTag(TAG_CARD_BACK);
-            deck[i].setBackgroundResource(R.drawable.menu_bg_card_back);
+            uiDeck[i].setTag(TAG_CARD_BACK);
+            uiDeck[i].setBackgroundResource(R.drawable.menu_bg_card_back);
         }
 
+        final ConstraintLayout gameBoard = findViewById(R.id.view_game_board);
         gameBoard.post(new Runnable() {
             @Override
             public void run() {
                 boardHeight = (float) gameBoard.getHeight();
                 boardWidth = (float) gameBoard.getWidth();
-                cardHeight = (float) deck[0].getHeight();
-                cardWidth = (float) deck[0].getWidth();
+                cardHeight = (float) uiDeck[0].getHeight();
+                cardWidth = (float) uiDeck[0].getWidth();
             }
         });
-
-        dealFirstCard();
     }
 
     // generates random float between +max and min
@@ -102,7 +105,7 @@ public class GameActivity extends AppCompatActivity {
         resetPosAnim.start();
     }
 
-    // takes a card and plays shuffle animation
+    // takes a card and plays a brief shuffle animation
     private void shuffleCardInDeck(final CardCanvasView card) {
         float displacement = generateRandomBetween(MAX_SHUFFLE_DISPLACEMENT, MAX_SHUFFLE_DISPLACEMENT/2);
 
@@ -125,41 +128,60 @@ public class GameActivity extends AppCompatActivity {
         shuffleAnim.start();
     }
 
+    private void playCardListener() {
+        uiDeck[CARD_PLAY].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dealCard(uiDeck[CARD_PLAY]);
+            }
+        });
+    }
+
     // deals first card and starts the game
-    private void dealFirstCard() {
-        deck[CARD_HAND].setOnClickListener(new View.OnClickListener() {
+    private void handCardListener() {
+        uiDeck[CARD_HAND].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isShuffled) {
                     if (gameLogic.getCurrentCardIndex() == 0) {
-                        dealCard(deck[CARD_HAND]);
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                gameLogic.startTimer(timer);
-                            }
-                        }, TIME_DEAL_CARD_MS + TIME_FLIP_CARD_MS);
+                        dealFirstCard();
                     } else {
-                        flipCard(deck[CARD_HAND]);
+                        // something
                     }
                 } else {
-                    for (int i = 0; i < NUM_CARDS_IN_ACTIVITY; i++) {
-                        shuffleCardInDeck(deck[i]);
-                    }
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            isShuffled = true;
-                        }
-                    }, TIME_SHUFFLE_CARD_MS * 2);
+                    shuffleUIDeck();
                 }
             }
         });
     }
 
-    // deals next card from deck to hand
+    private void dealFirstCard() {
+        dealCard(uiDeck[CARD_HAND]);
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                gameLogic.startTimer(timer);
+                flipCard(uiDeck[CARD_PLAY]);
+            }
+        }, TIME_DEAL_CARD_MS + TIME_FLIP_CARD_MS);
+    }
+
+    private void shuffleUIDeck() {
+        gameLogic.shuffleDeck();
+        for (int i = 0; i < NUM_CARDS_IN_ACTIVITY; i++) {
+            shuffleCardInDeck(uiDeck[i]);
+        }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isShuffled = true;
+            }
+        }, TIME_SHUFFLE_CARD_MS * 2);
+    }
+
+    // deals next card from deck to hand ( show deal animation and handle game logic implications)
     private void dealCard(final CardCanvasView card) {
         ObjectAnimator dealAnimation = ObjectAnimator.ofFloat(card, "translationY", boardHeight/2);
         dealAnimation.setDuration(TIME_DEAL_CARD_MS);
@@ -167,7 +189,9 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                flipCard(card);
+                if (card == uiDeck[CARD_HAND]) {
+                    flipCard(card);
+                }
             }
         });
         dealAnimation.start();
@@ -181,6 +205,7 @@ public class GameActivity extends AppCompatActivity {
         flipAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
         flipAnimation.setDuration(TIME_FLIP_CARD_MS);
         flipAnimation.start();
+        card.setRotation(180f);
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -189,7 +214,7 @@ public class GameActivity extends AppCompatActivity {
                 if (card.getTag() == TAG_CARD_BACK) {
                     card.setTag(TAG_CARD_FACE);
                     card.setBackgroundResource(R.drawable.menu_bg_card_face);
-
+                    drawCardImages(card);
                 } else if (card.getTag() == TAG_CARD_FACE){
                     card.setTag(TAG_CARD_BACK);
                     card.setBackgroundResource(R.drawable.menu_bg_card_back);
@@ -199,8 +224,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     // gets the images required for the given card and displays them on the card
-    private void drawCardImages(CardCanvasView card) {
+    private void drawCardImages(final CardCanvasView card) {
 
     }
-
 }
