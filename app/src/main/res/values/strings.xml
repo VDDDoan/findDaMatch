@@ -1,9 +1,21 @@
 <resources>
     <string name="app_name">Find daMatch</string>
     <string name="skip">skip</string>
+<<<<<<< app/src/main/res/values/strings.xml
     <string name="high_score">High Score</string>
     <string name="refrenceCup">https://www.freepik.com/premium-vector/prize-cup-hand-win-congrats_6221374.htm</string>
     <string name="record">Record</string>
     <string name="reset">Reset</string>
     <string name="back">Back</string>
+    <string name="David">David Doan</string>
+    <string name="James">James Wang</string>
+    <string name="Wei">Wei Yan</string>
+    <string name="Vinesh">Vinesh Reddy</string>
+    <string name="menu_title">Main Menu</string>
+    <string name="start">New Game</string>
+    <string name="options">Options</string>
+    <string name="score">High Scores</string>
+    <string name="help">Help</string>
+
+>>>>>>> app/src/main/res/values/strings.xml
 </resources>

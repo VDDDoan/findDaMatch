@@ -5,7 +5,7 @@
     Translated into Java and modified for Find daMatch game
 */
 
-package com.cmpt276.finddamatch.gamelogic;
+package com.cmpt276.finddamatch.model;
 
 import java.util.ArrayList;
 import java.lang.Math;
@@ -18,7 +18,8 @@ public class CardGenerator {
 
     /*
         takes the order and if its prime
-        returns an ArrayList cards x image index, new row every (order + 1) elements
+        returns an ArrayList cards x image index, new row every (order + 1) elements,
+        first element is the order + 1
         else it returns null
         where the order is a prime number and order + 1 = number of images per card
 
@@ -35,6 +36,7 @@ public class CardGenerator {
             }
         }
         ArrayList<Integer> cards = new ArrayList<Integer>();
+        cards.add(order + 1);
 
         if (!isPrime) {
             System.out.println("\nERROR: order must be prime\n");
