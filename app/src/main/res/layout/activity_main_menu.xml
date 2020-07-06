@@ -4,6 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainMenuActivity">
+    tools:context=".ui.MainMenuActivity"
+    android:background="@color/colorYellow">
+    <TextView
+        android:id="@+id/menuTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="188dp"
+        android:text="@string/menu_title"
+        android:textColor="@color/colorDarkRed"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/newGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:width="250dp"
+        android:backgroundTint="@color/colorViolet"
+        android:text="@string/start"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menuTitle" />
+
+    <Button
+        android:id="@+id/options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:width="250dp"
+        android:backgroundTint="@color/colorViolet"
+        android:text="@string/options"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="@+id/newGame"
+        app:layout_constraintStart_toStartOf="@+id/newGame"
+        app:layout_constraintTop_toBottomOf="@+id/newGame" />
+
+    <Button
+        android:id="@+id/highScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="250dp"
+        android:backgroundTint="@color/colorViolet"
+        android:text="@string/score"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="@+id/options"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/options"
+        app:layout_constraintTop_toBottomOf="@+id/options" />
+
+    <Button
+        android:id="@+id/help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="250dp"
+        android:backgroundTint="@color/colorViolet"
+        android:text="@string/help"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="@+id/highScore"
+        app:layout_constraintStart_toStartOf="@+id/highScore"
+        app:layout_constraintTop_toBottomOf="@+id/highScore" />
+
+    <ImageView
+        android:id="@+id/cloud"
+        android:layout_width="178dp"
+        android:layout_height="111dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cloud" />
 </androidx.constraintlayout.widget.ConstraintLayout>

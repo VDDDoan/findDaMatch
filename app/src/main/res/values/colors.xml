@@ -3,9 +3,16 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">@color/colorCharcoal</color>
     <color name="colorAccent">#03DAC5</color>
+<<<<<<< app/src/main/res/values/colors.xml
     
     <color name="colorMintCream">#f7fff7</color>
     <color name="colorCharcoal">#264653</color>
     <color name="colorBittersweet">#ff6b6b</color>
     <color name="colorNaplesYellow">#ffe66d</color>
+    <color name="colorYellow">#ffea00</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorDarkRed">#8B0000</color>
+    <color name="colorMagenta">#8B008B</color>
+    <color name="colorViolet">#EE82EE</color>
+>>>>>>> app/src/main/res/values/colors.xml
 </resources>
