@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Find daMatch</string>
     <string name="skip">skip</string>
+    <string name="high_score">High Score</string>
+    <string name="refrenceCup">https://www.freepik.com/premium-vector/prize-cup-hand-win-congrats_6221374.htm</string>
+    <string name="record">Record</string>
+    <string name="reset">Reset</string>
+    <string name="back">Back</string>
 </resources>
