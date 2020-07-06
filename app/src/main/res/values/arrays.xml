@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="arrayCardImagesSet1">
+        <item>@drawable/ic_apple</item>
+    </integer-array>
+
+    <integer-array name="arrayCardImagesSet2">
+        <item>@drawable/ic_apple</item>
+    </integer-array>
+</resources>
