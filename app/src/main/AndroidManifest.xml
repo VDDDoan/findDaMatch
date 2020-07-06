@@ -11,6 +11,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.GameActivity"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:exported="true"/>
         <activity android:name=".ui.HelpActivity" />
         <activity android:name=".ui.OptionsActivity" />
