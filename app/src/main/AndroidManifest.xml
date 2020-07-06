@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.GameActivity"></activity>
+        <activity
+            android:name=".ui.GameActivity"
+            android:exported="true"/>
         <activity android:name=".ui.HelpActivity" />
         <activity android:name=".ui.OptionsActivity" />
         <activity android:name=".ui.HighScoreActivity" />
