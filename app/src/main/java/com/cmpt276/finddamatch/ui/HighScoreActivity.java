@@ -97,7 +97,7 @@ public class HighScoreActivity extends AppCompatActivity {
         try {
             fos = new FileOutputStream(filename, true);
             pw = new PrintWriter(fos);
-            pw.println(hour + ':' + minute + ' '+ usrName + ' ' + time + "   on  " + month +',' + day + ',' + year );
+            pw.println(hour + ':' + minute + ' ' + usrName + " used " + time + " on " + month +',' + day + ',' + year );
             pw.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
