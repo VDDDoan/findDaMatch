@@ -5,15 +5,17 @@ package com.cmpt276.finddamatch.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.cmpt276.finddamatch.R;
 
 public class OptionsActivity extends AppCompatActivity {
     private Button imgChange;
-    private Button clrHiScore;
     private Button returnBtn;
 
     @Override
@@ -22,20 +24,12 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
 
         imgChange = findViewById(R.id.changeImgBtn);
-        clrHiScore = findViewById(R.id.clearHiScore);
         returnBtn = findViewById(R.id.returnBtn);
 
         imgChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Does nothing rn
-            }
-        });
-
-        clrHiScore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Does nothing rn
+                //Change integer array set somehow
             }
         });
 
@@ -45,5 +39,6 @@ public class OptionsActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 }
