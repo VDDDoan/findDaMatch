@@ -8,11 +8,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
@@ -25,12 +29,12 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
     private static final int TIME_FLIP_CARD_MS = 500;
     private static final int TIME_DEAL_CARD_MS = 500;
-    private static final int TIME_SHUFFLE_CARD_MS = 500;
-    private static final int MAX_SHUFFLE_DISPLACEMENT = 125;
+    private static final int TIME_SHUFFLE_CARD_MS = 1000;
     private static final int CARD_HAND = 0;
     private static final int CARD_PLAY = 1;
     private static final int CARD_DECK = 2;
     private static final int NUM_CARDS_IN_ACTIVITY = 3;
+    private static final float MAX_SHUFFLE_DISPLACEMENT = 50.0f;
     private static final String TAG_CARD_FACE = "face";
     private static final String TAG_CARD_BACK = "back";
 
@@ -86,25 +90,37 @@ public class GameActivity extends AppCompatActivity {
         dealFirstCard(deck[CARD_HAND]);
     }
 
-    // generates random float between +max and -max
-    private float getShuffleAnimDisplacement(float max) {
+    // generates random float between +max and min
+    private float generateRandomBetween(float max, float min) {
         Random rand = new Random();
-        float min = -max;
         return min + rand.nextFloat() * (max - min);
     }
 
-    // takes a card and plays animation
+    // animates a card to the given x, 0.0f is the origin
+    private void resetCardX(CardCanvasView card) {
+        ObjectAnimator resetPosAnim = ObjectAnimator.ofFloat(card, "translationX", 0.0f);
+        resetPosAnim.setDuration(TIME_SHUFFLE_CARD_MS/2);
+        resetPosAnim.start();
+    }
+
+    // takes a card and plays shuffle animation
     private void shuffleCardInDeck(final CardCanvasView card) {
-        final float displacement = getShuffleAnimDisplacement(MAX_SHUFFLE_DISPLACEMENT);
-        final ObjectAnimator shuffleAnim = ObjectAnimator.ofFloat(card, "translationX", displacement);
-        shuffleAnim.setDuration(TIME_SHUFFLE_CARD_MS/2);
+        float displacement = generateRandomBetween(MAX_SHUFFLE_DISPLACEMENT, MAX_SHUFFLE_DISPLACEMENT/2);
+
+        Keyframe kf0 = Keyframe.ofFloat(0.0f, 0);
+        Keyframe kf1 = Keyframe.ofFloat(0.25f, displacement);
+        Keyframe kf2 = Keyframe.ofFloat(0.75f, -displacement);
+        Keyframe kf3 = Keyframe.ofFloat(1.0f, 0);
+        PropertyValuesHolder pvhTranslation = PropertyValuesHolder.ofKeyframe("translationX", kf0, kf1, kf2, kf3);
+        ObjectAnimator shuffleAnim = ObjectAnimator.ofPropertyValuesHolder(card, pvhTranslation);
+        shuffleAnim.setInterpolator(new LinearInterpolator());
+        shuffleAnim.setDuration((long) generateRandomBetween(TIME_SHUFFLE_CARD_MS, (float) TIME_SHUFFLE_CARD_MS/2));
+        shuffleAnim.setRepeatCount(Animation.INFINITE);
         shuffleAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                final ObjectAnimator shuffleAnimReverse = ObjectAnimator.ofFloat(card, "translationX", 0.0f);
-                shuffleAnimReverse.setDuration(TIME_SHUFFLE_CARD_MS/2);
-                shuffleAnimReverse.start();
+                resetCardX(card);
             }
         });
         shuffleAnim.start();
