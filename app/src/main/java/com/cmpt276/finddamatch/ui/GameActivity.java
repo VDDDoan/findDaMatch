@@ -29,7 +29,7 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
     private static final int TIME_FLIP_CARD_MS = 500;
     private static final int TIME_DEAL_CARD_MS = 500;
-    private static final int TIME_SHUFFLE_CARD_MS = 1000;
+    private static final int TIME_SHUFFLE_CARD_MS = 500;
     private static final int CARD_HAND = 0;
     private static final int CARD_PLAY = 1;
     private static final int CARD_DECK = 2;
@@ -38,16 +38,16 @@ public class GameActivity extends AppCompatActivity {
     private static final String TAG_CARD_FACE = "face";
     private static final String TAG_CARD_BACK = "back";
 
-    private GameLogic gameLogic;
-    private Chronometer timer;
+    private boolean isShuffled;
 
     private float boardHeight;
     private float boardWidth;
     private float cardHeight;
     private float cardWidth;
 
+    private GameLogic gameLogic;
+    private Chronometer timer;
     private TextView txtNumCardsRemaining;
-    private CardCanvasView cardViewHand, cardViewPlay, cardViewDeck;
     private CardCanvasView[] deck;
 
     @Override
@@ -56,6 +56,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         gameLogic = new GameLogic();
+
+        isShuffled = false;
 
         final ConstraintLayout gameBoard = findViewById(R.id.view_game_board);
         txtNumCardsRemaining = findViewById(R.id.txt_num_cards_remaining);
@@ -81,13 +83,10 @@ public class GameActivity extends AppCompatActivity {
                 boardWidth = (float) gameBoard.getWidth();
                 cardHeight = (float) deck[0].getHeight();
                 cardWidth = (float) deck[0].getWidth();
-                for (int j = 0; j < NUM_CARDS_IN_ACTIVITY; j++) {
-                    shuffleCardInDeck(deck[j]);
-                }
             }
         });
 
-        dealFirstCard(deck[CARD_HAND]);
+        dealFirstCard();
     }
 
     // generates random float between +max and min
@@ -96,7 +95,7 @@ public class GameActivity extends AppCompatActivity {
         return min + rand.nextFloat() * (max - min);
     }
 
-    // animates a card to the given x, 0.0f is the origin
+    // animates a card to the origin
     private void resetCardX(CardCanvasView card) {
         ObjectAnimator resetPosAnim = ObjectAnimator.ofFloat(card, "translationX", 0.0f);
         resetPosAnim.setDuration(TIME_SHUFFLE_CARD_MS/2);
@@ -115,7 +114,7 @@ public class GameActivity extends AppCompatActivity {
         ObjectAnimator shuffleAnim = ObjectAnimator.ofPropertyValuesHolder(card, pvhTranslation);
         shuffleAnim.setInterpolator(new LinearInterpolator());
         shuffleAnim.setDuration((long) generateRandomBetween(TIME_SHUFFLE_CARD_MS, (float) TIME_SHUFFLE_CARD_MS/2));
-        shuffleAnim.setRepeatCount(Animation.INFINITE);
+        shuffleAnim.setRepeatCount(2);
         shuffleAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -127,22 +126,34 @@ public class GameActivity extends AppCompatActivity {
     }
 
     // deals first card and starts the game
-    private void dealFirstCard(final CardCanvasView card) {
-        card.setOnClickListener(new View.OnClickListener() {
+    private void dealFirstCard() {
+        deck[CARD_HAND].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (gameLogic.getCurrentCardIndex() == 0) {
-                    dealCard(card);
-
+                if (isShuffled) {
+                    if (gameLogic.getCurrentCardIndex() == 0) {
+                        dealCard(deck[CARD_HAND]);
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                gameLogic.startTimer(timer);
+                            }
+                        }, TIME_DEAL_CARD_MS + TIME_FLIP_CARD_MS);
+                    } else {
+                        flipCard(deck[CARD_HAND]);
+                    }
+                } else {
+                    for (int i = 0; i < NUM_CARDS_IN_ACTIVITY; i++) {
+                        shuffleCardInDeck(deck[i]);
+                    }
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            gameLogic.startTimer(timer);
+                            isShuffled = true;
                         }
-                    }, TIME_DEAL_CARD_MS + TIME_FLIP_CARD_MS);
-                } else {
-                    flipCard(card);
+                    }, TIME_SHUFFLE_CARD_MS * 2);
                 }
             }
         });
