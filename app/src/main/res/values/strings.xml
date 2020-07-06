@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Find daMatch</string>
     <string name="skip">skip</string>
+    >>>>>>> app/src/main/res/values/strings.xml
     <string name="high_score">High Score</string>
     <string name="refrenceCup">https://www.freepik.com/premium-vector/prize-cup-hand-win-congrats_6221374.htm</string>
     <string name="record">Record</string>
@@ -15,5 +16,8 @@
     <string name="options">Options</string>
     <string name="score">High Scores</string>
     <string name="help">Help</string>
+    <string name="howToPlayDiscr">Find the matching symbol! At the start of the game you will be given a card. Each card will have three symbols, Click the symbol on your card that is shared with the top card on the deck! Go through all seven cards as fast as you can for a higher score!</string>
+   <string name="returntxt">Return</string>
 
+   >>>>>>> app/src/main/res/values/strings.xml
 </resources>
