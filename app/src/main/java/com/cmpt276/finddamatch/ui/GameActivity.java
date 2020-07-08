@@ -15,6 +15,7 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
@@ -44,6 +45,7 @@ public class GameActivity extends AppCompatActivity {
     private boolean isShuffled;
 
     private TypedArray fruitImages;
+    ConstraintLayout constraintLayout;
 
     private float boardHeight;
     private float boardWidth;
@@ -61,6 +63,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        constraintLayout = new ConstraintLayout(this);
         initGame();
         fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);
         handCardListener();
@@ -259,18 +262,25 @@ public class GameActivity extends AppCompatActivity {
     private void drawCardImages(final CardCanvasView card) {
         int[] images = new int[Options.getInstance().getNumImagesPerCard()];
         images = gameLogic.getCard(gameLogic.getCurrentCardIndex());
+        loadImages(images);
 
     }
-/*
+
     public void loadImages(int imageArr[]){
         ImageView imagesViewArr[] = new ImageView[imageArr.length];
         for (int i = 0; i < imageArr.length - 1; i++){
             imagesViewArr[i] = new ImageView(this);
             imagesViewArr[i].setImageResource(fruitImages.getResourceId(imageArr[i], 0));
-            ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-            this.addContentView(imagesViewArr[i], lp);
+            imagesViewArr[i].setAdjustViewBounds(true);
+            imagesViewArr[i].setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            // Add the ImageView to the layout and set the layout as the content view.
+            constraintLayout.addView(imagesViewArr[i]);
+            setContentView(constraintLayout);
 
         }
-    }*/
+    }
 
 }
