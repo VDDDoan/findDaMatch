@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array name="arrayCardImagesSet1">
+    <integer-array name="fruitImageSet">
         <item>@drawable/ic_apple</item>
-    </integer-array>
-
-    <integer-array name="arrayCardImagesSet2">
-        <item>@drawable/ic_apple</item>
+        <item>@drawable/bananas</item>
+        <item>@drawable/blueberry</item>
+        <item>@drawable/mango</item>
+        <item>@drawable/orange</item>
+        <item>@drawable/pineapple</item>
+        <item>@drawable/strawberry</item>
+        <item>@drawable/watermelon</item>
     </integer-array>
 </resources>

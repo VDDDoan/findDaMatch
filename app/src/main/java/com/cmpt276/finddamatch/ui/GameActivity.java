@@ -11,12 +11,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,8 @@ public class GameActivity extends AppCompatActivity {
 
     private boolean isShuffled;
 
+    private TypedArray fruitImages;
+
     private float boardHeight;
     private float boardWidth;
     private float cardHeight;
@@ -57,9 +61,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
         initGame();
-
+        fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);
         handCardListener();
         playCardListener();
         deckCardListener();
@@ -134,46 +137,38 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void deckCardListener() {
-        uiDeck[CARD_DECK].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
-                    // deal HAND CARD to discard pile (HAND CARD)
-                    dealCard(uiDeck[CARD_DECK]);
-                    // win screen and times up
-                    gameLogic.stopTimer(timer);
-                    // show user dialog(fragment?) asking for name
-                }
+        uiDeck[CARD_DECK].setOnClickListener(v -> {
+            if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
+                // deal HAND CARD to discard pile (HAND CARD)
+                dealCard(uiDeck[CARD_DECK]);
+                // win screen and times up
+                gameLogic.stopTimer(timer);
+                // show user dialog(fragment?) asking for name
             }
         });
     }
 
     private void playCardListener() {
-        uiDeck[CARD_PLAY].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (gameLogic.getCurrentCardIndex() > 0 && gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
-                    // deal PLAY CARD to discard pile (HAND CARD)
-                    dealCard(uiDeck[CARD_PLAY]);
-                }
+        uiDeck[CARD_PLAY].setOnClickListener(v -> {
+            if (gameLogic.getCurrentCardIndex() > 0 && gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
+                // deal PLAY CARD to discard pile (HAND CARD)
+                dealCard(uiDeck[CARD_PLAY]);
             }
         });
     }
 
     // deals first card and starts the game
     private void handCardListener() {
-        uiDeck[CARD_HAND].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isShuffled) {
-                    if (gameLogic.getCurrentCardIndex() == 0) {
-                        dealFirstCard();
-                    } else {
-                        // something related to image selection
-                    }
+        uiDeck[CARD_HAND].setOnClickListener(v -> {
+            if (isShuffled) {
+                if (gameLogic.getCurrentCardIndex() == 0) {
+                    drawCardImages(uiDeck[CARD_HAND]);
+                    dealFirstCard();
                 } else {
-                    shuffleUIDeck();
+                    // something related to image selection
                 }
+            } else {
+                shuffleUIDeck();
             }
         });
     }
@@ -246,12 +241,7 @@ public class GameActivity extends AppCompatActivity {
         card.setRotation(180f);
 
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                flipCard(card);
-            }
-        }, TIME_FLIP_CARD_MS/2);
+        handler.postDelayed(() -> flipCard(card), TIME_FLIP_CARD_MS/2);
     }
 
     private void flipCard(CardCanvasView card) {
@@ -267,6 +257,20 @@ public class GameActivity extends AppCompatActivity {
 
     // gets the images required for the given card and displays them on the card
     private void drawCardImages(final CardCanvasView card) {
+        int[] images = new int[Options.getInstance().getNumImagesPerCard()];
+        images = gameLogic.getCard(gameLogic.getCurrentCardIndex());
 
     }
+/*
+    public void loadImages(int imageArr[]){
+        ImageView imagesViewArr[] = new ImageView[imageArr.length];
+        for (int i = 0; i < imageArr.length - 1; i++){
+            imagesViewArr[i] = new ImageView(this);
+            imagesViewArr[i].setImageResource(fruitImages.getResourceId(imageArr[i], 0));
+            ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            this.addContentView(imagesViewArr[i], lp);
+
+        }
+    }*/
+
 }
