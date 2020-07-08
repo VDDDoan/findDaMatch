@@ -19,6 +19,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmpt276.finddamatch.R;
@@ -49,7 +50,7 @@ public class GameActivity extends AppCompatActivity {
     private float cardHeight;
     private float cardWidth;
 
-    private int numCardsPerSet = Options.getInstance().getNumCardsPerSet();
+    private final int numCardsPerSet = Options.getInstance().getNumCardsPerSet();
 
     private GameLogic gameLogic;
     private Chronometer timer;
@@ -91,14 +92,11 @@ public class GameActivity extends AppCompatActivity {
         }
 
         final ConstraintLayout gameBoard = findViewById(R.id.view_game_board);
-        gameBoard.post(new Runnable() {
-            @Override
-            public void run() {
-                boardHeight = (float) gameBoard.getHeight();
-                boardWidth = (float) gameBoard.getWidth();
-                cardHeight = (float) uiDeck[0].getHeight();
-                cardWidth = (float) uiDeck[0].getWidth();
-            }
+        gameBoard.post(() -> {
+            boardHeight = (float) gameBoard.getHeight();
+            boardWidth = (float) gameBoard.getWidth();
+            cardHeight = (float) uiDeck[0].getHeight();
+            cardWidth = (float) uiDeck[0].getWidth();
         });
     }
 
@@ -166,8 +164,6 @@ public class GameActivity extends AppCompatActivity {
             if (isShuffled) {
                 if (gameLogic.getCurrentCardIndex() == 0) {
                     dealFirstCard();
-                } else {
-                    // something related to image selection
                 }
             } else {
                 shuffleUIDeck();
@@ -273,18 +269,37 @@ public class GameActivity extends AppCompatActivity {
         ImageView[] imageViews = new ImageView[images.length];
         for (int i = 0; i < imageViews.length; i++) {
             imageViews[i] = new ImageView(this);
-            ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            imageParams.height = (int) cardHeight/3;
-            imageParams.width = (int) cardWidth/3;
             imageViews[i].setTag(String.valueOf(i));
-            imageViews[i].setLayoutParams(imageParams);
+            imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
             imageViews[i].setImageResource(fruitImages.getResourceId(images[i], i));
             imageViews[i].setClickable(true);
             imageViews[i].setFocusable(true);
             card.addView(imageViews[i]);
         }
+    }
+
+    private RelativeLayout.LayoutParams generateImagePosition(ImageView[] imageViews, int index) {
+        RelativeLayout.LayoutParams imageParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        imageParams.height = (int) cardHeight / 2;
+        imageParams.width = (int) cardWidth / 2;
+
+        switch (index) {
+            case 0:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                break;
+            case 1:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                break;
+            case 2:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                break;
+        }
+        return imageParams;
     }
 
     // gets the images required for the given card and displays them on the card
@@ -302,5 +317,4 @@ public class GameActivity extends AppCompatActivity {
             applyCardImages(card, images);
         }
     }
-
 }

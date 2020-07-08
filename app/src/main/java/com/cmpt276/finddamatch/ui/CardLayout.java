@@ -2,11 +2,11 @@ package com.cmpt276.finddamatch.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 
-public class CardLayout  extends LinearLayout {
+public class CardLayout  extends RelativeLayout {
     public CardLayout(Context context) {
         super(context);
     }
