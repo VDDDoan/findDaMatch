@@ -178,13 +178,10 @@ public class GameActivity extends AppCompatActivity {
     private void dealFirstCard() {
         dealCard(uiDeck[CARD_HAND]);
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gameLogic.startTimer(timer);
-                flipCardAnim(uiDeck[CARD_PLAY]);
-                uiDeck[CARD_HAND].setTranslationZ(0);
-            }
+        handler.postDelayed(() -> {
+            gameLogic.startTimer(timer);
+            flipCardAnim(uiDeck[CARD_PLAY]);
+            uiDeck[CARD_HAND].setTranslationZ(0);
         }, TIME_DEAL_CARD_MS + TIME_FLIP_CARD_MS);
     }
 
@@ -194,12 +191,21 @@ public class GameActivity extends AppCompatActivity {
             shuffleCardInDeck(uiDeck[i]);
         }
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                isShuffled = true;
-            }
-        }, TIME_SHUFFLE_CARD_MS * 2);
+        handler.postDelayed(() -> isShuffled = true, TIME_SHUFFLE_CARD_MS * 2);
+    }
+
+    private void revealNextMiddleCard() {
+        CardLayout prevCard = uiDeck[CARD_HAND];
+        CardLayout nextCard = uiDeck[CARD_PLAY];
+        // show images that were on the PLAY CARD on the HAND CARD
+        applyCardImages(prevCard, gameLogic.getCard(gameLogic.getCurrentCardIndex() - 1));
+        // flip PLAY CARD to face down
+        flipCard(nextCard);
+        // move PLAY CARD back to draw pile (DECK CARD)
+        resetImageViews(nextCard);
+        nextCard.setTranslationY(0.0f);
+        // flip card animation
+        flipCardAnim(nextCard);
     }
 
     // deals next card from deck to hand ( show deal animation and handle game logic implications)
@@ -212,19 +218,8 @@ public class GameActivity extends AppCompatActivity {
                 super.onAnimationEnd(animation);
                 if (card == uiDeck[CARD_HAND]) {
                     flipCardAnim(card);
-
                 } else if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1){
-                    // show images that were on the PLAY CARD on the HAND CARD
-                    setImageViews(uiDeck[CARD_HAND], gameLogic.getCard(gameLogic.getCurrentCardIndex() - 1));
-                    // flip PLAY CARD to face down
-                    flipCard(uiDeck[CARD_PLAY]);
-                    // move PLAY CARD back to draw pile (DECK CARD)
-                    resetImageViews(uiDeck[CARD_PLAY]);
-                    uiDeck[CARD_PLAY].setTranslationY(0.0f);
-                    // flip card animation
-                    flipCardAnim(uiDeck[CARD_PLAY]);
-
-                    // show images of next card on PLAY CARD
+                    revealNextMiddleCard();
                 } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
                     flipCardAnim(uiDeck[CARD_DECK]);
                 }
@@ -251,29 +246,7 @@ public class GameActivity extends AppCompatActivity {
         if (card.getTag() == TAG_CARD_BACK) {
             card.setTag(TAG_CARD_FACE);
             card.setBackgroundResource(R.drawable.menu_bg_card_face);
-            tempDrawCardImages(card);
-        } else if (card.getTag() == TAG_CARD_FACE){
-            card.setTag(TAG_CARD_BACK);
-            card.setBackgroundResource(R.drawable.menu_bg_card_back);
-        }
-    }
-
-    // gets the images required for the given card and displays them on the card
-    private void drawCardImages(final CardLayout card) {
-        int[] images = new int[Options.getInstance().getNumImagesPerCard()];
-        images = gameLogic.getCard(gameLogic.getCurrentCardIndex());
-        //loadImages(images);
-
-        System.out.println("added images here");
-    }
-
-
-
-    private void tempFlipCard(CardLayout card) {
-        if (card.getTag() == TAG_CARD_BACK) {
-            card.setTag(TAG_CARD_FACE);
-            card.setBackgroundResource(R.drawable.menu_bg_card_face);
-            tempDrawCardImages(card);
+            drawCardImages(card);
         } else if (card.getTag() == TAG_CARD_FACE){
             card.setTag(TAG_CARD_BACK);
             card.setBackgroundResource(R.drawable.menu_bg_card_back);
@@ -288,7 +261,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void setImageViews(CardLayout card, int[] images) {
+    private void applyCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
         for (int i = 0; i < imageViews.length; i++) {
             imageViews[i] = card.findViewWithTag(String.valueOf(i));
@@ -296,50 +269,37 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void tempDrawCardImages(final CardLayout card) {
+    private void createCardImages(CardLayout card, int[] images) {
+        ImageView[] imageViews = new ImageView[images.length];
+        for (int i = 0; i < imageViews.length; i++) {
+            imageViews[i] = new ImageView(this);
+            ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            imageParams.height = (int) cardHeight/3;
+            imageParams.width = (int) cardWidth/3;
+            imageViews[i].setTag(String.valueOf(i));
+            imageViews[i].setLayoutParams(imageParams);
+            imageViews[i].setImageResource(fruitImages.getResourceId(images[i], i));
+            imageViews[i].setClickable(true);
+            imageViews[i].setFocusable(true);
+            card.addView(imageViews[i]);
+        }
+    }
+
+    // gets the images required for the given card and displays them on the card
+    private void drawCardImages(final CardLayout card) {
         int[] images;
         if (card == uiDeck[CARD_HAND]) {
             images = gameLogic.getCard(gameLogic.getCurrentCardIndex() - 1);
         } else {
             images = gameLogic.getCard(gameLogic.getCurrentCardIndex());
         }
-        ImageView[] imageViews = new ImageView[images.length];
         // if there's no images
         if (card.findViewWithTag("0") == null) {
-            // create image views
-            for (int i = 0; i < imageViews.length; i++) {
-                imageViews[i] = new ImageView(this);
-                ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-                imageParams.height = (int) cardHeight/3;
-                imageParams.width = (int) cardWidth/3;
-                imageViews[i].setTag(String.valueOf(i));
-                imageViews[i].setLayoutParams(imageParams);
-                imageViews[i].setImageResource(fruitImages.getResourceId(images[i], i));
-                imageViews[i].setClickable(true);
-                imageViews[i].setFocusable(true);
-                card.addView(imageViews[i]);
-            }
+            createCardImages(card, images);
         } else {
-            setImageViews(card, images);
-        }
-    }
-
-    public void loadImages(int[] imageArr){
-        ImageView[] imagesViewArr = new ImageView[imageArr.length];
-        for (int i = 0; i < imageArr.length - 1; i++){
-            imagesViewArr[i] = new ImageView(this);
-            imagesViewArr[i].setImageResource(fruitImages.getResourceId(imageArr[i], 0));
-            imagesViewArr[i].setAdjustViewBounds(true);
-            imagesViewArr[i].setLayoutParams(new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            // Add the ImageView to the layout and set the layout as the content view.
-            constraintLayout.addView(imagesViewArr[i]);
-            setContentView(constraintLayout);
-
+            applyCardImages(card, images);
         }
     }
 
