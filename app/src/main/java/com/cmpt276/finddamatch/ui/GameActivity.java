@@ -267,6 +267,5 @@ public class GameActivity extends AppCompatActivity {
 
     // gets the images required for the given card and displays them on the card
     private void drawCardImages(final CardCanvasView card) {
-
     }
 }
