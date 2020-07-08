@@ -66,10 +66,12 @@ public class GameActivity extends AppCompatActivity {
         constraintLayout = new ConstraintLayout(this);
         initGame();
         fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);
+        temp();
         handCardListener();
         playCardListener();
         deckCardListener();
     }
+
     private void initGame() {
         gameLogic = new GameLogic();
 
@@ -264,7 +266,53 @@ public class GameActivity extends AppCompatActivity {
         images = gameLogic.getCard(gameLogic.getCurrentCardIndex());
         loadImages(images);
 
+        System.out.println("added images here");
     }
+
+
+    private void temp() {
+        CardLayout cardLayout = findViewById(R.id.layout_card_demo);
+        cardLayout.setTag(TAG_CARD_BACK);
+        cardLayout.setBackgroundResource(R.drawable.menu_bg_card_back);
+        cardLayout.setOnClickListener(v -> {
+            tempFlipCard(cardLayout);
+        });
+    }
+
+    private void tempFlipCard(CardLayout card) {
+        if (card.getTag() == TAG_CARD_BACK) {
+            card.setTag(TAG_CARD_FACE);
+            card.setBackgroundResource(R.drawable.menu_bg_card_face);
+            tempDrawCardImages(card);
+        } else if (card.getTag() == TAG_CARD_FACE){
+            card.setTag(TAG_CARD_BACK);
+            card.setBackgroundResource(R.drawable.menu_bg_card_back);
+        }
+    }
+
+    private void tempDrawCardImages(final CardLayout card) {
+        int[] images = new int[Options.getInstance().getNumImagesPerCard()];
+        images = gameLogic.getCard(gameLogic.getCurrentCardIndex());
+        ImageView imagesViewArr[] = new ImageView[images.length];
+
+        for (int i = 0; i < imagesViewArr.length; i++) {
+            imagesViewArr[i] = new ImageView(this);
+            ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            imageParams.height = (int) cardHeight/3;
+            imageParams.width = (int) cardWidth/3;
+            imagesViewArr[i].setLayoutParams(imageParams);
+            imagesViewArr[i].setImageResource(fruitImages.getResourceId(i, i));
+            imagesViewArr[i].setClickable(true);
+            imagesViewArr[i].setFocusable(true);
+            card.addView(imagesViewArr[i]);
+        }
+
+        System.out.println("added images here");
+    }
+
+
 
     public void loadImages(int imageArr[]){
         ImageView imagesViewArr[] = new ImageView[imageArr.length];

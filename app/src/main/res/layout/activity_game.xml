@@ -64,6 +64,21 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent=".5"/>
 
+
+        <com.cmpt276.finddamatch.ui.CardLayout
+            android:id="@+id/layout_card_demo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".4"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guide_game"
+            app:layout_constraintWidth_percent=".7">
+
+        </com.cmpt276.finddamatch.ui.CardLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
