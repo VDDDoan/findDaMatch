@@ -7,7 +7,7 @@
     tools:context=".ui.MainMenuActivity"
     android:background="@color/colorNaplesYellow">
     <TextView
-        android:id="@+id/menuTitle"
+        android:id="@+id/text_menu_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="188dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/newGame"
+        android:id="@+id/btn_menu_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -31,10 +31,10 @@
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menuTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/text_menu_title" />
 
     <Button
-        android:id="@+id/options"
+        android:id="@+id/btn_menu_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
@@ -42,37 +42,37 @@
         android:backgroundTint="@color/colorViolet"
         android:text="@string/options"
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="@+id/newGame"
-        app:layout_constraintStart_toStartOf="@+id/newGame"
-        app:layout_constraintTop_toBottomOf="@+id/newGame" />
+        app:layout_constraintEnd_toEndOf="@+id/btn_menu_game"
+        app:layout_constraintStart_toStartOf="@+id/btn_menu_game"
+        app:layout_constraintTop_toBottomOf="@+id/btn_menu_game" />
 
     <Button
-        android:id="@+id/highScore"
+        android:id="@+id/btn_menu_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="250dp"
         android:backgroundTint="@color/colorViolet"
         android:text="@string/score"
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="@+id/options"
+        app:layout_constraintEnd_toEndOf="@+id/btn_menu_option"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/options"
-        app:layout_constraintTop_toBottomOf="@+id/options" />
+        app:layout_constraintStart_toStartOf="@+id/btn_menu_option"
+        app:layout_constraintTop_toBottomOf="@+id/btn_menu_option" />
 
     <Button
-        android:id="@+id/help"
+        android:id="@+id/btn_menu_help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="250dp"
         android:backgroundTint="@color/colorViolet"
         android:text="@string/help"
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="@+id/highScore"
-        app:layout_constraintStart_toStartOf="@+id/highScore"
-        app:layout_constraintTop_toBottomOf="@+id/highScore" />
+        app:layout_constraintEnd_toEndOf="@+id/btn_menu_score"
+        app:layout_constraintStart_toStartOf="@+id/btn_menu_score"
+        app:layout_constraintTop_toBottomOf="@+id/btn_menu_score" />
 
     <ImageView
-        android:id="@+id/cloud"
+        android:id="@+id/img_menu_cloud"
         android:layout_width="178dp"
         android:layout_height="111dp"
         android:layout_marginStart="4dp"
