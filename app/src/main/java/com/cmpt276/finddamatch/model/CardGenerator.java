@@ -36,7 +36,6 @@ public class CardGenerator {
             }
         }
         ArrayList<Integer> cards = new ArrayList<Integer>();
-        cards.add(order + 1);
 
         if (!isPrime) {
             System.out.println("\nERROR: order must be prime\n");
