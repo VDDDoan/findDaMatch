@@ -3,6 +3,7 @@
  */
 package com.cmpt276.finddamatch.ui;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -11,21 +12,26 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmpt276.finddamatch.R;
 import com.cmpt276.finddamatch.model.GameLogic;
+import com.cmpt276.finddamatch.model.HighScore;
+import com.cmpt276.finddamatch.model.HighScoreManager;
 import com.cmpt276.finddamatch.model.Options;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
@@ -40,7 +46,11 @@ public class GameActivity extends AppCompatActivity {
     private static final String TAG_CARD_FACE = "face";
     private static final String TAG_CARD_BACK = "back";
 
+    private final int numCardsPerSet = Options.getInstance().getNumCardsPerSet();
+
     private boolean isShuffled;
+    private boolean startOfGame;
+    private boolean isDealing;
 
     private TypedArray fruitImages;
 
@@ -49,14 +59,10 @@ public class GameActivity extends AppCompatActivity {
     private float cardHeight;
     private float cardWidth;
 
-    private final int numCardsPerSet = Options.getInstance().getNumCardsPerSet();
-
     private GameLogic gameLogic;
     private Chronometer timer;
     private TextView txtNumCardsRemaining;
     private CardLayout[] uiDeck;
-    private boolean startOfGame;
-    private boolean isDealing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +71,6 @@ public class GameActivity extends AppCompatActivity {
         initGame();
         fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);
         handCardListener();
-        //playCardListener();
-        deckCardListener();
     }
 
     private void initGame() {
@@ -136,7 +140,7 @@ public class GameActivity extends AppCompatActivity {
         });
         shuffleAnim.start();
     }
-
+/*
     private void deckCardListener() {
         uiDeck[CARD_DECK].setOnClickListener(v -> {
             if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
@@ -149,7 +153,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
     }
-
+*/
     /*private void playCardListener() {
         uiDeck[CARD_PLAY].setOnClickListener(v -> {
             if (gameLogic.getCurrentCardIndex() > 0 && gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
@@ -276,9 +280,38 @@ public class GameActivity extends AppCompatActivity {
                             dealCard(uiDeck[CARD_PLAY]);
                         }
                     });
+                } else {
+                    imageViews[i].setOnClickListener(null);
                 }
+            } else {
+                imageViews[i].setOnClickListener(null);
             }
         }
+    }
+
+    private void showGameOver() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(getLayoutInflater().inflate(R.layout.dialog_gameover, null));
+
+        builder.setPositiveButton("Confirm", (dialog, which) -> {
+            EditText userName = findViewById(R.id.e_text_username);
+            HighScore score = new HighScore(
+                    gameLogic.getTime(),
+                    userName.getText().toString(),
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime()));
+            HighScoreManager.getInstance().setHighScore(score);
+            System.out.println(score.toString());
+            finish();
+        });
+        builder.setNegativeButton("Don't Record", (dialog, which) -> {
+            dialog.cancel();
+            finish();
+        });
+        builder.setOnDismissListener(dialog -> {
+            finish();
+        });
+
+        builder.show();
     }
 
     private void createCardImages(CardLayout card, int[] images) {
@@ -306,7 +339,7 @@ public class GameActivity extends AppCompatActivity {
                             dealCard(uiDeck[CARD_DECK]);
                             // win screen and times up
                             gameLogic.stopTimer(timer);
-                            // show user dialog(fragment?) asking for name
+                            showGameOver();
                         }
 
                     }));

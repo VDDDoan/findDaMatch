@@ -21,7 +21,7 @@ public class HighScore {
         date = DateFormat.getDateInstance().format(Calendar.getInstance().getTime());
     }
 
-    public HighScore(int time, String nickname, String date) {
+    public HighScore(long time, String nickname, String date) {
         this.time = time;
         this.nickname = nickname;
         this.date = date;

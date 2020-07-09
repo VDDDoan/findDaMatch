@@ -18,6 +18,7 @@
     <string name="help">Help</string>
     <string name="howToPlayDiscr">Find the matching symbol! At the start of the game you will be given a card. Each card will have three symbols, Click the symbol on your card that is shared with the top card on the deck! Go through all seven cards as fast as you can for a higher score!</string>
    <string name="returntxt">Return</string>
+    <string name="stringEnterName">Congratulations!\nEnter your name:</string>
 
-   >>>>>>> app/src/main/res/values/strings.xml
+    >>>>>>> app/src/main/res/values/strings.xml
 </resources>
