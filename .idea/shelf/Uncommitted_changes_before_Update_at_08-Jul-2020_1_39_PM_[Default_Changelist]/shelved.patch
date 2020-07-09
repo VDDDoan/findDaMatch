@@ -1,0 +1,177 @@
+Index: app/src/main/res/layout/activity_game.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.GameActivity\"\r\n    android:background=\"@color/colorCharcoal\">\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:id=\"@+id/view_game_board\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"0dp\"\r\n        android:background=\"@color/colorCharcoal\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHeight_percent=\".9\"\r\n        app:layout_constraintStart_toStartOf=\"parent\">\r\n\r\n        <com.cmpt276.finddamatch.ui.CardCanvasView\r\n            android:id=\"@+id/view_card_deck\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"0dp\"\r\n            android:translationZ=\"1dp\"\r\n            app:layout_constraintBottom_toTopOf=\"@+id/guide_game\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHeight_percent=\".4\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:layout_constraintWidth_percent=\".7\">\r\n\r\n        </com.cmpt276.finddamatch.ui.CardCanvasView>\r\n\r\n        <com.cmpt276.finddamatch.ui.CardCanvasView\r\n            android:id=\"@+id/view_card_play\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"0dp\"\r\n            android:translationZ=\"2dp\"\r\n            app:layout_constraintBottom_toTopOf=\"@+id/guide_game\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHeight_percent=\".4\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:layout_constraintWidth_percent=\".7\">\r\n        </com.cmpt276.finddamatch.ui.CardCanvasView>\r\n\r\n        <com.cmpt276.finddamatch.ui.CardCanvasView\r\n            android:id=\"@+id/view_card_hand\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"0dp\"\r\n            android:translationZ=\"3dp\"\r\n            app:layout_constraintBottom_toTopOf=\"@+id/guide_game\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHeight_percent=\".4\"\r\n            app:layout_constraintHorizontal_bias=\"0.495\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:layout_constraintWidth_percent=\".7\" />\r\n\r\n        <androidx.constraintlayout.widget.Guideline\r\n            android:id=\"@+id/guide_game\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"horizontal\"\r\n            app:layout_constraintGuide_percent=\".5\"/>\r\n\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"0dp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/view_game_board\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHeight_percent=\".05\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintWidth_percent=\".7\">\r\n\r\n        <Chronometer\r\n            android:id=\"@+id/timer_game\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:textSize=\"22sp\"\r\n            android:textColor=\"@color/colorMintCream\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/txt_num_cards_remaining\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"\"\r\n            android:textColor=\"@color/colorMintCream\"\r\n            android:textSize=\"22sp\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\" />\r\n\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_game.xml	(revision c334323d6d50ae1c2e42dd8b4739c4df7cecc0ed)
++++ app/src/main/res/layout/activity_game.xml	(date 1594236508922)
+@@ -64,6 +64,21 @@
+             android:orientation="horizontal"
+             app:layout_constraintGuide_percent=".5"/>
+ 
++
++        <com.cmpt276.finddamatch.ui.CardLayout
++            android:id="@+id/layout_card_demo"
++            android:layout_width="0dp"
++            android:layout_height="0dp"
++            app:layout_constraintBottom_toBottomOf="parent"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHeight_percent=".4"
++            app:layout_constraintHorizontal_bias="0.495"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="@+id/guide_game"
++            app:layout_constraintWidth_percent=".7">
++
++        </com.cmpt276.finddamatch.ui.CardLayout>
++
+     </androidx.constraintlayout.widget.ConstraintLayout>
+ 
+     <androidx.constraintlayout.widget.ConstraintLayout
+Index: app/src/main/java/com/cmpt276/finddamatch/ui/GameActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/*\r\n    UI class for playing the game\r\n */\r\npackage com.cmpt276.finddamatch.ui;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.constraintlayout.widget.ConstraintLayout;\r\n\r\nimport android.animation.Animator;\r\nimport android.animation.AnimatorListenerAdapter;\r\nimport android.animation.Keyframe;\r\nimport android.animation.ObjectAnimator;\r\nimport android.animation.PropertyValuesHolder;\r\nimport android.content.res.TypedArray;\r\nimport android.os.Bundle;\r\nimport android.os.Handler;\r\nimport android.view.View;\r\nimport android.view.animation.AccelerateDecelerateInterpolator;\r\nimport android.view.animation.LinearInterpolator;\r\nimport android.widget.Chronometer;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.cmpt276.finddamatch.R;\r\nimport com.cmpt276.finddamatch.model.GameLogic;\r\nimport com.cmpt276.finddamatch.model.HighScoreManager;\r\nimport com.cmpt276.finddamatch.model.Options;\r\n\r\nimport java.util.Random;\r\n\r\npublic class GameActivity extends AppCompatActivity {\r\n    private static final int TIME_FLIP_CARD_MS = 500;\r\n    private static final int TIME_DEAL_CARD_MS = 500;\r\n    private static final int TIME_SHUFFLE_CARD_MS = 500;\r\n    private static final int CARD_HAND = 0;\r\n    private static final int CARD_PLAY = 1;\r\n    private static final int CARD_DECK = 2;\r\n    private static final int NUM_CARDS_IN_ACTIVITY = 3;\r\n    private static final float MAX_SHUFFLE_DISPLACEMENT = 50.0f;\r\n    private static final String TAG_CARD_FACE = \"face\";\r\n    private static final String TAG_CARD_BACK = \"back\";\r\n\r\n    private boolean isShuffled;\r\n\r\n    private TypedArray fruitImages;\r\n\r\n    private float boardHeight;\r\n    private float boardWidth;\r\n    private float cardHeight;\r\n    private float cardWidth;\r\n\r\n    private int numCardsPerSet = Options.getInstance().getNumCardsPerSet();\r\n\r\n    private GameLogic gameLogic;\r\n    private Chronometer timer;\r\n    private TextView txtNumCardsRemaining;\r\n    private CardCanvasView[] uiDeck;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_game);\r\n        initGame();\r\n        fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);\r\n        handCardListener();\r\n        playCardListener();\r\n        deckCardListener();\r\n    }\r\n    private void initGame() {\r\n        gameLogic = new GameLogic();\r\n\r\n        isShuffled = false;\r\n\r\n        txtNumCardsRemaining = findViewById(R.id.txt_num_cards_remaining);\r\n        timer = findViewById(R.id.timer_game);\r\n\r\n        txtNumCardsRemaining.setText(\"Cards Remaining: \" + (numCardsPerSet - gameLogic.getCurrentCardIndex()));\r\n\r\n        uiDeck = new CardCanvasView[NUM_CARDS_IN_ACTIVITY];\r\n\r\n        uiDeck[CARD_HAND] = findViewById(R.id.view_card_hand);\r\n        uiDeck[CARD_PLAY] = findViewById(R.id.view_card_play);\r\n        uiDeck[CARD_DECK] = findViewById(R.id.view_card_deck);\r\n\r\n        for (int i = 0; i < NUM_CARDS_IN_ACTIVITY; i++) {\r\n            uiDeck[i].setTag(TAG_CARD_BACK);\r\n            uiDeck[i].setBackgroundResource(R.drawable.menu_bg_card_back);\r\n        }\r\n\r\n        final ConstraintLayout gameBoard = findViewById(R.id.view_game_board);\r\n        gameBoard.post(new Runnable() {\r\n            @Override\r\n            public void run() {\r\n                boardHeight = (float) gameBoard.getHeight();\r\n                boardWidth = (float) gameBoard.getWidth();\r\n                cardHeight = (float) uiDeck[0].getHeight();\r\n                cardWidth = (float) uiDeck[0].getWidth();\r\n            }\r\n        });\r\n    }\r\n\r\n    // generates random float between +max and min\r\n    private float generateRandomBetween(float max, float min) {\r\n        Random rand = new Random();\r\n        return min + rand.nextFloat() * (max - min);\r\n    }\r\n\r\n    // animates a card to the origin\r\n    private void resetCardX(CardCanvasView card) {\r\n        ObjectAnimator resetPosAnim = ObjectAnimator.ofFloat(card, \"translationX\", 0.0f);\r\n        resetPosAnim.setDuration(TIME_SHUFFLE_CARD_MS/2);\r\n        resetPosAnim.start();\r\n    }\r\n\r\n    // takes a card and plays a brief shuffle animation\r\n    private void shuffleCardInDeck(final CardCanvasView card) {\r\n        float displacement = generateRandomBetween(MAX_SHUFFLE_DISPLACEMENT, MAX_SHUFFLE_DISPLACEMENT/2);\r\n\r\n        Keyframe kf0 = Keyframe.ofFloat(0.0f, 0);\r\n        Keyframe kf1 = Keyframe.ofFloat(0.25f, displacement);\r\n        Keyframe kf2 = Keyframe.ofFloat(0.75f, -displacement);\r\n        Keyframe kf3 = Keyframe.ofFloat(1.0f, 0);\r\n        PropertyValuesHolder pvhTranslation = PropertyValuesHolder.ofKeyframe(\"translationX\", kf0, kf1, kf2, kf3);\r\n        ObjectAnimator shuffleAnim = ObjectAnimator.ofPropertyValuesHolder(card, pvhTranslation);\r\n        shuffleAnim.setInterpolator(new LinearInterpolator());\r\n        shuffleAnim.setDuration((long) generateRandomBetween(TIME_SHUFFLE_CARD_MS, (float) TIME_SHUFFLE_CARD_MS/2));\r\n        shuffleAnim.setRepeatCount(2);\r\n        shuffleAnim.addListener(new AnimatorListenerAdapter() {\r\n            @Override\r\n            public void onAnimationEnd(Animator animation) {\r\n                super.onAnimationEnd(animation);\r\n                resetCardX(card);\r\n            }\r\n        });\r\n        shuffleAnim.start();\r\n    }\r\n\r\n    private void deckCardListener() {\r\n        uiDeck[CARD_DECK].setOnClickListener(v -> {\r\n            if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {\r\n                // deal HAND CARD to discard pile (HAND CARD)\r\n                dealCard(uiDeck[CARD_DECK]);\r\n                // win screen and times up\r\n                gameLogic.stopTimer(timer);\r\n                // show user dialog(fragment?) asking for name\r\n            }\r\n        });\r\n    }\r\n\r\n    private void playCardListener() {\r\n        uiDeck[CARD_PLAY].setOnClickListener(v -> {\r\n            if (gameLogic.getCurrentCardIndex() > 0 && gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {\r\n                // deal PLAY CARD to discard pile (HAND CARD)\r\n                dealCard(uiDeck[CARD_PLAY]);\r\n            }\r\n        });\r\n    }\r\n\r\n    // deals first card and starts the game\r\n    private void handCardListener() {\r\n        uiDeck[CARD_HAND].setOnClickListener(v -> {\r\n            if (isShuffled) {\r\n                if (gameLogic.getCurrentCardIndex() == 0) {\r\n                    drawCardImages(uiDeck[CARD_HAND]);\r\n                    dealFirstCard();\r\n                } else {\r\n                    // something related to image selection\r\n                }\r\n            } else {\r\n                shuffleUIDeck();\r\n            }\r\n        });\r\n    }\r\n\r\n    private void dealFirstCard() {\r\n        dealCard(uiDeck[CARD_HAND]);\r\n        final Handler handler = new Handler();\r\n        handler.postDelayed(new Runnable() {\r\n            @Override\r\n            public void run() {\r\n                gameLogic.startTimer(timer);\r\n                flipCardAnim(uiDeck[CARD_PLAY]);\r\n            }\r\n        }, TIME_DEAL_CARD_MS + TIME_FLIP_CARD_MS);\r\n    }\r\n\r\n    private void shuffleUIDeck() {\r\n        gameLogic.shuffleDeck();\r\n        for (int i = 0; i < NUM_CARDS_IN_ACTIVITY; i++) {\r\n            shuffleCardInDeck(uiDeck[i]);\r\n        }\r\n        final Handler handler = new Handler();\r\n        handler.postDelayed(new Runnable() {\r\n            @Override\r\n            public void run() {\r\n                isShuffled = true;\r\n            }\r\n        }, TIME_SHUFFLE_CARD_MS * 2);\r\n    }\r\n\r\n    // deals next card from deck to hand ( show deal animation and handle game logic implications)\r\n    private void dealCard(final CardCanvasView card) {\r\n        ObjectAnimator dealAnimation = ObjectAnimator.ofFloat(card, \"translationY\", boardHeight/2);\r\n        dealAnimation.setDuration(TIME_DEAL_CARD_MS);\r\n        dealAnimation.addListener(new AnimatorListenerAdapter() {\r\n\r\n            @Override\r\n            public void onAnimationEnd(Animator animation) {\r\n                super.onAnimationEnd(animation);\r\n                if (card == uiDeck[CARD_HAND]) {\r\n                    flipCardAnim(card);\r\n                } else if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1){\r\n                    // show images that were on the PLAY CARD on the HAND CARD\r\n\r\n                    // drawCardImages(something);\r\n\r\n                    // flip PLAY CARD to face down\r\n                    flipCard(uiDeck[CARD_PLAY]);\r\n                    // move PLAY CARD back to draw pile (DECK CARD)\r\n                    uiDeck[CARD_PLAY].setTranslationY(0.0f);\r\n                    // flip card animation\r\n                    flipCardAnim(uiDeck[CARD_PLAY]);\r\n                    // show images of next card on PLAY CARD\r\n                } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {\r\n                    flipCardAnim(uiDeck[CARD_DECK]);\r\n                }\r\n            }\r\n        });\r\n        dealAnimation.start();\r\n        gameLogic.incrementCurrentCardIndex();\r\n        txtNumCardsRemaining.setText(\"Cards Remaining: \" + (numCardsPerSet - gameLogic.getCurrentCardIndex()));\r\n    }\r\n\r\n    // takes a card plays the animation, switches the background halfway through the animation\r\n    private void flipCardAnim(final CardCanvasView card) {\r\n        ObjectAnimator flipAnimation = ObjectAnimator.ofFloat(card, \"rotationX\", 0.0f, 180f);\r\n        flipAnimation.setInterpolator(new AccelerateDecelerateInterpolator());\r\n        flipAnimation.setDuration(TIME_FLIP_CARD_MS);\r\n        flipAnimation.start();\r\n        card.setRotation(180f);\r\n\r\n        final Handler handler = new Handler();\r\n        handler.postDelayed(() -> flipCard(card), TIME_FLIP_CARD_MS/2);\r\n    }\r\n\r\n    private void flipCard(CardCanvasView card) {\r\n        if (card.getTag() == TAG_CARD_BACK) {\r\n            card.setTag(TAG_CARD_FACE);\r\n            card.setBackgroundResource(R.drawable.menu_bg_card_face);\r\n            drawCardImages(card);\r\n        } else if (card.getTag() == TAG_CARD_FACE){\r\n            card.setTag(TAG_CARD_BACK);\r\n            card.setBackgroundResource(R.drawable.menu_bg_card_back);\r\n        }\r\n    }\r\n\r\n    // gets the images required for the given card and displays them on the card\r\n    private void drawCardImages(final CardCanvasView card) {\r\n        int[] images = new int[Options.getInstance().getNumImagesPerCard()];\r\n        images = gameLogic.getCard(gameLogic.getCurrentCardIndex());\r\n\r\n    }\r\n/*\r\n    public void loadImages(int imageArr[]){\r\n        ImageView imagesViewArr[] = new ImageView[imageArr.length];\r\n        for (int i = 0; i < imageArr.length - 1; i++){\r\n            imagesViewArr[i] = new ImageView(this);\r\n            imagesViewArr[i].setImageResource(fruitImages.getResourceId(imageArr[i], 0));\r\n            ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);\r\n            this.addContentView(imagesViewArr[i], lp);\r\n\r\n        }\r\n    }*/\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/cmpt276/finddamatch/ui/GameActivity.java	(revision c334323d6d50ae1c2e42dd8b4739c4df7cecc0ed)
++++ app/src/main/java/com/cmpt276/finddamatch/ui/GameActivity.java	(date 1594240003705)
+@@ -15,6 +15,7 @@
+ import android.os.Bundle;
+ import android.os.Handler;
+ import android.view.View;
++import android.view.ViewGroup;
+ import android.view.animation.AccelerateDecelerateInterpolator;
+ import android.view.animation.LinearInterpolator;
+ import android.widget.Chronometer;
+@@ -63,10 +64,12 @@
+         setContentView(R.layout.activity_game);
+         initGame();
+         fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);
++        temp();
+         handCardListener();
+         playCardListener();
+         deckCardListener();
+     }
++
+     private void initGame() {
+         gameLogic = new GameLogic();
+ 
+@@ -260,7 +263,52 @@
+         int[] images = new int[Options.getInstance().getNumImagesPerCard()];
+         images = gameLogic.getCard(gameLogic.getCurrentCardIndex());
+ 
++        System.out.println("added images here");
++    }
++
++
++    private void temp() {
++        CardLayout cardLayout = findViewById(R.id.layout_card_demo);
++        cardLayout.setTag(TAG_CARD_BACK);
++        cardLayout.setBackgroundResource(R.drawable.menu_bg_card_back);
++        cardLayout.setOnClickListener(v -> {
++            tempFlipCard(cardLayout);
++        });
++    }
++
++    private void tempFlipCard(CardLayout card) {
++        if (card.getTag() == TAG_CARD_BACK) {
++            card.setTag(TAG_CARD_FACE);
++            card.setBackgroundResource(R.drawable.menu_bg_card_face);
++            tempDrawCardImages(card);
++        } else if (card.getTag() == TAG_CARD_FACE){
++            card.setTag(TAG_CARD_BACK);
++            card.setBackgroundResource(R.drawable.menu_bg_card_back);
++        }
++    }
++
++    private void tempDrawCardImages(final CardLayout card) {
++        int[] images = new int[Options.getInstance().getNumImagesPerCard()];
++        images = gameLogic.getCard(gameLogic.getCurrentCardIndex());
++        ImageView imagesViewArr[] = new ImageView[images.length];
++
++        for (int i = 0; i < imagesViewArr.length; i++) {
++            imagesViewArr[i] = new ImageView(this);
++            ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(
++                    ViewGroup.LayoutParams.WRAP_CONTENT,
++                    ViewGroup.LayoutParams.WRAP_CONTENT);
++            imageParams.height = (int) cardHeight/3;
++            imageParams.width = (int) cardWidth/3;
++            imagesViewArr[i].setLayoutParams(imageParams);
++            imagesViewArr[i].setImageResource(fruitImages.getResourceId(i, i));
++            imagesViewArr[i].setClickable(true);
++            imagesViewArr[i].setFocusable(true);
++            card.addView(imagesViewArr[i]);
++        }
++
++        System.out.println("added images here");
+     }
++
+ /*
+     public void loadImages(int imageArr[]){
+         ImageView imagesViewArr[] = new ImageView[imageArr.length];
+Index: app/src/main/java/com/cmpt276/finddamatch/ui/CardCanvasView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/*\r\n    Image drawing for game cards\r\n */\r\npackage com.cmpt276.finddamatch.ui;\r\n\r\nimport android.content.Context;\r\nimport android.content.res.TypedArray;\r\nimport android.graphics.Canvas;\r\nimport android.graphics.Paint;\r\nimport android.graphics.drawable.Drawable;\r\nimport android.util.AttributeSet;\r\nimport android.view.View;\r\nimport android.widget.ImageView;\r\n\r\nimport androidx.annotation.Nullable;\r\n\r\nimport com.cmpt276.finddamatch.R;\r\n\r\nimport java.util.Random;\r\n\r\npublic class CardCanvasView extends View {\r\n\r\n    \r\n    public CardCanvasView(Context context) {\r\n        super(context);\r\n    }\r\n\r\n    public CardCanvasView(Context context, @Nullable AttributeSet attrs) {\r\n        super(context, attrs);\r\n    }\r\n\r\n    public CardCanvasView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {\r\n        super(context, attrs, defStyleAttr);\r\n    }\r\n\r\n\r\n    @Override\r\n    protected void onDraw(Canvas canvas) {\r\n        super.onDraw(canvas);\r\n    }\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/cmpt276/finddamatch/ui/CardCanvasView.java	(revision c334323d6d50ae1c2e42dd8b4739c4df7cecc0ed)
++++ app/src/main/java/com/cmpt276/finddamatch/ui/CardCanvasView.java	(date 1594236098369)
+@@ -10,6 +10,7 @@
+ import android.graphics.drawable.Drawable;
+ import android.util.AttributeSet;
+ import android.view.View;
++import android.view.ViewGroup;
+ import android.widget.ImageView;
+ 
+ import androidx.annotation.Nullable;
+@@ -33,12 +34,8 @@
+         super(context, attrs, defStyleAttr);
+     }
+ 
+-
+     @Override
+     protected void onDraw(Canvas canvas) {
+         super.onDraw(canvas);
+     }
+-
+-
+-
+ }
+Index: app/src/main/java/com/cmpt276/finddamatch/ui/CardLayout.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/cmpt276/finddamatch/ui/CardLayout.java	(date 1594236253078)
++++ app/src/main/java/com/cmpt276/finddamatch/ui/CardLayout.java	(date 1594236253078)
+@@ -0,0 +1,25 @@
++package com.cmpt276.finddamatch.ui;
++
++import android.content.Context;
++import android.util.AttributeSet;
++import android.widget.LinearLayout;
++
++import androidx.annotation.Nullable;
++
++public class CardLayout  extends LinearLayout {
++    public CardLayout(Context context) {
++        super(context);
++    }
++
++    public CardLayout(Context context, @Nullable AttributeSet attrs) {
++        super(context, attrs);
++    }
++
++    public CardLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
++        super(context, attrs, defStyleAttr);
++    }
++
++    public CardLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
++        super(context, attrs, defStyleAttr, defStyleRes);
++    }
++}
