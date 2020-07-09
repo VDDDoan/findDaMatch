@@ -18,5 +18,6 @@
     <string name="howToPlayDes">
         Find the matching symbol! At the start of the game you will be given a card. Each card will have three symbols, Click the symbol on your card that is shared with the top card on the deck! Go through all seven cards as fast as you can for a higher score!
     </string>
+    <string name="stringEnterName">Congratulations!\nEnter your name:</string>
 
 </resources>

@@ -135,7 +135,6 @@ public class GameLogic {
         for (int i = 0; i < numImagesPerCard; i++) {
             if (input == deck[currentCardIndex - 1][i]) {
                 hasMatch = true;
-                currentCardIndex++;
                 break;
             }
         }
