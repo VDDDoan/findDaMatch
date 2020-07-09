@@ -5,14 +5,10 @@ package com.cmpt276.finddamatch.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -28,23 +24,23 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        cloud = findViewById(R.id.cloud);
-        play = findViewById(R.id.newGame);
+        cloud = findViewById(R.id.img_menu_cloud);
+        play = findViewById(R.id.btn_menu_game);
         play.setOnClickListener((View v)->{
             Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
             startActivity(intent);
         });
-        option = findViewById(R.id.options);
+        option = findViewById(R.id.btn_menu_option);
         option.setOnClickListener((View v)->{
             Intent intent = new Intent(MainMenuActivity.this, OptionsActivity.class);
             startActivity(intent);
         });
-        score = findViewById(R.id.highScore);
+        score = findViewById(R.id.btn_menu_score);
         score.setOnClickListener((View v)->{
             Intent intent = new Intent(MainMenuActivity.this, HighScoreActivity.class);
             startActivity(intent);
         });
-        help = findViewById(R.id.help);
+        help = findViewById(R.id.btn_menu_help);
         help.setOnClickListener((View v)->{
             Intent intent = new Intent(MainMenuActivity.this, HelpActivity.class);
             startActivity(intent);

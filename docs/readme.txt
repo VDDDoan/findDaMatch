@@ -1,0 +1,1 @@
+Project requires Android Studio 4.1 or higher for lamda expressions

@@ -38,13 +38,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         Button btnSkip = findViewById(R.id.btn_splash_skip);
         intent = new Intent(SplashScreenActivity.this, MainMenuActivity.class);
-        btnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                finish();
-                startActivity(intent);
-                finish();
-            }
+        btnSkip.setOnClickListener(v -> {
+            finish();
+            startActivity(intent);
+            finish();
         });
         name1 = findViewById(R.id.David);
         name2 = findViewById(R.id.James);
