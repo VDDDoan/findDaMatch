@@ -56,6 +56,7 @@ public class GameActivity extends AppCompatActivity {
     private Chronometer timer;
     private TextView txtNumCardsRemaining;
     private CardLayout[] uiDeck;
+    private boolean startOfGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class GameActivity extends AppCompatActivity {
         initGame();
         fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);
         handCardListener();
-        playCardListener();
+        //playCardListener();
         deckCardListener();
     }
 
@@ -73,6 +74,7 @@ public class GameActivity extends AppCompatActivity {
         gameLogic = new GameLogic();
 
         isShuffled = false;
+        startOfGame = true;
 
         txtNumCardsRemaining = findViewById(R.id.txt_num_cards_remaining);
         timer = findViewById(R.id.timer_game);
@@ -149,14 +151,14 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
-    private void playCardListener() {
+    /*private void playCardListener() {
         uiDeck[CARD_PLAY].setOnClickListener(v -> {
             if (gameLogic.getCurrentCardIndex() > 0 && gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                 // deal PLAY CARD to discard pile (HAND CARD)
                 dealCard(uiDeck[CARD_PLAY]);
             }
         });
-    }
+    }*/
 
     // deals first card and starts the game
     private void handCardListener() {
@@ -222,7 +224,9 @@ public class GameActivity extends AppCompatActivity {
             }
         });
         dealAnimation.start();
+
         gameLogic.incrementCurrentCardIndex();
+
         txtNumCardsRemaining.setText("Cards Remaining: " + (numCardsPerSet - gameLogic.getCurrentCardIndex()));
     }
 
@@ -260,14 +264,23 @@ public class GameActivity extends AppCompatActivity {
     private void applyCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
         for (int i = 0; i < imageViews.length; i++) {
+            final int index = images[i];
             imageViews[i] = card.findViewWithTag(String.valueOf(i));
             imageViews[i].setImageResource(fruitImages.getResourceId(images[i], i));
+            if (!startOfGame && gameLogic.isMatch(index)) {
+                if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
+                    imageViews[i].setOnClickListener(v -> {
+                        dealCard(uiDeck[CARD_PLAY]);
+                    });
+                }
+            }
         }
     }
 
     private void createCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
         for (int i = 0; i < imageViews.length; i++) {
+            final int index = images[i];
             imageViews[i] = new ImageView(this);
             imageViews[i].setTag(String.valueOf(i));
             imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
@@ -275,6 +288,21 @@ public class GameActivity extends AppCompatActivity {
             imageViews[i].setClickable(true);
             imageViews[i].setFocusable(true);
             card.addView(imageViews[i]);
+            if (!startOfGame && gameLogic.isMatch(index)){
+                if(gameLogic.getCurrentCardIndex() < numCardsPerSet - 1){
+                    imageViews[i].setOnClickListener(v->{
+                        dealCard(uiDeck[CARD_PLAY]);
+                    });
+                }else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1){
+                    imageViews[i].setOnClickListener((v->{
+                        uiDeck[CARD_DECK].setTranslationZ(3);
+                        dealCard(uiDeck[CARD_DECK]);
+                        // win screen and times up
+                        gameLogic.stopTimer(timer);
+                        // show user dialog(fragment?) asking for name
+                    }));
+                }
+            }
         }
     }
 
@@ -313,7 +341,9 @@ public class GameActivity extends AppCompatActivity {
         // if there's no images
         if (card.findViewWithTag("0") == null) {
             createCardImages(card, images);
+            startOfGame = false;
         } else {
+            //createCardImages(card, images);
             applyCardImages(card, images);
         }
     }
