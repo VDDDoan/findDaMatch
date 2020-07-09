@@ -43,7 +43,6 @@ public class GameActivity extends AppCompatActivity {
     private boolean isShuffled;
 
     private TypedArray fruitImages;
-    ConstraintLayout constraintLayout;
 
     private float boardHeight;
     private float boardWidth;
@@ -57,12 +56,12 @@ public class GameActivity extends AppCompatActivity {
     private TextView txtNumCardsRemaining;
     private CardLayout[] uiDeck;
     private boolean startOfGame;
+    private boolean isDealing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        constraintLayout = new ConstraintLayout(this);
         initGame();
         fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);
         handCardListener();
@@ -208,6 +207,7 @@ public class GameActivity extends AppCompatActivity {
 
     // deals next card from deck to hand ( show deal animation and handle game logic implications)
     private void dealCard(final CardLayout card) {
+        isDealing = true;
         ObjectAnimator dealAnimation = ObjectAnimator.ofFloat(card, "translationY", boardHeight/2);
         dealAnimation.setDuration(TIME_DEAL_CARD_MS);
         dealAnimation.addListener(new AnimatorListenerAdapter() {
@@ -221,6 +221,7 @@ public class GameActivity extends AppCompatActivity {
                 } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
                     flipCardAnim(uiDeck[CARD_DECK]);
                 }
+                isDealing = false;
             }
         });
         dealAnimation.start();
@@ -267,10 +268,13 @@ public class GameActivity extends AppCompatActivity {
             final int index = images[i];
             imageViews[i] = card.findViewWithTag(String.valueOf(i));
             imageViews[i].setImageResource(fruitImages.getResourceId(images[i], i));
-            if (!startOfGame && gameLogic.isMatch(index)) {
+
+            if (!startOfGame && gameLogic.isMatch(index) && card == uiDeck[CARD_PLAY]) {
                 if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                     imageViews[i].setOnClickListener(v -> {
-                        dealCard(uiDeck[CARD_PLAY]);
+                        if (!isDealing) {
+                            dealCard(uiDeck[CARD_PLAY]);
+                        }
                     });
                 }
             }
@@ -289,17 +293,22 @@ public class GameActivity extends AppCompatActivity {
             imageViews[i].setFocusable(true);
             card.addView(imageViews[i]);
             if (!startOfGame && gameLogic.isMatch(index)){
-                if(gameLogic.getCurrentCardIndex() < numCardsPerSet - 1){
+                if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1){
                     imageViews[i].setOnClickListener(v->{
-                        dealCard(uiDeck[CARD_PLAY]);
+                        if (!isDealing) {
+                            dealCard(uiDeck[CARD_PLAY]);
+                        }
                     });
-                }else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1){
+                } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1){
                     imageViews[i].setOnClickListener((v->{
-                        uiDeck[CARD_DECK].setTranslationZ(3);
-                        dealCard(uiDeck[CARD_DECK]);
-                        // win screen and times up
-                        gameLogic.stopTimer(timer);
-                        // show user dialog(fragment?) asking for name
+                        if (!isDealing) {
+                            uiDeck[CARD_DECK].setTranslationZ(3);
+                            dealCard(uiDeck[CARD_DECK]);
+                            // win screen and times up
+                            gameLogic.stopTimer(timer);
+                            // show user dialog(fragment?) asking for name
+                        }
+
                     }));
                 }
             }
@@ -343,7 +352,6 @@ public class GameActivity extends AppCompatActivity {
             createCardImages(card, images);
             startOfGame = false;
         } else {
-            //createCardImages(card, images);
             applyCardImages(card, images);
         }
     }
