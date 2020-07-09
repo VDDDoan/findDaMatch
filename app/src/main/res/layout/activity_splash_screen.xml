@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.SplashScreenActivity"
-    android:background="@color/colorYellow">
+    android:background="@color/colorNaplesYellow">
 
     <Button
         android:id="@+id/btn_splash_skip"

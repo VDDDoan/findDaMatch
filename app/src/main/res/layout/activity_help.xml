@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.HelpActivity"
-    android:background="@color/colorYellow"
-
-    >
+    android:background="@color/colorNaplesYellow">
 
     <TextView
         android:id="@+id/helpTitle"
