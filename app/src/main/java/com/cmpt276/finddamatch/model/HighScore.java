@@ -54,8 +54,8 @@ public class HighScore {
     @NonNull
     @Override
     public String toString() {
-        long minutes = (time / 1000) / 60;
-        long seconds = (time / 1000) % 60;
+        long minutes = time  / 60;
+        long seconds = time  % 60;
         String scoreString = minutes + "m " + seconds + "s " + nickname + " on " + date;
         return scoreString;
     }
