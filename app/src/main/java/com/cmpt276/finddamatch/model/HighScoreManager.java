@@ -19,12 +19,33 @@ public class HighScoreManager {
     public static HighScoreManager getInstance() {
         if (instance == null) {
             instance = new HighScoreManager();
-            for (int i = 0; i < NUM_HIGH_SCORES; i++) {
+          /*  for (int i = 0; i < NUM_HIGH_SCORES; i++) {
                 instance.highScores.add(new HighScore(
                         i * 1000 + 1000,
                         String.valueOf(i),
                         DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
             }
+           */
+          instance.highScores.add(new HighScore(
+                    180,
+                    "Mr.Panda",
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
+            instance.highScores.add(new HighScore(
+                    180,
+                    "Mr.James",
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
+            instance.highScores.add(new HighScore(
+                    180,
+                    "Mr.David",
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
+            instance.highScores.add(new HighScore(
+                    180,
+                    "Mr.Vinesh",
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
+            instance.highScores.add(new HighScore(
+                    180,
+                    "Mr.Brain",
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
         }
         return instance;
     }

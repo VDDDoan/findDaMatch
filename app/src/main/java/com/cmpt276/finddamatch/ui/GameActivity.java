@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
@@ -291,17 +292,19 @@ public class GameActivity extends AppCompatActivity {
 
     private void showGameOver() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(getLayoutInflater().inflate(R.layout.dialog_gameover, null));
 
-        builder.setPositiveButton("Confirm", (dialog, which) -> {
-            EditText userName = findViewById(R.id.e_text_username);
-            HighScore score = new HighScore(
-                    gameLogic.getTime(),
-                    userName.getText().toString(),
-                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime()));
-            HighScoreManager.getInstance().setHighScore(score);
-            System.out.println(score.toString());
-            finish();
+        View view = getLayoutInflater().inflate(R.layout.dialog_gameover, null);
+        builder.setView(view).
+                //add action button
+            setPositiveButton("Confirm", (dialog, which) -> {
+                EditText userName = view.findViewById(R.id.e_text_username); //bug fixed inspired by https://stackoverflow.com/questions/24895509/getting-value-of-edittext-contained-in-a-custom-dialog-box
+                HighScore score = new HighScore(
+                        gameLogic.getTime()/1000,
+                         userName.getText().toString(),
+                         DateFormat.getDateInstance().format(Calendar.getInstance().getTime()));
+                HighScoreManager.getInstance().setHighScore(score);
+                System.out.println(score.toString());
+             finish();
         });
         builder.setNegativeButton("Don't Record", (dialog, which) -> {
             dialog.cancel();
