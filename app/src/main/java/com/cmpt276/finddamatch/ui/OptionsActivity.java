@@ -47,8 +47,6 @@ public class OptionsActivity extends AppCompatActivity {
                     case 1:
                         option.setImageSetIndex(0);
                 }
-                Toast.makeText(OptionsActivity.this,"Imgdex: "+ option.getImageSetIndex(),
-                        Toast.LENGTH_SHORT).show();
 
             }
         });
