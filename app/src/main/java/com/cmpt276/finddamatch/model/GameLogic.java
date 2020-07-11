@@ -13,6 +13,11 @@ public class GameLogic {
     private static final int NUM_SWAPS_IN_SHUFFLE = 50;
 
     private int numCardsPerSet = Options.getInstance().getNumCardsPerSet();
+
+    public int getNumImagesPerCard() {
+        return numImagesPerCard;
+    }
+
     private int numImagesPerCard = Options.getInstance().getNumImagesPerCard();
 
     private long time;
@@ -41,6 +46,10 @@ public class GameLogic {
         deck = createDeck();
     }
 
+    public int[][] getDeck(){
+        return deck;
+    }
+
     // returns array of image indices for the card in deck at index;
     public int[] getCard(int index) {
         int[] card = new int[numImagesPerCard];
@@ -50,6 +59,10 @@ public class GameLogic {
 
     public int getCurrentCardIndex() {
         return currentCardIndex;
+    }
+
+    public void incrementCurrentCardIndex() {
+        currentCardIndex++;
     }
 
     public void setCurrentCardIndex(int currentCardIndex) {
@@ -66,7 +79,6 @@ public class GameLogic {
     public void stopTimer(Chronometer timer) {
         timer.stop();
         time = SystemClock.elapsedRealtime() - timer.getBase();
-        timer.setBase(SystemClock.elapsedRealtime());
     }
 
     public long getTime() {
@@ -96,19 +108,38 @@ public class GameLogic {
         return deck;
     }
 
+    public void shuffleDeck() {
+        Random rand = new Random();
+        // randomly choose rows and swap them
+        int temp;
+        int randRow1, randRow2;
+        for (int i = 0; i < NUM_SWAPS_IN_SHUFFLE; i++) {
+            randRow1 = rand.nextInt(numCardsPerSet);
+            randRow2 = rand.nextInt(numCardsPerSet);
+            while (randRow1 == randRow2) {
+                randRow2 = rand.nextInt(numCardsPerSet);
+            }
+            for (int column = 0; column < deck[0].length; column++) {
+                temp = deck[randRow1][column];
+                deck[randRow1][column] = deck[randRow2][column];
+                deck[randRow2][column] = temp;
+            }
+        }
+    }
+
     // scans the next card in the deck for a matching image to the picked one
     // if there's a match increment currentCard and return true, return false otherwise
     public boolean isMatch(int input) {
         boolean hasMatch = false;
 
         for (int i = 0; i < numImagesPerCard; i++) {
-            if (input == deck[currentCardIndex + 1][i]) {
+            if (input == deck[currentCardIndex - 1][i]) {
                 hasMatch = true;
-                currentCardIndex++;
                 break;
             }
         }
 
         return hasMatch;
     }
+
 }

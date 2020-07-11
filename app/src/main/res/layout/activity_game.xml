@@ -7,37 +7,95 @@
     tools:context=".ui.GameActivity"
     android:background="@color/colorCharcoal">
 
-    <RelativeLayout
-        android:id="@+id/view_card_deck"
-        android:layout_width="409dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_game_board"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/menu_bg_card"
-        app:layout_constraintBottom_toTopOf="@+id/guide_game"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/view_card_hand"
-        android:layout_width="409dp"
-        android:layout_height="0dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        android:background="@drawable/menu_bg_card"
+        android:background="@color/colorCharcoal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".9"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.cmpt276.finddamatch.ui.CardLayout
+            android:id="@+id/view_card_deck"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/guide_game"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".7">
+
+        </com.cmpt276.finddamatch.ui.CardLayout>
+
+        <com.cmpt276.finddamatch.ui.CardLayout
+            android:id="@+id/view_card_play"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/guide_game"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".7">
+        </com.cmpt276.finddamatch.ui.CardLayout>
+
+        <com.cmpt276.finddamatch.ui.CardLayout
+            android:id="@+id/view_card_hand"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/guide_game"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".4"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".7" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".5"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/view_game_board"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_card_deck">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".7">
 
-    </RelativeLayout>
+        <Chronometer
+            android:id="@+id/timer_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/colorMintCream"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".5" />
+        <TextView
+            android:id="@+id/txt_num_cards_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/colorMintCream"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
