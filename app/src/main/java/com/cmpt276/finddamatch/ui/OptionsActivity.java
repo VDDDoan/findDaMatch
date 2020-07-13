@@ -4,59 +4,48 @@
 package com.cmpt276.finddamatch.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.solver.widgets.ConstraintHorizontalLayout;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.cmpt276.finddamatch.R;
 import com.cmpt276.finddamatch.model.Options;
 
 public class OptionsActivity extends AppCompatActivity {
-    private Button imgChange;
-    private Button returnBtn;
-    private Options option;
-    private LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-        imgChange = findViewById(R.id.changeImgBtn);
-        returnBtn = findViewById(R.id.returnBtn);
+        Button btnImageSet0 = findViewById(R.id.btn_imageSet0);
+        Button btnImageSet1 = findViewById(R.id.btn_imageSet1);
+
+        if (Options.getInstance().getImageSetIndex() == 0) {
+            btnImageSet0.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
+        } else {
+            btnImageSet1.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
+        }
 
 
-
-        imgChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Change integer array set somehow
-                option = option.getInstance();
-                int currentImgSet = option.getImageSetIndex();
-                switch (currentImgSet){
-                    case 0:
-                        option.setImageSetIndex(1);
-                        break;
-                    case 1:
-                        option.setImageSetIndex(0);
-                }
-
-            }
+        btnImageSet0.setOnClickListener(v -> {
+            Options.getInstance().setImageSetIndex(0);
+            btnImageSet0.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
+            btnImageSet1.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoal)));
         });
 
-        returnBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        btnImageSet1.setOnClickListener(v -> {
+            Options.getInstance().setImageSetIndex(1);
+            btnImageSet0.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoal)));
+            btnImageSet1.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
         });
+
+        ImageView returnBtn = findViewById(R.id.btn_options_back);
+        returnBtn.setOnClickListener(v -> finish());
 
     }
 
