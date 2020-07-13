@@ -6,13 +6,11 @@ package com.cmpt276.finddamatch.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+
 
 import com.cmpt276.finddamatch.R;
 import com.cmpt276.finddamatch.model.HighScore;
@@ -32,10 +30,9 @@ import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -53,8 +50,56 @@ public class HighScoreActivity extends AppCompatActivity {
         populateListView();
     }
 
+    private void ManagerUpdate() throws IOException {
+        String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//path of file
+        File file = new File(filename);
+        Scanner inputStream = null;
+        FileInputStream fis = null;
+        BufferedReader br = null;
+        String str;
+        //if file not exist, No record! Then create default records
+        if (!file.exists()) {
+            File dir = new File(filename);
+            dir.createNewFile();
+            GameRecord(180,"Mr.Panda");
+            GameRecord(180,"Mr.James");
+            GameRecord(180,"Mr.David");
+            GameRecord(180,"Mr.Vinesh");
+            GameRecord(180,"Mr.Brain");
+        }
+
+        try {
+            //load file and pop up
+            inputStream = new Scanner(new FileInputStream(filename));
+            int i = 1;
+            fis = new FileInputStream(filename);
+            br = new BufferedReader(new InputStreamReader(fis));
+            while ((str = br.readLine()) != null) {
+                String[] record = str.split(" ");
+                List<String> recordlist = Arrays.asList(record);
+                System.out.println(str);
+                HighScore newScore = new HighScore( Long.parseLong(recordlist.get(1)), recordlist.get(0), recordlist.get(2)+recordlist.get(3)+recordlist.get(4));
+                HighScoreManager.getInstance().setHighScore(newScore);
+                i++;
+            }
+            fis.close();
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            inputStream.close();
+        }
+
+
+    }
+
     //set list
     private void populateListView(){
+        try {
+            ManagerUpdate();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for(int i = 0; i < HighScoreManager.getNumHighScores(); i++) {
             scoreText[i] = HighScoreManager.getInstance().getHighScores().get(i).toString();
         }
@@ -81,7 +126,7 @@ public class HighScoreActivity extends AppCompatActivity {
         HighScore newScore = new HighScore(time,usrName,date);
         HighScoreManager.getInstance().setHighScore(newScore);
 
-        String filename = getExternalCacheDir().getAbsolutePath() + "/gameRecord.txt";//record the path of file
+        String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//record the path of file
         FileOutputStream fos;
         FileInputStream fis;
         PrintWriter pw = null;
@@ -130,11 +175,12 @@ public class HighScoreActivity extends AppCompatActivity {
         try {
             fos = new FileOutputStream(filename, true);
             pw = new PrintWriter(fos);
-            pw.println("  " + usrName + " used " + time + "s on " + date);
+            pw.println(usrName +  ' '  + time +  ' ' + date);
             pw.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {
+            assert pw != null;
             pw.close();
         }
     }
@@ -167,6 +213,11 @@ public class HighScoreActivity extends AppCompatActivity {
             br = new BufferedReader(new InputStreamReader(fis));
             while ((str = br.readLine()) != null) {
                 message = message + (i + ".  " + str + "\n");
+                String[] record = str.split(" ");
+                List<String> recordlist = Arrays.asList(record);
+                System.out.println(str);
+                HighScore newScore = new HighScore( Long.parseLong(recordlist.get(1)), recordlist.get(0), recordlist.get(2)+recordlist.get(3)+recordlist.get(4));
+                HighScoreManager.getInstance().setHighScore(newScore);
                 i++;
             }
             new AlertDialog.Builder(this)
