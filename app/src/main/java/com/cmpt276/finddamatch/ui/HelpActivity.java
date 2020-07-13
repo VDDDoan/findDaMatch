@@ -21,4 +21,10 @@ public class HelpActivity extends AppCompatActivity {
         ImageView returnBtn = findViewById(R.id.btn_help_back);
         returnBtn.setOnClickListener(v -> finish());
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_top);
+    }
 }

@@ -38,18 +38,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import java.util.Scanner;
 
 public class GameActivity extends AppCompatActivity {
     private static final int TIME_FLIP_CARD_MS = 500;
@@ -89,6 +85,12 @@ public class GameActivity extends AppCompatActivity {
         initGame();
 
         handCardListener();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_top);
     }
 
     private void initGame() {

@@ -41,7 +41,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         btnSkip.setOnClickListener(v -> {
             finish();
             startActivity(intent);
-            finish();
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
         name1 = findViewById(R.id.David);
         name2 = findViewById(R.id.James);
@@ -70,6 +70,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 handler.removeCallbacks(runnable);
             }else{
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
             }
         }
     };
