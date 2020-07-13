@@ -4,14 +4,20 @@
  */
 package com.cmpt276.finddamatch.model;
 
+
+
+
+import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
+
+
 public class HighScoreManager {
     private static final int NUM_HIGH_SCORES = 5;
-
     private List<HighScore> highScores = new ArrayList<>();
 
     private static HighScoreManager instance;
@@ -26,7 +32,7 @@ public class HighScoreManager {
                         DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
             }
            */
-          instance.highScores.add(new HighScore(
+            instance.highScores.add(new HighScore(
                     180,
                     "Mr.Panda",
                     DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
@@ -70,3 +76,5 @@ public class HighScoreManager {
         }
     }
 }
+
+
