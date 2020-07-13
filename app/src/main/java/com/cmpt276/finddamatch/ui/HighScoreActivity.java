@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -158,32 +159,6 @@ public class HighScoreActivity extends AppCompatActivity {
             GameRecord(180,"Mr.Brain");
         }
 
-        try {
-            //load file and pop up
-            inputStream = new Scanner(new FileInputStream(filename));
-            int i = 1;
-            fis = new FileInputStream(filename);
-            br = new BufferedReader(new InputStreamReader(fis));
-            while ((str = br.readLine()) != null) {
-                message = message + (i + ".  " + str + "\n");
-                String[] record = str.split(" ");
-                List<String> recordlist = Arrays.asList(record);
-                System.out.println(str);
-                HighScore newScore = new HighScore( Long.parseLong(recordlist.get(1)), recordlist.get(0), recordlist.get(2)+recordlist.get(3)+recordlist.get(4));
-                HighScoreManager.getInstance().setHighScore(newScore);
-                i++;
-            }
-            new AlertDialog.Builder(this)
-                    .setMessage(message)
-                    .setNegativeButton("Yes", null)
-                    .create().show();
-            fis.close();
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            inputStream.close();
-        }
     }
 
     public void reset(View view) throws IOException {
