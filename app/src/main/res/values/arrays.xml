@@ -10,4 +10,14 @@
         <item>@drawable/strawberry</item>
         <item>@drawable/watermelon</item>
     </integer-array>
+
+    <integer-array name="sportImageSet">
+        <item>@drawable/badminton</item>
+        <item>@drawable/baseball</item>
+        <item>@drawable/hockey</item>
+        <item>@drawable/soccerball</item>
+        <item>@drawable/tennisball</item>
+        <item>@drawable/volleyball</item>
+        <item>@drawable/basketball</item>
+    </integer-array>
 </resources>
