@@ -4,14 +4,20 @@
  */
 package com.cmpt276.finddamatch.model;
 
+
+
+
+import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
+
+
 public class HighScoreManager {
     private static final int NUM_HIGH_SCORES = 5;
-
     private List<HighScore> highScores = new ArrayList<>();
 
     private static HighScoreManager instance;
@@ -19,12 +25,33 @@ public class HighScoreManager {
     public static HighScoreManager getInstance() {
         if (instance == null) {
             instance = new HighScoreManager();
-            for (int i = 0; i < NUM_HIGH_SCORES; i++) {
+          /*  for (int i = 0; i < NUM_HIGH_SCORES; i++) {
                 instance.highScores.add(new HighScore(
                         i * 1000 + 1000,
                         String.valueOf(i),
                         DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
             }
+           */
+            instance.highScores.add(new HighScore(
+                    180,
+                    "Mr.Panda",
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
+            instance.highScores.add(new HighScore(
+                    180,
+                    "Mr.James",
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
+            instance.highScores.add(new HighScore(
+                    180,
+                    "Mr.David",
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
+            instance.highScores.add(new HighScore(
+                    180,
+                    "Mr.Vinesh",
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
+            instance.highScores.add(new HighScore(
+                    180,
+                    "Mr.Brain",
+                    DateFormat.getDateInstance().format(Calendar.getInstance().getTime())));
         }
         return instance;
     }
@@ -49,3 +76,5 @@ public class HighScoreManager {
         }
     }
 }
+
+

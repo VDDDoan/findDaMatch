@@ -17,11 +17,10 @@
         app:layout_constraintHeight_percent=".9"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.cmpt276.finddamatch.ui.CardCanvasView
+        <com.cmpt276.finddamatch.ui.CardLayout
             android:id="@+id/view_card_deck"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:translationZ="1dp"
             app:layout_constraintBottom_toTopOf="@+id/guide_game"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".4"
@@ -29,33 +28,31 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent=".7">
 
-        </com.cmpt276.finddamatch.ui.CardCanvasView>
+        </com.cmpt276.finddamatch.ui.CardLayout>
 
-        <com.cmpt276.finddamatch.ui.CardCanvasView
+        <com.cmpt276.finddamatch.ui.CardLayout
             android:id="@+id/view_card_play"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:translationZ="2dp"
             app:layout_constraintBottom_toTopOf="@+id/guide_game"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent=".7">
-        </com.cmpt276.finddamatch.ui.CardCanvasView>
+        </com.cmpt276.finddamatch.ui.CardLayout>
 
-        <com.cmpt276.finddamatch.ui.CardCanvasView
+        <com.cmpt276.finddamatch.ui.CardLayout
             android:id="@+id/view_card_hand"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:translationZ="3dp"
             app:layout_constraintBottom_toTopOf="@+id/guide_game"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".4"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent=".7">
-        </com.cmpt276.finddamatch.ui.CardCanvasView>
+            app:layout_constraintWidth_percent=".7" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_game"
@@ -63,6 +60,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent=".5"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

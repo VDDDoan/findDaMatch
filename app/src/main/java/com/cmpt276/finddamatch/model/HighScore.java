@@ -21,7 +21,7 @@ public class HighScore {
         date = DateFormat.getDateInstance().format(Calendar.getInstance().getTime());
     }
 
-    public HighScore(int time, String nickname, String date) {
+    public HighScore(long time, String nickname, String date) {
         this.time = time;
         this.nickname = nickname;
         this.date = date;
@@ -54,8 +54,8 @@ public class HighScore {
     @NonNull
     @Override
     public String toString() {
-        long minutes = (time / 1000) / 60;
-        long seconds = (time / 1000) % 60;
+        long minutes = time  / 60;
+        long seconds = time  % 60;
         String scoreString = minutes + "m " + seconds + "s " + nickname + " on " + date;
         return scoreString;
     }

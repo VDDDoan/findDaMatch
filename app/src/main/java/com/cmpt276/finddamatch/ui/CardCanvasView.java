@@ -4,11 +4,14 @@
 package com.cmpt276.finddamatch.ui;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
@@ -18,6 +21,7 @@ import java.util.Random;
 
 public class CardCanvasView extends View {
 
+    
     public CardCanvasView(Context context) {
         super(context);
     }
@@ -29,7 +33,6 @@ public class CardCanvasView extends View {
     public CardCanvasView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {

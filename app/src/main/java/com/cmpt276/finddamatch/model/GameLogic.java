@@ -13,6 +13,11 @@ public class GameLogic {
     private static final int NUM_SWAPS_IN_SHUFFLE = 50;
 
     private int numCardsPerSet = Options.getInstance().getNumCardsPerSet();
+
+    public int getNumImagesPerCard() {
+        return numImagesPerCard;
+    }
+
     private int numImagesPerCard = Options.getInstance().getNumImagesPerCard();
 
     private long time;
@@ -128,13 +133,13 @@ public class GameLogic {
         boolean hasMatch = false;
 
         for (int i = 0; i < numImagesPerCard; i++) {
-            if (input == deck[currentCardIndex + 1][i]) {
+            if (input == deck[currentCardIndex - 1][i]) {
                 hasMatch = true;
-                currentCardIndex++;
                 break;
             }
         }
 
         return hasMatch;
     }
+
 }
