@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <integer-array name="imageSets">
+        <item>@array/fruitImageSet</item>
+        <item>@array/sportImageSet</item>
+    </integer-array>
+
     <integer-array name="fruitImageSet">
         <item>@drawable/ic_apple</item>
         <item>@drawable/bananas</item>
