@@ -87,7 +87,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         initGame();
-        fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);
 
         handCardListener();
     }
