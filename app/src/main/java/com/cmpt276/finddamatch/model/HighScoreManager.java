@@ -7,10 +7,16 @@ package com.cmpt276.finddamatch.model;
 
 
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -66,14 +72,44 @@ public class HighScoreManager {
 
     // inserts newScore into highScores before the next best (lowest) time
     // removes the high score with the greatest time
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void setHighScore(HighScore newScore) {
-        for (int i = 0; i < highScores.size(); i++) {
+        mangerSort();
+        for (int i = highScores.size()-1; i>=0; i--) {
             if (newScore.getTime() < highScores.get(i).getTime()) {
                 highScores.add(i, newScore);
                 highScores.remove(highScores.size() - 1);
                 break;
             }
         }
+        mangerSort();
+    }
+    public void forcedHighScore(HighScore newScore) {
+        for (int i = 0; i < highScores.size(); i++) {
+                highScores.add(i, newScore);
+                highScores.remove(highScores.size() - 1);
+                break;
+        }
+        mangerSort();
+    }
+    public void mangerSort(){
+        Collections.sort(highScores,
+                new Comparator<HighScore>(){
+                    public int compare(HighScore h1, HighScore h2) {
+                        int mark = 1;
+                        try {
+                            if(h1.getTime() < h2.getTime()){
+                                mark = -1;//
+                            }
+                            if(h1.equals(h2)){
+                                mark =  0;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return mark;
+                    }
+                });
     }
 }
 

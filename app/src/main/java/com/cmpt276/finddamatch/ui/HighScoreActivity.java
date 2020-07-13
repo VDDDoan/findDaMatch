@@ -50,60 +50,13 @@ public class HighScoreActivity extends AppCompatActivity {
         populateListView();
     }
 
-    private void ManagerUpdate() throws IOException {
-        String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//path of file
-        File file = new File(filename);
-        Scanner inputStream = null;
-        FileInputStream fis = null;
-        BufferedReader br = null;
-        String str;
-        //if file not exist, No record! Then create default records
-        if (!file.exists()) {
-            File dir = new File(filename);
-            dir.createNewFile();
-            GameRecord(180,"Mr.Panda");
-            GameRecord(180,"Mr.James");
-            GameRecord(180,"Mr.David");
-            GameRecord(180,"Mr.Vinesh");
-            GameRecord(180,"Mr.Brain");
-        }
-
-        try {
-            //load file and pop up
-            inputStream = new Scanner(new FileInputStream(filename));
-            int i = 1;
-            fis = new FileInputStream(filename);
-            br = new BufferedReader(new InputStreamReader(fis));
-            while ((str = br.readLine()) != null) {
-                String[] record = str.split(" ");
-                List<String> recordlist = Arrays.asList(record);
-                System.out.println(str);
-                HighScore newScore = new HighScore( Long.parseLong(recordlist.get(1)), recordlist.get(0), recordlist.get(2)+recordlist.get(3)+recordlist.get(4));
-                HighScoreManager.getInstance().setHighScore(newScore);
-                i++;
-            }
-            fis.close();
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            inputStream.close();
-        }
-
-
-    }
 
     //set list
     private void populateListView(){
-        try {
-            ManagerUpdate();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         for(int i = 0; i < HighScoreManager.getNumHighScores(); i++) {
             scoreText[i] = HighScoreManager.getInstance().getHighScores().get(i).toString();
         }
-
+        System.out.println(scoreText);
         //Build Adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
@@ -124,7 +77,7 @@ public class HighScoreActivity extends AppCompatActivity {
         // require date from calendar, and add this towards high_score Manager
         String date = DateFormat.getDateInstance().format(c.getTime());
         HighScore newScore = new HighScore(time,usrName,date);
-        HighScoreManager.getInstance().setHighScore(newScore);
+        HighScoreManager.getInstance().forcedHighScore(newScore);
 
         String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//record the path of file
         FileOutputStream fos;
