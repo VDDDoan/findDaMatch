@@ -31,9 +31,26 @@ import com.cmpt276.finddamatch.model.HighScore;
 import com.cmpt276.finddamatch.model.HighScoreManager;
 import com.cmpt276.finddamatch.model.Options;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 
 public class GameActivity extends AppCompatActivity {
     private static final int TIME_FLIP_CARD_MS = 500;
@@ -71,6 +88,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         initGame();
         fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);
+
         handCardListener();
     }
 
@@ -115,13 +133,13 @@ public class GameActivity extends AppCompatActivity {
     // animates a card to the origin
     private void resetCardX(CardLayout card) {
         ObjectAnimator resetPosAnim = ObjectAnimator.ofFloat(card, "translationX", 0.0f);
-        resetPosAnim.setDuration(TIME_SHUFFLE_CARD_MS/2);
+        resetPosAnim.setDuration(TIME_SHUFFLE_CARD_MS / 2);
         resetPosAnim.start();
     }
 
     // takes a card and plays a brief shuffle animation
     private void shuffleCardInDeck(final CardLayout card) {
-        float displacement = generateRandomBetween(MAX_SHUFFLE_DISPLACEMENT, MAX_SHUFFLE_DISPLACEMENT/2);
+        float displacement = generateRandomBetween(MAX_SHUFFLE_DISPLACEMENT, MAX_SHUFFLE_DISPLACEMENT / 2);
 
         Keyframe kf0 = Keyframe.ofFloat(0.0f, 0);
         Keyframe kf1 = Keyframe.ofFloat(0.25f, displacement);
@@ -130,7 +148,7 @@ public class GameActivity extends AppCompatActivity {
         PropertyValuesHolder pvhTranslation = PropertyValuesHolder.ofKeyframe("translationX", kf0, kf1, kf2, kf3);
         ObjectAnimator shuffleAnim = ObjectAnimator.ofPropertyValuesHolder(card, pvhTranslation);
         shuffleAnim.setInterpolator(new LinearInterpolator());
-        shuffleAnim.setDuration((long) generateRandomBetween(TIME_SHUFFLE_CARD_MS, (float) TIME_SHUFFLE_CARD_MS/2));
+        shuffleAnim.setDuration((long) generateRandomBetween(TIME_SHUFFLE_CARD_MS, (float) TIME_SHUFFLE_CARD_MS / 2));
         shuffleAnim.setRepeatCount(2);
         shuffleAnim.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -213,7 +231,7 @@ public class GameActivity extends AppCompatActivity {
     // deals next card from deck to hand ( show deal animation and handle game logic implications)
     private void dealCard(final CardLayout card) {
         isDealing = true;
-        ObjectAnimator dealAnimation = ObjectAnimator.ofFloat(card, "translationY", boardHeight/2);
+        ObjectAnimator dealAnimation = ObjectAnimator.ofFloat(card, "translationY", boardHeight / 2);
         dealAnimation.setDuration(TIME_DEAL_CARD_MS);
         dealAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -221,7 +239,7 @@ public class GameActivity extends AppCompatActivity {
                 super.onAnimationEnd(animation);
                 if (card == uiDeck[CARD_HAND]) {
                     flipCardAnim(card);
-                } else if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1){
+                } else if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                     revealNextMiddleCard();
                 } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
                     flipCardAnim(uiDeck[CARD_DECK]);
@@ -245,7 +263,7 @@ public class GameActivity extends AppCompatActivity {
         card.setRotation(180f);
 
         final Handler handler = new Handler();
-        handler.postDelayed(() -> flipCard(card), TIME_FLIP_CARD_MS/2);
+        handler.postDelayed(() -> flipCard(card), TIME_FLIP_CARD_MS / 2);
     }
 
     private void flipCard(CardLayout card) {
@@ -253,7 +271,7 @@ public class GameActivity extends AppCompatActivity {
             card.setTag(TAG_CARD_FACE);
             card.setBackgroundResource(R.drawable.menu_bg_card_face);
             drawCardImages(card);
-        } else if (card.getTag() == TAG_CARD_FACE){
+        } else if (card.getTag() == TAG_CARD_FACE) {
             card.setTag(TAG_CARD_BACK);
             card.setBackgroundResource(R.drawable.menu_bg_card_back);
         }
@@ -296,16 +314,17 @@ public class GameActivity extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.dialog_gameover, null);
         builder.setView(view).
                 //add action button
-            setPositiveButton("Confirm", (dialog, which) -> {
-                EditText userName = view.findViewById(R.id.e_text_username); //bug fixed inspired by https://stackoverflow.com/questions/24895509/getting-value-of-edittext-contained-in-a-custom-dialog-box
-                HighScore score = new HighScore(
-                        gameLogic.getTime()/1000,
-                         userName.getText().toString(),
-                         DateFormat.getDateInstance().format(Calendar.getInstance().getTime()));
-                HighScoreManager.getInstance().setHighScore(score);
-                System.out.println(score.toString());
-             finish();
-        });
+                        setPositiveButton("Confirm", (dialog, which) -> {
+                    EditText userName = view.findViewById(R.id.e_text_username); //bug fixed inspired by https://stackoverflow.com/questions/24895509/getting-value-of-edittext-contained-in-a-custom-dialog-box
+                    HighScore score = new HighScore(
+                            gameLogic.getTime() / 1000,
+                            userName.getText().toString(),
+                            DateFormat.getDateInstance().format(Calendar.getInstance().getTime()));
+                    HighScoreManager.getInstance().setHighScore(score);
+                    FileRecord(score);
+                    System.out.println(score.toString());
+                    finish();
+                });
         builder.setNegativeButton("Don't Record", (dialog, which) -> {
             dialog.cancel();
             finish();
@@ -328,15 +347,15 @@ public class GameActivity extends AppCompatActivity {
             imageViews[i].setClickable(true);
             imageViews[i].setFocusable(true);
             card.addView(imageViews[i]);
-            if (!startOfGame && gameLogic.isMatch(index)){
-                if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1){
-                    imageViews[i].setOnClickListener(v->{
+            if (!startOfGame && gameLogic.isMatch(index)) {
+                if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
+                    imageViews[i].setOnClickListener(v -> {
                         if (!isDealing) {
                             dealCard(uiDeck[CARD_PLAY]);
                         }
                     });
-                } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1){
-                    imageViews[i].setOnClickListener((v->{
+                } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
+                    imageViews[i].setOnClickListener((v -> {
                         if (!isDealing) {
                             uiDeck[CARD_DECK].setTranslationZ(3);
                             dealCard(uiDeck[CARD_DECK]);
@@ -389,6 +408,67 @@ public class GameActivity extends AppCompatActivity {
             startOfGame = false;
         } else {
             applyCardImages(card, images);
+        }
+    }
+
+    public void FileRecord(HighScore newScore) {
+        String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//record the path of file
+        FileOutputStream fos;
+        FileInputStream fis;
+        PrintWriter pw = null;
+        BufferedReader br = null;
+        //if the director path not exist, then build it
+        File file = new File(getExternalCacheDir().getAbsolutePath());
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        try {
+            File dir = new File(filename);
+            if (!dir.exists()) dir.createNewFile();//if record file not be created
+                //if record file has been created, check the # of record, we need only 5 records
+            else {
+                LineNumberReader lnr = new LineNumberReader(new FileReader(filename));
+                lnr.skip(Long.MAX_VALUE);
+                int i = lnr.getLineNumber();
+                lnr.close();
+                //write back to list
+                if (i >= 5) {
+                    fis = new FileInputStream(filename);
+                    br = new BufferedReader(new InputStreamReader(fis));
+                    i = 0;
+                    String str = null;
+                    ArrayList<String> list = new ArrayList<String>();
+                    while ((str = br.readLine()) != null) {
+                        if (i == 0) {
+                            i++;
+                            continue;
+                        }
+                        i++;
+                        list.add(str);
+                    }
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+                    for (String a : list) {
+                        bw.write(a);
+                        bw.newLine();
+                    }
+                    bw.close();
+                    fis.close();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //record the new record
+        try {
+            fos = new FileOutputStream(filename, true);
+            pw = new PrintWriter(fos);
+            pw.println(newScore.getNickname() + ' ' + newScore.getTime() + ' ' + newScore.getDate());
+            pw.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            assert pw != null;
+            pw.close();
         }
     }
 }
