@@ -1,25 +1,25 @@
 <resources>
-    <string name="app_name">Find daMatch</string>
-    <string name="skip">skip</string>
-    <string name="high_score">High Score</string>
-    <string name="refrenceCup">https://www.freepik.com/premium-vector/prize-cup-hand-win-congrats_6221374.htm</string>
-    <string name="record">Details</string>
-    <string name="reset">Reset</string>
-    <string name="back">Back</string>
-    <string name="David">David Doan</string>
-    <string name="James">James Wang</string>
-    <string name="Wei">Wei Yan</string>
-    <string name="Vinesh">Vinesh Reddy</string>
-    <string name="menu_title">Main Menu</string>
-    <string name="start">New Game</string>
-    <string name="options">Options</string>
-    <string name="score">High Scores</string>
-    <string name="help">Help</string>
-    <string name="howToPlayDes">
-        Find the matching symbol! At the start of the game you will be given a card. Each card will have three symbols, Click the symbol on the top card on the deck that is shared with your card! Go through all seven cards as fast as you can for a higher score!
+    <string name="string_app_name">Find daMatch</string>
+    <string name="string_skip">skip</string>
+    <string name="string_high_score">High Score</string>
+    <string name="reference_cup_image">https://www.freepik.com/premium-vector/prize-cup-hand-win-congrats_6221374.htm</string>
+    <string name="string_record">Details</string>
+    <string name="string_reset">Reset</string>
+    <string name="string_back">Back</string>
+    <string name="string_david">David Doan</string>
+    <string name="string_james">James Wang</string>
+    <string name="string_wei">Wei Yan</string>
+    <string name="string_vinesh">Vinesh Reddy</string>
+    <string name="string_menu_title">Main Menu</string>
+    <string name="string_new_game">New Game</string>
+    <string name="string_options">Options</string>
+    <string name="string_scores">High Scores</string>
+    <string name="string_help">Help</string>
+    <string name="string_howtoplay_des">
+        Find the matching symbol! At the start of the game you will be given a card. Each card will have three symbols, Click the symbol on your card that is shared with the top card on the deck! Go through all seven cards as fast as you can for a higher score!
     </string>
     <string name="stringEnterName">Congratulations!\nEnter your name:</string>
-    <string name="change_images">Change Images</string>
-    <string name="returntxt">Return</string>
+    <string name="string_sport_deck">Sport Deck</string>
+    <string name="string_fruit_deck">Fruit Deck</string>
 
 </resources>

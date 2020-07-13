@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <integer-array name="imageSets">
+        <item>@array/fruitImageSet</item>
+        <item>@array/sportImageSet</item>
+    </integer-array>
+
     <integer-array name="fruitImageSet">
         <item>@drawable/ic_apple</item>
         <item>@drawable/bananas</item>
@@ -9,5 +15,15 @@
         <item>@drawable/pineapple</item>
         <item>@drawable/strawberry</item>
         <item>@drawable/watermelon</item>
+    </integer-array>
+
+    <integer-array name="sportImageSet">
+        <item>@drawable/badminton</item>
+        <item>@drawable/baseball</item>
+        <item>@drawable/hockey</item>
+        <item>@drawable/soccerball</item>
+        <item>@drawable/tennisball</item>
+        <item>@drawable/volleyball</item>
+        <item>@drawable/basketball</item>
     </integer-array>
 </resources>
