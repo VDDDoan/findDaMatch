@@ -13,7 +13,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,7 +71,8 @@ public class GameActivity extends AppCompatActivity {
     private boolean startOfGame;
     private boolean isDealing;
 
-    private TypedArray fruitImages;
+    private TypedArray imageSetUI;
+    private TypedArray imageSets;
 
     private float boardHeight;
     private float boardWidth;
@@ -89,7 +89,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         initGame();
-        fruitImages = getResources().obtainTypedArray(R.array.fruitImageSet);
 
         handCardListener();
     }
@@ -124,6 +123,10 @@ public class GameActivity extends AppCompatActivity {
             cardHeight = (float) uiDeck[0].getHeight();
             cardWidth = (float) uiDeck[0].getWidth();
         });
+
+        imageSets = getResources().obtainTypedArray(R.array.imageSets);
+        int resId = imageSets.getResourceId(Options.getInstance().getImageSetIndex(), 0);
+        imageSetUI = getResources().obtainTypedArray(resId);
     }
 
     // generates random float between +max and min
@@ -292,7 +295,7 @@ public class GameActivity extends AppCompatActivity {
         for (int i = 0; i < imageViews.length; i++) {
             final int index = images[i];
             imageViews[i] = card.findViewWithTag(String.valueOf(i));
-            imageViews[i].setImageResource(fruitImages.getResourceId(images[i], i));
+            imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
 
             if (!startOfGame && gameLogic.isMatch(index) && card == uiDeck[CARD_PLAY]) {
                 if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
@@ -351,7 +354,7 @@ public class GameActivity extends AppCompatActivity {
             imageViews[i] = new ImageView(this);
             imageViews[i].setTag(String.valueOf(i));
             imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
-            imageViews[i].setImageResource(fruitImages.getResourceId(images[i], i));
+            imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
             imageViews[i].setClickable(true);
             imageViews[i].setFocusable(true);
             card.addView(imageViews[i]);

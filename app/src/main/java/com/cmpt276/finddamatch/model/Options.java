@@ -5,7 +5,7 @@ package com.cmpt276.finddamatch.model;
 
 public class Options {
     private static Options instance;
-    private int imageSetIndex = 1;
+    private int imageSetIndex = 0;
     private static final int NUM_CARDS_PER_SET = 7;
     private static final int NUM_IMAGES_PER_CARD = 3;
 
