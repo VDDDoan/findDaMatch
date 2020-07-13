@@ -90,7 +90,6 @@ public class HighScoreManager {
                 highScores.remove(highScores.size() - 1);
                 break;
         }
-        mangerSort();
     }
     public void mangerSort(){
         Collections.sort(highScores,
