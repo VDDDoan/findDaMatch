@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -138,7 +137,6 @@ public class HighScoreActivity extends AppCompatActivity {
             pw.close();
         }
     }
-    
 
     public void reset(View view) throws IOException {
         String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//path of file
