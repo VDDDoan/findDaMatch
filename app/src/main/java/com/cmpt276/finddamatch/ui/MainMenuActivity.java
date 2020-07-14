@@ -99,6 +99,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 HighScoreManager.getInstance().forcedHighScore(newScore);
                 i++;
             }
+            HighScoreManager.getInstance().mangerSort();
             fis.close();
             br.close();
         } catch (IOException e) {
