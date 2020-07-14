@@ -11,11 +11,11 @@
         android:id="@+id/btn_splash_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="64dp"
-        android:backgroundTint="#A4231414"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorDarkRed"
         android:text="@string/string_skip"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorMintCream"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -23,49 +23,49 @@
         android:id="@+id/David"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="204dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/string_david"
         android:textColor="@color/colorDarkRed"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Title" />
+        app:layout_constraintBottom_toTopOf="@+id/Wei"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/Vinesh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/string_vinesh"
         android:textColor="@color/colorDarkRed"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/James" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/James"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/string_james"
         android:textColor="@color/colorDarkRed"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Wei" />
+        app:layout_constraintBottom_toTopOf="@+id/Vinesh"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/Wei"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/string_wei"
         android:textColor="@color/colorDarkRed"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/David" />
+        app:layout_constraintBottom_toTopOf="@+id/James"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/Title"

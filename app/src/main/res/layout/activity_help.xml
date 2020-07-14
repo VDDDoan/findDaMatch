@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/string_back"
-            android:src="?attr/homeAsUpIndicator"
+            android:src="@drawable/ic_baseline_arrow_upward_24"
             android:tint="@color/colorMintCream"
             android:paddingVertical="16dp"
             android:paddingEnd="16dp"
