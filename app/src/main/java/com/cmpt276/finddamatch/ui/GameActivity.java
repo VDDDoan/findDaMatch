@@ -13,6 +13,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
@@ -336,6 +337,8 @@ public class GameActivity extends AppCompatActivity {
                         }
                     }
                     System.out.println(score.toString());
+                    Intent intent = new Intent(GameActivity.this, HighScoreActivity.class);
+                    startActivity(intent);
                     finish();
                 });
         builder.setNegativeButton("Don't Record", (dialog, which) -> {
