@@ -143,28 +143,7 @@ public class HighScoreActivity extends AppCompatActivity {
             pw.close();
         }
     }
-
-    //Record view
-    public void RecordView(View view) throws IOException {
-        String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//path of file
-        File file = new File(filename);
-        Scanner inputStream = null;
-        FileInputStream fis = null;
-        BufferedReader br = null;
-        String str;
-        String message = "                          High Record                    \n";
-        //if file not exist, No record! Then create default records
-        if (!file.exists()) {
-            File dir = new File(filename);
-            dir.createNewFile();
-            GameRecord(180,"Mr.Panda");
-            GameRecord(180,"Mr.James");
-            GameRecord(180,"Mr.David");
-            GameRecord(180,"Mr.Vinesh");
-            GameRecord(180,"Mr.Brain");
-        }
-
-    }
+    
 
     public void reset(View view) throws IOException {
         String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//path of file
