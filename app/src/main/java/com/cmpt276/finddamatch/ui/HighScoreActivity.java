@@ -67,9 +67,7 @@ public class HighScoreActivity extends AppCompatActivity {
         System.out.println(scoreText);
         //Build Adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,
-                R.layout.da_item,
-                scoreText);
+                this, R.layout.da_item, scoreText);
 
 
         //Configure the list view
