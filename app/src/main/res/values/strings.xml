@@ -21,5 +21,7 @@
     <string name="stringEnterName">Congratulations!\nEnter your name:</string>
     <string name="string_sport_deck">Sport Deck</string>
     <string name="string_fruit_deck">Fruit Deck</string>
+    <string name="eye">eye</string>
+    <string name="cloud">cloud</string>
 
 </resources>
