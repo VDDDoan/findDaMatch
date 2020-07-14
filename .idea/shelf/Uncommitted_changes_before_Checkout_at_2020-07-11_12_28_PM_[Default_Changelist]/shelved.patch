@@ -1,0 +1,114 @@
+Index: app/src/main/java/com/cmpt276/finddamatch/ui/OptionsActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/*\r\n    UI class for changing the game settings\r\n */\r\npackage com.cmpt276.finddamatch.ui;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.constraintlayout.solver.widgets.ConstraintHorizontalLayout;\r\n\r\nimport android.content.Context;\r\nimport android.content.SharedPreferences;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.ImageView;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.Toast;\r\n\r\nimport com.cmpt276.finddamatch.R;\r\nimport com.cmpt276.finddamatch.model.Options;\r\n\r\npublic class OptionsActivity extends AppCompatActivity {\r\n    private Button imgChange;\r\n    private Button returnBtn;\r\n    private Options option;\r\n    private LinearLayout layout;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_options);\r\n\r\n        imgChange = findViewById(R.id.changeImgBtn);\r\n        returnBtn = findViewById(R.id.returnBtn);\r\n\r\n\r\n\r\n        imgChange.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                //Change integer array set somehow\r\n                option = option.getInstance();\r\n                int currentImgSet = option.getImageSetIndex();\r\n                switch (currentImgSet){\r\n                    case 0:\r\n                        option.setImageSetIndex(1);\r\n                        break;\r\n                    case 1:\r\n                        option.setImageSetIndex(0);\r\n                }\r\n\r\n            }\r\n        });\r\n\r\n        returnBtn.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                finish();\r\n            }\r\n        });\r\n\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/cmpt276/finddamatch/ui/OptionsActivity.java	(revision b51f36ef445a96f2061e45862abd4ace0db126a7)
++++ app/src/main/java/com/cmpt276/finddamatch/ui/OptionsActivity.java	(date 1594474744830)
+@@ -8,6 +8,7 @@
+ 
+ import android.content.Context;
+ import android.content.SharedPreferences;
++import android.content.res.TypedArray;
+ import android.os.Bundle;
+ import android.view.View;
+ import android.widget.Button;
+@@ -23,6 +24,7 @@
+     private Button returnBtn;
+     private Options option;
+     private LinearLayout layout;
++    private TypedArray selectedImgArray;
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+@@ -31,8 +33,10 @@
+ 
+         imgChange = findViewById(R.id.changeImgBtn);
+         returnBtn = findViewById(R.id.returnBtn);
++        layout = findViewById(R.id.layout);
++        selectedImgArray = getResources().obtainTypedArray(R.array.fruitImageSet);
+ 
+-
++        updateScreen();
+ 
+         imgChange.setOnClickListener(new View.OnClickListener() {
+             @Override
+@@ -60,5 +64,20 @@
+ 
+     }
+ 
++    private void updateScreen() {
++        for (int i = 0; i < selectedImgArray.length(); i++){
++        ImageView imageViews = new ImageView(OptionsActivity.this);
++        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
++                LinearLayout.LayoutParams.WRAP_CONTENT);
++        params.setMargins(0,0,0,0);
++            imageViews.setImageResource(selectedImgArray.getResourceId(i,i));
++            imageViews.setLayoutParams(params);
++            layout.addView(imageViews);
++
++        }
++
++
++    }
++
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_options.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.OptionsActivity\"\r\n    android:background=\"@color/colorCharcoal\">\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"0dp\"\r\n        android:background=\"@drawable/menu_bg_card_back\"\r\n        app:layout_constraintHeight_percent=\".6\"\r\n        app:layout_constraintWidth_percent=\".8\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n        <TextView\r\n            android:id=\"@+id/optionTitle\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"@string/options\"\r\n            android:textColor=\"@color/colorCharcoal\"\r\n            android:textSize=\"25sp\"\r\n            android:textStyle=\"bold\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            android:layout_marginTop=\"32dp\"/>\r\n\r\n        <Button\r\n            android:id=\"@+id/changeImgBtn\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:width=\"250dp\"\r\n            android:backgroundTint=\"@color/colorViolet\"\r\n            android:text=\"@string/change_images\"\r\n            android:textColor=\"@color/colorCharcoal\"\r\n            android:layout_marginTop=\"64dp\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHorizontal_bias=\"0.496\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/optionTitle\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/returnBtn\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:width=\"250dp\"\r\n            android:backgroundTint=\"@color/colorViolet\"\r\n            android:text=\"@string/returntxt\"\r\n            android:textColor=\"@color/colorCharcoal\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHorizontal_bias=\"0.496\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/changeImgBtn\" />\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_options.xml	(revision b51f36ef445a96f2061e45862abd4ace0db126a7)
++++ app/src/main/res/layout/activity_options.xml	(date 1594474443496)
+@@ -56,6 +56,27 @@
+             app:layout_constraintHorizontal_bias="0.496"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/changeImgBtn" />
++
++        <TextView
++            android:id="@+id/textView"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="24dp"
++            android:text="TextView"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.059"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/returnBtn" />
++
++        <LinearLayout
++            android:id="@+id/layout"
++            android:layout_width="305dp"
++            android:layout_height="151dp"
++            android:orientation="vertical"
++            app:layout_constraintBottom_toBottomOf="parent"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/textView"></LinearLayout>
+     </androidx.constraintlayout.widget.ConstraintLayout>
+ 
+ 
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nbuildscript {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n    dependencies {\r\n        classpath 'com.android.tools.build:gradle:4.0.0'\r\n\r\n        // NOTE: Do not place your application dependencies here; they belong\r\n        // in the individual module build.gradle files\r\n    }\r\n}\r\n\r\nallprojects {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision b51f36ef445a96f2061e45862abd4ace0db126a7)
++++ build.gradle	(date 1594472983191)
+@@ -5,7 +5,7 @@
+         jcenter()
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:4.0.0'
++        classpath 'com.android.tools.build:gradle:4.1.0-beta02'
+ 
+         // NOTE: Do not place your application dependencies here; they belong
+         // in the individual module build.gradle files
