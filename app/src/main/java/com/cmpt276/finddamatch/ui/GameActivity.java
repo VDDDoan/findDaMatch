@@ -3,6 +3,7 @@
  */
 package com.cmpt276.finddamatch.ui;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,6 +14,7 @@ import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -313,6 +315,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void showGameOver() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -326,7 +329,12 @@ public class GameActivity extends AppCompatActivity {
                             userName.getText().toString(),
                             DateFormat.getDateInstance().format(Calendar.getInstance().getTime()));
                     HighScoreManager.getInstance().setHighScore(score);
-                    FileRecord(score);
+                    for (int i = HighScoreManager.getInstance().getHighScores().size() - 1; i >= 0; i--) {
+                        if (score.getTime() < HighScoreManager.getInstance().getHighScores().get(i).getTime()) {
+                            FileRecord(score);
+                            break;
+                        }
+                    }
                     System.out.println(score.toString());
                     finish();
                 });
