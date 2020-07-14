@@ -13,8 +13,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cmpt276.finddamatch.R;
+import com.cmpt276.finddamatch.model.HighScore;
+import com.cmpt276.finddamatch.model.HighScoreManager;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class MainMenuActivity extends AppCompatActivity {
+    private int locker = 0;
     private ImageView cloud;
     private Button play;
     private Button option;
@@ -23,7 +36,16 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(locker == 0) {
+            try {
+                ManagerUpdate();
+                locker++;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         setContentView(R.layout.activity_main_menu);
+
         cloud = findViewById(R.id.img_menu_cloud);
         play = findViewById(R.id.btn_menu_game);
         play.setOnClickListener((View v)->{
@@ -56,5 +78,33 @@ public class MainMenuActivity extends AppCompatActivity {
         animationX.setRepeatCount(ObjectAnimator.INFINITE);
         animationX.start();
     }
-
+    private void ManagerUpdate() throws IOException {
+        String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//path of file
+        File file = new File(filename);
+        Scanner inputStream = null;
+        FileInputStream fis = null;
+        BufferedReader br = null;
+        String str;
+        try {
+            //load file and pop up
+            inputStream = new Scanner(new FileInputStream(filename));
+            int i = 1;
+            fis = new FileInputStream(filename);
+            br = new BufferedReader(new InputStreamReader(fis));
+            while ((str = br.readLine()) != null) {
+                String[] record = str.split(" ");
+                List<String> recordlist = Arrays.asList(record);
+                System.out.println(str);
+                HighScore newScore = new HighScore(Long.parseLong(recordlist.get(1)), recordlist.get(0), recordlist.get(2) + recordlist.get(3) + recordlist.get(4));
+                HighScoreManager.getInstance().forcedHighScore(newScore);
+                i++;
+            }
+            fis.close();
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            inputStream.close();
+        }
+    }
 }

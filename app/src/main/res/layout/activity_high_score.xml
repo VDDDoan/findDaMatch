@@ -60,15 +60,6 @@
             app:srcCompat="@drawable/prizecup" />
 
         <Button
-            android:id="@+id/RecordView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="RecordView"
-            android:text="@string/string_record"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
             android:id="@+id/ResetRe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,6 +72,7 @@
             android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:onClick="back"
             android:text="@string/string_back"
             app:layout_constraintStart_toStartOf="parent"
