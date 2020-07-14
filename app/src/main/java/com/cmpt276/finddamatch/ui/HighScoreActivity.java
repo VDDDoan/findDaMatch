@@ -6,6 +6,7 @@ package com.cmpt276.finddamatch.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -54,13 +55,7 @@ public class HighScoreActivity extends AppCompatActivity {
 
     //set list
     private void populateListView(){
-        /*
-        try {
-            ManagerUpdate();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
+
         for(int i = 0; i < HighScoreManager.getNumHighScores(); i++) {
             scoreText[i] = HighScoreManager.getInstance().getHighScores().get(i).toString();
         }
@@ -165,5 +160,12 @@ public class HighScoreActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_top);
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(HighScoreActivity.this, MainMenuActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

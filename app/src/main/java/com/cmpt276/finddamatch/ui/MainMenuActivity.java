@@ -107,4 +107,8 @@ public class MainMenuActivity extends AppCompatActivity {
             inputStream.close();
         }
     }
+    @Override
+    public void onBackPressed(){
+        this.finishAffinity();
+    }
 }
