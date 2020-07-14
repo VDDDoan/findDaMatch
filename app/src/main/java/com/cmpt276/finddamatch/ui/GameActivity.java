@@ -167,28 +167,7 @@ public class GameActivity extends AppCompatActivity {
         });
         shuffleAnim.start();
     }
-/*
-    private void deckCardListener() {
-        uiDeck[CARD_DECK].setOnClickListener(v -> {
-            if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
-                // deal HAND CARD to discard pile (HAND CARD)
-                uiDeck[CARD_DECK].setTranslationZ(3);
-                dealCard(uiDeck[CARD_DECK]);
-                // win screen and times up
-                gameLogic.stopTimer(timer);
-                // show user dialog(fragment?) asking for name
-            }
-        });
-    }
-*/
-    /*private void playCardListener() {
-        uiDeck[CARD_PLAY].setOnClickListener(v -> {
-            if (gameLogic.getCurrentCardIndex() > 0 && gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
-                // deal PLAY CARD to discard pile (HAND CARD)
-                dealCard(uiDeck[CARD_PLAY]);
-            }
-        });
-    }*/
+
 
     // deals first card and starts the game
     private void handCardListener() {
@@ -343,9 +322,13 @@ public class GameActivity extends AppCompatActivity {
                 });
         builder.setNegativeButton("Don't Record", (dialog, which) -> {
             dialog.cancel();
+            Intent intent = new Intent(GameActivity.this, HighScoreActivity.class);
+            startActivity(intent);
             finish();
         });
         builder.setOnDismissListener(dialog -> {
+            Intent intent = new Intent(GameActivity.this, HighScoreActivity.class);
+            startActivity(intent);
             finish();
         });
 
