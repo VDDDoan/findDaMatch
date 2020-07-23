@@ -1,5 +1,6 @@
 package com.cmpt276.finddamatch.ui;
 
+import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -26,6 +27,7 @@ public class PhotoGalleryFragment extends Fragment {
 
     private RecyclerView mPhotoRecyclerView;
     private List<GalleryItem> mItems = new ArrayList<>();
+    private ThumbnailUtils
 
     public static PhotoGalleryFragment newInstance() {
         return new PhotoGalleryFragment();
