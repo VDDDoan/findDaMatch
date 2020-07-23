@@ -26,4 +26,31 @@
         <item>@drawable/volleyball</item>
         <item>@drawable/basketball</item>
     </integer-array>
+
+    <integer-array name="gameOrderSizes">
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+    </integer-array>
+
+
+    <integer-array name="drawPileOrder3">
+        <item>5</item>
+        <item>10</item>
+        <item>13</item>
+    </integer-array>
+
+    <integer-array name="drawPileOrder2">
+        <item>5</item>
+        <item>7</item>
+    </integer-array>
+
+    <integer-array name="drawPileOrder5">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>31</item>
+    </integer-array>
+
 </resources>
