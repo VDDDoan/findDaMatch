@@ -27,7 +27,6 @@ public class PhotoGalleryFragment extends Fragment {
 
     private RecyclerView mPhotoRecyclerView;
     private List<GalleryItem> mItems = new ArrayList<>();
-    private ThumbnailUtils
 
     public static PhotoGalleryFragment newInstance() {
         return new PhotoGalleryFragment();
