@@ -5,6 +5,7 @@ package com.cmpt276.finddamatch.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.widget.Button;
@@ -23,6 +24,12 @@ public class OptionsActivity extends AppCompatActivity {
         updateScreen();
         onClickListener(R.id.btn_imageSet0,R.id.btn_imageSet1, 0);
         onClickListener(R.id.btn_imageSet1,R.id.btn_imageSet0, 1);
+
+        Button flickr = findViewById(R.id.btn_flickr_imageSet);
+        flickr.setOnClickListener(v -> {
+            Intent intent = new Intent(OptionsActivity.this, PhotoGalleryActivity.class);
+            startActivity(intent);
+        });
 
 
         ImageView returnBtn = findViewById(R.id.btn_options_back);

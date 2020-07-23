@@ -81,6 +81,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent=".8"
             app:layout_constraintTop_toBottomOf="@+id/btn_imageSet0" />
+        <Button
+            android:id="@+id/btn_flickr_imageSet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:width="250dp"
+            android:backgroundTint="@color/colorCharcoal"
+            android:text="Flickr Custom Set"
+            android:textColor="@color/colorMintCream"
+            android:drawableEnd="@drawable/ic_basketball"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent=".8"
+            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
