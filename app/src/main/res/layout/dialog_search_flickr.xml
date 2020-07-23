@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_main_menu"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditText
-        android:id="@+id/make_text"
+        android:id="@+id/search_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -15,41 +16,48 @@
         android:ems="10"
         android:textSize="25sp"
         android:hint="@string/search_hint"
+        android:background="@drawable/text_border"
+        android:textColor="@color/colorMintCream"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/searchTitle"
         android:autofillHints=""/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/searchTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
         android:text="@string/search_title"
+        android:textColor="@color/colorMintCream"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="25dp"
+        android:textSize="15sp"
         android:text="@string/string_search"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/make_text" />
+        android:background="@drawable/menu_bg_card_back"
+        app:layout_constraintTop_toBottomOf="@+id/search_text" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="25dp"
         android:text="@string/string_cancel"
+        android:background="@drawable/menu_bg_card_back"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/make_text" />
+        app:layout_constraintTop_toBottomOf="@+id/search_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
