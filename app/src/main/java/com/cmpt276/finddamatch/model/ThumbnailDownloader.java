@@ -1,5 +1,7 @@
 package com.cmpt276.finddamatch.model;
 // code used in this class from Big Nerd Ranch 3rd Edition
+
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;

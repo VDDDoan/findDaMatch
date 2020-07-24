@@ -34,7 +34,6 @@ public class PhotoGalleryActivity extends AppCompatActivity implements DialogFli
             showDialog();
         });
         showDialog();
-
     }
 
 
@@ -44,16 +43,16 @@ public class PhotoGalleryActivity extends AppCompatActivity implements DialogFli
         Toast.makeText(this,searchWord, Toast.LENGTH_LONG).show();
         if (newSearch){
             FragmentManager fm = getSupportFragmentManager();
-            Fragment fragment = fm.findFragmentById(R.id.flickr_photo_recycler_view);
+            Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
             if (fragment == null) {
                 fragment = PhotoGalleryFragment.newInstance();
                 fm.beginTransaction()
-                        .add(R.id.flickr_photo_recycler_view, fragment)
+                        .add(R.id.fragment_container, fragment)
                         .commit();
             }else{
                 fragment = PhotoGalleryFragment.newInstance();
-                fm.beginTransaction().replace(R.id.flickr_photo_recycler_view, fragment).commit();
+                fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
             }
         }
     }

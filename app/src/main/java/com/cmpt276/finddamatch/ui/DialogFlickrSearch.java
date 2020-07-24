@@ -67,7 +67,7 @@ public class DialogFlickrSearch extends DialogFragment {
         searchButton.setOnClickListener(v->{
             if(!errorFunc()){
                 listener.onFinishSearchDialog(searchWord, true);
-                this.dismiss();
+                DialogFlickrSearch.this.dismiss();
             }
         });
         return view;

@@ -42,8 +42,7 @@ public class PhotoGalleryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        new FetchItemsTask(PhotoGalleryActivity.getWords()).execute();
+        updateItems();
         Handler responseHandler = new Handler();
         thumbnailDownloader = new ThumbnailDownloader<>(responseHandler);
         thumbnailDownloader.setThumbnailDownloadListener(
@@ -57,11 +56,9 @@ public class PhotoGalleryFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_photo_gallery, container, false);
-
-        photoRecyclerView = (RecyclerView) v.findViewById(R.id.photo_recycler_view);
+        photoRecyclerView = v.findViewById(R.id.photo_recycler_view);
         photoRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
         setupAdapter();
@@ -129,6 +126,10 @@ public class PhotoGalleryFragment extends Fragment {
             return galleryItems.size();
         }
     }
+    private void updateItems(){
+        String query = PhotoGalleryActivity.getWords();
+        new FetchItemsTask(query).execute();
+    }
 
     private class FetchItemsTask extends AsyncTask<Void,Void,List<GalleryItem>> {
         private String query;
@@ -139,8 +140,11 @@ public class PhotoGalleryFragment extends Fragment {
 
         @Override
         protected List<GalleryItem> doInBackground(Void... params) {
-            return new FlickrFetchr().searchPhotos(query);
-
+            if (query == null) {
+                return new FlickrFetchr().fetchRecentPhotos();
+            } else {
+                return new FlickrFetchr().searchPhotos(query);
+            }
         }
 
         @Override

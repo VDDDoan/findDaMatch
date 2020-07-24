@@ -4,8 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_container"
+    android:background="@color/colorCharcoalLite">
     <ImageView
         android:id="@+id/search_Button"
         android:layout_width="36dp"
@@ -15,11 +16,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/search" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/flickr_photo_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        tools:context="com.cmpt276.finddamatch.ui.OptionsActivity"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
