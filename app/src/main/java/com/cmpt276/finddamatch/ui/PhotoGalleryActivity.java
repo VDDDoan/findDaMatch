@@ -13,12 +13,16 @@ import androidx.fragment.app.FragmentManager;
 import com.cmpt276.finddamatch.R;
 
 public class PhotoGalleryActivity extends AppCompatActivity implements DialogFlickrSearch.SearchDialogListener {
-    private String searchWord;
+    private static String searchWord;
     private ImageView search;
 
-    public static Intent newIntent(Context packageContext){
+    public static Intent newIntent(Context packageContext) {
         Intent intent = new Intent(packageContext, PhotoGalleryActivity.class);
         return intent;
+    }
+
+    public static String getWords(){
+        return searchWord;
     }
 
     @Override
@@ -29,22 +33,28 @@ public class PhotoGalleryActivity extends AppCompatActivity implements DialogFli
         search.setOnClickListener(v->{
             showDialog();
         });
-        Toast.makeText(this,searchWord, Toast.LENGTH_LONG).show();
         showDialog();
-        /*FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.flickr_photo_recycler_view);
-
-        if (fragment == null) {
-            fragment = PhotoGalleryFragment.newInstance();
-            fm.beginTransaction()
-                    .add(R.id.flickr_photo_recycler_view, fragment)
-                    .commit();
-        }*/
     }
 
+
     @Override
-    public void onFinishSearchDialog(String inputText) {
+    public void onFinishSearchDialog(String inputText, boolean newSearch) {
         searchWord = inputText;
+        Toast.makeText(this,searchWord, Toast.LENGTH_LONG).show();
+        if (newSearch){
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+
+            if (fragment == null) {
+                fragment = PhotoGalleryFragment.newInstance();
+                fm.beginTransaction()
+                        .add(R.id.fragment_container, fragment)
+                        .commit();
+            }else{
+                fragment = PhotoGalleryFragment.newInstance();
+                fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            }
+        }
     }
 
     private void showDialog(){
