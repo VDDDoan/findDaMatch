@@ -33,14 +33,15 @@ public class PhotoGalleryActivity extends AppCompatActivity implements DialogFli
         search.setOnClickListener(v->{
             showDialog();
         });
-        Toast.makeText(this,searchWord, Toast.LENGTH_LONG).show();
         showDialog();
 
     }
 
+
     @Override
     public void onFinishSearchDialog(String inputText, boolean newSearch) {
         searchWord = inputText;
+        Toast.makeText(this,searchWord, Toast.LENGTH_LONG).show();
         if (newSearch){
             FragmentManager fm = getSupportFragmentManager();
             Fragment fragment = fm.findFragmentById(R.id.flickr_photo_recycler_view);

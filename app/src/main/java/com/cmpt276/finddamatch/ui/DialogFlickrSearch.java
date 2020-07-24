@@ -1,6 +1,7 @@
 package com.cmpt276.finddamatch.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,12 +23,18 @@ public class DialogFlickrSearch extends DialogFragment {
     private Button cancelButton;
     private Button searchButton;
 
-    private SearchDialogListener listener;
+
 
     public interface SearchDialogListener{
         void onFinishSearchDialog(String inputText, boolean newSearch);
     }
 
+    private SearchDialogListener listener;
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        listener = (SearchDialogListener) context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
