@@ -25,7 +25,7 @@ public class DialogFlickrSearch extends DialogFragment {
     private SearchDialogListener listener;
 
     public interface SearchDialogListener{
-        void onFinishSearchDialog(String inputText);
+        void onFinishSearchDialog(String inputText, boolean newSearch);
     }
 
 
@@ -59,7 +59,7 @@ public class DialogFlickrSearch extends DialogFragment {
         searchButton = view.findViewById(R.id.search_button);
         searchButton.setOnClickListener(v->{
             if(!errorFunc()){
-                listener.onFinishSearchDialog(searchWord);
+                listener.onFinishSearchDialog(searchWord, true);
                 this.dismiss();
             }
         });
