@@ -3,8 +3,13 @@ package com.cmpt276.finddamatch.ui;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -19,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.cmpt276.finddamatch.model.FlickrFetchr;
 import com.cmpt276.finddamatch.model.FlickrImagesManager;
@@ -39,8 +45,10 @@ public class PhotoGalleryFragment extends Fragment {
 
     private RecyclerView photoRecyclerView;
     private List<GalleryItem> items = new ArrayList<>();
+    private List<GalleryItem> selectedItems = new ArrayList<>();
     private ThumbnailDownloader<PhotoHolder> thumbnailDownloader;
     private FlickrImagesManager flickrManager;
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
     public static PhotoGalleryFragment newInstance() {
         return new PhotoGalleryFragment();
@@ -92,13 +100,14 @@ public class PhotoGalleryFragment extends Fragment {
         thumbnailDownloader.quit();
     }
 
-    private class PhotoHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private class PhotoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView itemImageView;
 
         public PhotoHolder(View itemView) {
             super(itemView);
 
-            itemImageView = (ImageView) itemView.findViewById(R.id.item_image_view);
+            itemImageView = itemView.findViewById(R.id.item_image_view);
+            itemImageView.setOnClickListener(this);
         }
 
         public void bindDrawable(Drawable drawable) {
@@ -107,8 +116,17 @@ public class PhotoGalleryFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            // TODO implement the following
+            // if item is in the list
+            //      remove from selected list
+            //      deselect
+            // else
+            //      add to selected list
+            //      ( run async task to save the gallery items )
+            Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
             int position = getAdapterPosition();
             GalleryItem galleryItem = items.get(position);
+            /*
             String name = galleryItem.getUrl();
             URL url_value = null;
             try {
@@ -119,8 +137,18 @@ public class PhotoGalleryFragment extends Fragment {
             try {
                 Bitmap imageToSave = BitmapFactory.decodeStream(url_value.openConnection().getInputStream());
                 flickrManager.add(imageToSave);
+                Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+            */
+        }
+
+        private class SaveAsyncTask extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                return null;
             }
         }
     }
@@ -145,7 +173,23 @@ public class PhotoGalleryFragment extends Fragment {
             GalleryItem galleryItem = galleryItems.get(position);
             Drawable placeholder = ContextCompat.getDrawable(getActivity(), R.drawable.button_style);;
             photoHolder.bindDrawable(placeholder);
+            //photoHolder.itemView.setSelected();
             thumbnailDownloader.queueThumbnail(photoHolder, galleryItem.getUrl());
+            if (selectedPosition == position) {
+                ShapeDrawable sd = new ShapeDrawable();
+                sd.setShape(new RectShape());
+                sd.getPaint().setColor(Color.BLUE);
+                sd.getPaint().setStrokeWidth(50f);
+                sd.getPaint().setStyle(Paint.Style.STROKE);
+                photoHolder.itemView.setForeground(sd);
+            } else {
+                photoHolder.itemView.setForeground(new ColorDrawable(Color.TRANSPARENT));
+            }
+            photoHolder.itemView.setOnClickListener(v -> {
+                photoHolder.onClick(v);
+                selectedPosition = position;
+                notifyDataSetChanged();
+            });
         }
 
         @Override

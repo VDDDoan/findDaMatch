@@ -69,7 +69,6 @@ public class GameActivity extends AppCompatActivity {
     private boolean isDealing;
 
     private TypedArray imageSetUI;
-    private TypedArray imageSets;
 
     private float boardHeight;
     private float boardWidth;
@@ -127,7 +126,7 @@ public class GameActivity extends AppCompatActivity {
             cardWidth = (float) uiDeck[0].getWidth();
         });
 
-        imageSets = getResources().obtainTypedArray(R.array.imageSets);
+        TypedArray imageSets = getResources().obtainTypedArray(R.array.imageSets);
         int resId = imageSets.getResourceId(Options.getInstance().getImageSetIndex(), 0);
         imageSetUI = getResources().obtainTypedArray(resId);
     }
