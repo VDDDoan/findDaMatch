@@ -123,11 +123,11 @@ public class PhotoGalleryFragment extends Fragment {
             // else
             //      add to selected list
             //      ( run async task to save the gallery items )
-            Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
             int position = getAdapterPosition();
             GalleryItem galleryItem = items.get(position);
-            /*
             String name = galleryItem.getUrl();
+            Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+            /*
             URL url_value = null;
             try {
                 url_value = new URL(name);
