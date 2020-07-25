@@ -24,7 +24,7 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
         update();
     }
 
-    public static FlickrImagesManager get(Context context){
+    public static FlickrImagesManager getInstance(Context context){
         if(FlickrImagesManager == null){
             FlickrImagesManager = new FlickrImagesManager(context);
         }
@@ -49,5 +49,13 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
         UUID random = UUID.randomUUID();
         fileLocation.setFileName(random.toString());
         fileLocation.save(image);
+    }
+
+    public List<Bitmap> getBitmaps() {
+        return flickrImages;
+    }
+
+    public Bitmap getBitmapAt(int position) {
+        return flickrImages.get(position);
     }
 }

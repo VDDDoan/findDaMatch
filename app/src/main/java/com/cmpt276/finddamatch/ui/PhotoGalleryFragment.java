@@ -2,7 +2,6 @@ package com.cmpt276.finddamatch.ui;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
@@ -58,7 +57,7 @@ public class PhotoGalleryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         updateItems();
-        flickrManager = FlickrImagesManager.get(getActivity());
+        flickrManager = FlickrImagesManager.getInstance(getActivity());
         Handler responseHandler = new Handler();
         thumbnailDownloader = new ThumbnailDownloader<>(responseHandler);
         thumbnailDownloader.setThumbnailDownloadListener(
@@ -73,7 +72,7 @@ public class PhotoGalleryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_photo_gallery, container, false);
+        View v = inflater.inflate(R.layout.container_flickr_gallery, container, false);
         photoRecyclerView = v.findViewById(R.id.photo_recycler_view);
         photoRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
@@ -162,7 +161,7 @@ public class PhotoGalleryFragment extends Fragment {
         @Override
         public PhotoHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View view = inflater.inflate(R.layout.list_item_gallery, viewGroup, false);
+            View view = inflater.inflate(R.layout.layout_gallery_list_item, viewGroup, false);
             return new PhotoHolder(view);
         }
 

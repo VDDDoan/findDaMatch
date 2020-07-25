@@ -45,6 +45,7 @@ public class SaveImages {
         try {
             fileOutputStream = new FileOutputStream(createFile());
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            System.out.println("saved");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
