@@ -1,6 +1,8 @@
 package com.cmpt276.finddamatch.ui;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -19,10 +21,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.cmpt276.finddamatch.model.FlickrFetchr;
+import com.cmpt276.finddamatch.model.FlickrImagesManager;
 import com.cmpt276.finddamatch.model.GalleryItem;
 import com.cmpt276.finddamatch.R;
 import com.cmpt276.finddamatch.model.ThumbnailDownloader;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +40,7 @@ public class PhotoGalleryFragment extends Fragment {
     private RecyclerView photoRecyclerView;
     private List<GalleryItem> items = new ArrayList<>();
     private ThumbnailDownloader<PhotoHolder> thumbnailDownloader;
+    private FlickrImagesManager flickrManager;
 
     public static PhotoGalleryFragment newInstance() {
         return new PhotoGalleryFragment();
@@ -43,6 +50,7 @@ public class PhotoGalleryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         updateItems();
+        flickrManager = FlickrImagesManager.get(getActivity());
         Handler responseHandler = new Handler();
         thumbnailDownloader = new ThumbnailDownloader<>(responseHandler);
         thumbnailDownloader.setThumbnailDownloadListener(
@@ -84,7 +92,7 @@ public class PhotoGalleryFragment extends Fragment {
         thumbnailDownloader.quit();
     }
 
-    private class PhotoHolder extends RecyclerView.ViewHolder {
+    private class PhotoHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView itemImageView;
 
         public PhotoHolder(View itemView) {
@@ -95,6 +103,25 @@ public class PhotoGalleryFragment extends Fragment {
 
         public void bindDrawable(Drawable drawable) {
             itemImageView.setImageDrawable(drawable);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            GalleryItem galleryItem = items.get(position);
+            String name = galleryItem.getUrl();
+            URL url_value = null;
+            try {
+                url_value = new URL(name);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            try {
+                Bitmap imageToSave = BitmapFactory.decodeStream(url_value.openConnection().getInputStream());
+                flickrManager.add(imageToSave);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -154,4 +181,5 @@ public class PhotoGalleryFragment extends Fragment {
         }
 
     }
+
 }

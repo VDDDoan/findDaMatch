@@ -12,9 +12,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.List;
 
 /**
- * Created by Ilya Gazman on 3/6/2016.
+ * Most functions by Ilya Gazman on 3/6/2016.
  * https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-from-internal-memory-in-android
  */
 public class SaveImages {
@@ -32,7 +34,6 @@ public class SaveImages {
         this.fileName = fileName;
         return this;
     }
-
 
     public SaveImages setDirectoryName(String directoryName) {
         this.directoryName = directoryName;
@@ -60,22 +61,12 @@ public class SaveImages {
     @NonNull
     private File createFile() {
         File directory;
-        if(external){
-            directory = getAlbumStorageDir(directoryName);
-        }
-        else {
-            directory = context.getDir(directoryName, Context.MODE_PRIVATE);
-        }
+        directory = context.getDir(directoryName, Context.MODE_PRIVATE);
         if(!directory.exists() && !directory.mkdirs()){
             Log.e("ImageSaver","Error creating directory " + directory);
         }
 
         return new File(directory, fileName);
-    }
-
-    private File getAlbumStorageDir(String albumName) {
-        return new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), albumName);
     }
 
 
@@ -96,5 +87,13 @@ public class SaveImages {
             }
         }
         return null;
+    }
+
+    public String[] getFileNames(){
+        return context.fileList();
+    }
+
+    public void deleteFile (String fileName){
+        context.deleteFile(fileName);
     }
 }
