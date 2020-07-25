@@ -127,27 +127,25 @@ public class PhotoGalleryFragment extends Fragment {
             GalleryItem galleryItem = items.get(position);
             String name = galleryItem.getUrl();
             Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
-            /*
-            URL url_value = null;
-            try {
-                url_value = new URL(name);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            try {
-                Bitmap imageToSave = BitmapFactory.decodeStream(url_value.openConnection().getInputStream());
-                flickrManager.add(imageToSave);
-                Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            */
+            new SaveAsyncTask().execute(name);
         }
 
-        private class SaveAsyncTask extends AsyncTask<Void, Void, Void> {
+        private class SaveAsyncTask extends AsyncTask<String, Void, Void> {
 
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Void doInBackground(String... strings) {
+                URL url_value = null;
+                try {
+                    url_value = new URL(strings[0]);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    Bitmap imageToSave = BitmapFactory.decodeStream(url_value.openConnection().getInputStream());
+                    flickrManager.add(imageToSave);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return null;
             }
         }
