@@ -31,11 +31,12 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
         return FlickrImagesManager;
     }
 
-    private void update() {
+    public void update() {
         fileId = fileLocation.getFileNames();
         for (int i = 0; 0 < fileId.length; i++){
-           fileLocation.setFileName(fileId[i]);
-           flickrImages.add(fileLocation.load());
+            fileLocation.setFileName(fileId[i]);
+            flickrImages.add(fileLocation.load());
+            System.out.println(i + " size: " + flickrImages.size() + "\n");
         }
     }
 
