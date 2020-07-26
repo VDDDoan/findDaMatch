@@ -3,7 +3,6 @@ package com.cmpt276.finddamatch.model;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,8 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.List;
 
 /**
  * Most functions by Ilya Gazman on 3/6/2016.
@@ -40,18 +37,19 @@ public class SaveImages {
         return this;
     }
 
-    public void save(Bitmap bitmapImage) {
-        FileOutputStream fileOutputStream = null;
+    public void save(Bitmap bitmapImage, String nameFile) {
+        FileOutputStream fos = null;
         try {
-            fileOutputStream = new FileOutputStream(createFile());
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            //fos = new FileOutputStream(createFile());
+            fos = context.openFileOutput(nameFile, Context.MODE_PRIVATE);
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
             System.out.println("saved");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                if (fileOutputStream != null) {
-                    fileOutputStream.close();
+                if (fos != null) {
+                    fos.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -71,17 +69,18 @@ public class SaveImages {
     }
 
 
-    public Bitmap load() {
-        FileInputStream inputStream = null;
+    public Bitmap load(String nameFile) {
+        FileInputStream fis = null;
         try {
-            inputStream = new FileInputStream(createFile());
-            return BitmapFactory.decodeStream(inputStream);
+            //fis = new FileInputStream(createFile());
+            fis = context.openFileInput(nameFile);
+            return BitmapFactory.decodeStream(fis);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                if (inputStream != null) {
-                    inputStream.close();
+                if (fis != null) {
+                    fis.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

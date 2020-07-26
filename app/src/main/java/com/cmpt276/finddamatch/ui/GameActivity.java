@@ -341,6 +341,8 @@ public class GameActivity extends AppCompatActivity {
             imageViews[i] = new ImageView(this);
             imageViews[i].setTag(String.valueOf(i));
             imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
+            System.out.println(i);
+            System.out.println(images[i]);
             imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
             imageViews[i].setClickable(true);
             imageViews[i].setFocusable(true);
