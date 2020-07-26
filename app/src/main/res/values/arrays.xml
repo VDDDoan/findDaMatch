@@ -44,6 +44,26 @@
         <item>@drawable/tennisball</item>
         <item>@drawable/volleyball</item>
         <item>@drawable/basketball</item>
+        <item>@drawable/cursedimage1</item>
+        <item>@drawable/cursedimage2</item>
+        <item>@drawable/cursedimage3</item>
+        <item>@drawable/cursedimage4</item>
+        <item>@drawable/cursedimage5</item>
+        <item>@drawable/cursedimage6</item>
+        <item>@drawable/cursedimage7</item>
+        <item>@drawable/cursedimage8</item>
+        <item>@drawable/cursedimage9</item>
+        <item>@drawable/cursedimage10</item>
+        <item>@drawable/cursedimage11</item>
+        <item>@drawable/cursedimage12</item>
+        <item>@drawable/cursedimage13</item>
+        <item>@drawable/cursedimage14</item>
+        <item>@drawable/cursedimage15</item>
+        <item>@drawable/cursedimage16</item>
+        <item>@drawable/cursedimage17</item>
+        <item>@drawable/cursedimage18</item>
+        <item>@drawable/cursedimage19</item>
+        <item>@drawable/cursedimage20</item>
     </integer-array>
 
     <integer-array name="gameOrderSizes">

@@ -47,10 +47,9 @@ public class OptionsActivity extends AppCompatActivity {
             Toast.makeText(this,"Draw Pile Options Updated!",Toast.LENGTH_SHORT).show();
         });
 
-        Button cardNumButton = findViewById(R.id.numOfCardsBtn);
-        cardNumButton.setOnClickListener(v -> {
+        Button drawPileBtn = findViewById(R.id.numOfCardsBtn);
+        drawPileBtn.setOnClickListener(v -> {
             incrementDrawPile();
-
         });
 
         ImageView returnBtn = findViewById(R.id.btn_options_back);
@@ -139,7 +138,7 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void incrementDrawPile(){
-        Button cardNumButton = findViewById(R.id.numOfCardsBtn);
+        Button drawPileBtn = findViewById(R.id.numOfCardsBtn);
 
         int[] drawSizeOptions = getDrawPileOptions(Options.getInstance().getNumImagesPerCard());
         int currentDrawSize = Options.getInstance().getNumCardsPerSet();
@@ -147,13 +146,13 @@ public class OptionsActivity extends AppCompatActivity {
         for (int i = 0; i < drawSizeOptions.length; i++) {
             if (currentDrawSize == drawSizeOptions[i]) {
                 if (i == drawSizeOptions.length - 1) {
-                    cardNumButton.setText(getString(R.string.current_number_of_cards, drawSizeOptions[0]));
+                    drawPileBtn.setText(getString(R.string.current_number_of_cards, drawSizeOptions[0]));
                     Options.getInstance().setNumCardsPerSet(drawSizeOptions[0]);
                 } else if (i == drawSizeOptions.length - 2) {
-                    cardNumButton.setText(R.string.drawPileAllOption);
+                    drawPileBtn.setText(R.string.drawPileAllOption);
                     Options.getInstance().setNumCardsPerSet(drawSizeOptions[i + 1]);
                 } else {
-                    cardNumButton.setText(getString(R.string.current_number_of_cards, drawSizeOptions[i + 1]));
+                    drawPileBtn.setText(getString(R.string.current_number_of_cards, drawSizeOptions[i + 1]));
                     Options.getInstance().setNumCardsPerSet(drawSizeOptions[i + 1]);
                 }
             }
