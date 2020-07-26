@@ -59,12 +59,13 @@
             android:id="@+id/btn_imageSet0"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:backgroundTint="@color/colorCharcoal"
+            android:drawableEnd="@drawable/ic_pineapple"
             android:text="@string/string_fruit_deck"
             android:textColor="@color/colorMintCream"
-            android:layout_marginTop="64dp"
-            android:drawableEnd="@drawable/ic_pineapple"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.515"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/optionTitle"
             app:layout_constraintWidth_percent=".8" />
@@ -76,12 +77,24 @@
             android:width="250dp"
             android:backgroundTint="@color/colorCharcoal"
             android:text="@string/string_sport_deck"
+            android:drawableEnd="@drawable/ic_basketball"
             android:textColor="@color/colorMintCream"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_imageSet0"
             app:layout_constraintWidth_percent=".8" />
-
+        <Button
+            android:id="@+id/btn_flickr_imageSet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:width="250dp"
+            android:backgroundTint="@color/colorCharcoal"
+            android:text="Flickr Custom Set"
+            android:textColor="@color/colorMintCream"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent=".8"
+            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1" />
         <Button
             android:id="@+id/orderChangeBtn"
             android:layout_width="264dp"
@@ -92,7 +105,7 @@
             android:textColor="@color/colorMintCream"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1"
+            app:layout_constraintTop_toBottomOf="@+id/btn_flickr_imageSet"
             app:layout_constraintWidth_percent=".8" />
 
         <Button
@@ -103,26 +116,17 @@
             android:backgroundTint="@color/colorCharcoal"
             android:text="@string/current_number_of_cards"
             android:textColor="@color/colorMintCream"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/orderChangeBtn"
+            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_percent=".8" />
 
-            app:layout_constraintWidth_percent=".8"
+        app:layout_constraintWidth_percent=".8"
             app:layout_constraintTop_toBottomOf="@+id/btn_imageSet0" />
-        <Button
-            android:id="@+id/btn_flickr_imageSet"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:width="250dp"
-            android:backgroundTint="@color/colorCharcoal"
-            android:text="Flickr Custom Set"
-            android:textColor="@color/colorMintCream"
-            android:drawableEnd="@drawable/ic_basketball"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent=".8"
-            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
