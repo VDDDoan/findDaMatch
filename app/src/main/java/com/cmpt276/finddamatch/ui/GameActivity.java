@@ -383,12 +383,23 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case 1:
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 break;
             case 2:
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 break;
+            case 3:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                break;
+            case 4:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                break;
+            case 5:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         }
         return imageParams;
     }

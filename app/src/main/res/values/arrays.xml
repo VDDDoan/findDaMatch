@@ -15,6 +15,25 @@
         <item>@drawable/pineapple</item>
         <item>@drawable/strawberry</item>
         <item>@drawable/watermelon</item>
+        <item>@drawable/badminton</item>
+        <item>@drawable/baseball</item>
+        <item>@drawable/hockey</item>
+        <item>@drawable/soccerball</item>
+        <item>@drawable/tennisball</item>
+        <item>@drawable/volleyball</item>
+        <item>@drawable/basketball</item>
+        <item>@drawable/worryfacepalm</item>
+        <item>@drawable/worryfingers</item>
+        <item>@drawable/worryfrog</item>
+        <item>@drawable/worryfu</item>
+        <item>@drawable/worryhands</item>
+        <item>@drawable/worryheart</item>
+        <item>@drawable/worryjudge</item>
+        <item>@drawable/worrystudy</item>
+        <item>@drawable/worrysweat</item>
+        <item>@drawable/worrythumbsup</item>
+        <item>@drawable/worrywow</item>
+        <item>@drawable/worryyes</item>
     </integer-array>
 
     <integer-array name="sportImageSet">

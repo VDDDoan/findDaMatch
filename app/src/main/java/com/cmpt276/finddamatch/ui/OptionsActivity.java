@@ -72,7 +72,7 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private int[] getDrawPileOptions(int numImagesPerCard) {
-        int[] drawPileOptions = getResources().getIntArray(R.array.drawPileOrder2);
+        int[] drawPileOptions;
         switch (numImagesPerCard){
             case 3:
                 drawPileOptions = getResources().getIntArray(R.array.drawPileOrder2);
@@ -82,6 +82,9 @@ public class OptionsActivity extends AppCompatActivity {
                 break;
             case 6:
                 drawPileOptions = getResources().getIntArray(R.array.drawPileOrder5);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + numImagesPerCard);
         }
         return drawPileOptions;
     }
@@ -119,7 +122,11 @@ public class OptionsActivity extends AppCompatActivity {
 
         for (int i = 0; i < drawSizeOptions.length; i++) {
             if (currentDrawSize == drawSizeOptions[i]) {
-                cardNumButton.setText(getString(R.string.current_number_of_cards,drawSizeOptions[i]));
+                if (i == drawSizeOptions.length-1){
+                    cardNumButton.setText(R.string.drawPileAllOption);
+                }else{
+                    cardNumButton.setText(getString(R.string.current_number_of_cards,drawSizeOptions[i]));
+                }
                 Options.getInstance().setNumCardsPerSet(drawSizeOptions[i]);
                 isNotAnOption = false;
             }
