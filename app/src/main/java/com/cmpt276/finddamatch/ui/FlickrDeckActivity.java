@@ -30,20 +30,23 @@ public class FlickrDeckActivity extends AppCompatActivity {
     private List<Bitmap> images;
     private FlickrImagesManager flickrImagesManager;
     private final List<String> selectedItems = new ArrayList<>();
-    private final List<Integer>deletedIndex = new ArrayList<Integer>();
+    private final List<Integer> deletedIndex = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flickr_deck);
+
         ImageView deleteImages = findViewById(R.id.btn_deleteflickrimage);
         deleteImages.setOnClickListener(v->{
             for(int i = 0; i < selectedItems.size(); i++){
-                flickrImagesManager.deleteImage(selectedItems.get(i),deletedIndex.get(i));
+                System.out.println("deleted index at index" + i + "= " + deletedIndex.get(i));
+                flickrImagesManager.deleteImage(selectedItems.get(0), deletedIndex.get(0));
             }
             //flickrImagesManager.update();
             recreate();
         });
+
         ImageView add = findViewById(R.id.btn_addtoflickrdeck);
         add.setOnClickListener(v -> {
             Intent intent = new Intent(FlickrDeckActivity.this, PhotoGalleryActivity.class);
@@ -84,14 +87,16 @@ public class FlickrDeckActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int position = getLayoutPosition();
+                Integer integerPos = position;
                 String name = flickrImagesManager.returnFileId(position);
                 if (!selectedItems.contains(name)) {
                     selectedItems.add(name);
-                    deletedIndex.add(position);
+                    deletedIndex.add(integerPos);
                 } else {
                     selectedItems.remove(name);
-                    deletedIndex.remove(position);
+                    deletedIndex.remove(integerPos);
                 }
+                deletedIndex.sort(Integer::compareTo);
             }
         }
 
@@ -111,7 +116,7 @@ public class FlickrDeckActivity extends AppCompatActivity {
             Bitmap deckImg = images.get(position);
             holder.itemImageView.setImageBitmap(deckImg);
             // bug here out of bounds error in returnFileId when pressing back from adding new flickr images
-          /*  if (selectedItems.contains(flickrImagesManager.returnFileId(position))) {
+            if (selectedItems.contains(flickrImagesManager.returnFileId(position))) {
                 ShapeDrawable sd = new ShapeDrawable();
                 sd.setShape(new RectShape());
                 sd.getPaint().setColor(Color.RED);
@@ -124,7 +129,7 @@ public class FlickrDeckActivity extends AppCompatActivity {
             holder.itemView.setOnClickListener(v -> {
                 holder.onClick(v);
                 notifyDataSetChanged();
-            });*/
+            });
 
 
         }

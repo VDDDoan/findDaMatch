@@ -36,7 +36,8 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
 
     public void update() {
         String[] temp = fileLocation.getFileNames();
-        fileId = Arrays.asList(temp);
+        fileId.addAll(Arrays.asList(temp));
+        System.out.println("manager id size = " + fileId.size());
         for (int i = 0; i < fileId.size(); i++){
             System.out.println("load file id at " + i);
             flickrImages.add(fileLocation.load(fileId.get(i)));
@@ -50,10 +51,9 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
     }
 
     public void add(Bitmap image, URL url_value){
-        UUID random = UUID.randomUUID();
-        //fileLocation.setFileName(random.toString());
-        fileLocation.save(image, String.valueOf(image.getByteCount()));
+        fileLocation.save(image, url_value.toString());
         flickrImages.add(image);
+        fileId.add(url_value.toString());
     }
 
     public List<Bitmap> getBitmaps() {

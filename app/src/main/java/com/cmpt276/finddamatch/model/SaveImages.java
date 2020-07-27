@@ -40,7 +40,6 @@ public class SaveImages {
     public void save(Bitmap bitmapImage, String fileName) {
         FileOutputStream fos = null;
         try {
-            //fos = new FileOutputStream(createFile());
             fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
         } catch (Exception e) {
@@ -71,7 +70,6 @@ public class SaveImages {
     public Bitmap load(String nameFile) {
         FileInputStream fis = null;
         try {
-            //fis = new FileInputStream(createFile());
             fis = context.openFileInput(nameFile);
             return BitmapFactory.decodeStream(fis);
         } catch (Exception e) {
