@@ -52,7 +52,7 @@ public class OptionsActivity extends AppCompatActivity {
         drawPileBtn.setOnClickListener(v -> {
             incrementDrawPile();
         });
-        Button flickr = findViewById(R.id.btn_flickr_imageSet);
+        Button flickr = findViewById(R.id.btn_flickr_imageSet_customize);
         flickr.setOnClickListener(v -> {
             Intent intent = new Intent(OptionsActivity.this, FlickrDeckActivity.class);
             startActivity(intent);

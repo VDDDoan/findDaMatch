@@ -31,5 +31,7 @@
     <string name="string_search">Search</string>
     <string name="string_cancel">Cancel</string>
     <string name="stringAddButtonDes">button to add images to flickr deck</string>
+    <string name="flickr_custom_set">Flickr Deck</string>
+    <string name="customize">Customize</string>
 
 </resources>
