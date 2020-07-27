@@ -371,14 +371,14 @@ public class GameActivity extends AppCompatActivity {
                 });
         builder.setNegativeButton("Don't Record", (dialog, which) -> {
             dialog.cancel();
+            finish();
             Intent intent = new Intent(GameActivity.this, HighScoreActivity.class);
             startActivity(intent);
-            finish();
         });
         builder.setOnDismissListener(dialog -> {
+            finish();
             Intent intent = new Intent(GameActivity.this, HighScoreActivity.class);
             startActivity(intent);
-            finish();
         });
 
         builder.show();

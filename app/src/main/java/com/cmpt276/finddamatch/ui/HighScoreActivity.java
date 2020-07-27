@@ -147,7 +147,7 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
     public void back(View view) {
-        this.finish();
+        this.onBackPressed();
     }
 
     @Override
@@ -158,8 +158,8 @@ public class HighScoreActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
+        finish();
         Intent intent = new Intent(HighScoreActivity.this, MainMenuActivity.class);
         startActivity(intent);
-        finish();
     }
 }

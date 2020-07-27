@@ -4,9 +4,6 @@
  */
 package com.cmpt276.finddamatch.model;
 
-
-
-
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -18,9 +15,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-
-
 
 public class HighScoreManager {
     private static final int NUM_HIGH_SCORES = 5;
