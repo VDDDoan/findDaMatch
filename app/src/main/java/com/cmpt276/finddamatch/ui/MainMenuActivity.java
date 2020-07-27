@@ -18,10 +18,18 @@ import com.cmpt276.finddamatch.model.HighScoreManager;
 import com.cmpt276.finddamatch.model.Options;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -40,6 +48,7 @@ public class MainMenuActivity extends AppCompatActivity {
         if(locker == 0) {
             try {
                 ManagerUpdate();
+                configUpdate();
                 locker++;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -113,8 +122,73 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void configUpdate() throws IOException {
+        String filename;
+        filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/Configs.txt";//record the path of file
+        File file = new File(filename);
+        Scanner inputStream = null;
+        FileInputStream fis = null;
+        BufferedReader br = null;
+        String str;
+        try {
+            //load file and pop up
+            inputStream = new Scanner(new FileInputStream(filename));
+            fis = new FileInputStream(filename);
+            br = new BufferedReader(new InputStreamReader(fis));
+            if((str = br.readLine()) != null) {
+                String[] config = str.split(" ");
+                List<String> configs = Arrays.asList(config);
+                Options.getInstance().setNumImagesPerCard(Integer.parseInt(configs.get(0)) + 1);
+                Options.getInstance().setGameMode(Integer.parseInt(configs.get(1)));
+                Options.getInstance().setNumCardsPerSet(Integer.parseInt(configs.get(2)));
+            }
+            fis.close();
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+    }
+
+    public void Configs(int orderNum, int showType, int size) {
+        String filename;
+        filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/Configs.txt";//record the path of file
+
+        FileOutputStream fos;
+        FileInputStream fis;
+        PrintWriter pw = null;
+        BufferedReader br = null;
+        //if the director path not exist, then build it
+        File file = new File(getExternalCacheDir().getAbsolutePath());
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        try {
+            File dir = new File(filename);
+            dir.createNewFile();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        //record the new configs
+        try {
+            fos = new FileOutputStream(filename, true);
+            pw = new PrintWriter(fos);
+            pw.println(String.valueOf(orderNum) + ' ' + String.valueOf(showType) + ' ' + String.valueOf(size));
+            pw.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            assert pw != null;
+            pw.close();
+        }
+    }
     @Override
     public void onBackPressed(){
+        Configs(Options.getInstance().getOrderNum(),Options.getInstance().getGameMode(),Options.getInstance().getNumCardsPerSet());
         this.finishAffinity();
     }
 }

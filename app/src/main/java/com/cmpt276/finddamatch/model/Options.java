@@ -11,8 +11,6 @@ public class Options {
     private int numImagesPerCard = 3;
     private int gameMode = 0;
 
-
-
     public static Options getInstance() {
         if(instance == null) {
             instance = new Options();
