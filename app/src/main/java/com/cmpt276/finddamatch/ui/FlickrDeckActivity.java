@@ -43,7 +43,6 @@ public class FlickrDeckActivity extends AppCompatActivity {
                 System.out.println("deleted index at index" + i + "= " + deletedIndex.get(i));
                 flickrImagesManager.deleteImage(selectedItems.get(0), deletedIndex.get(0));
             }
-            //flickrImagesManager.update();
             recreate();
         });
 
