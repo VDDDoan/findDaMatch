@@ -105,8 +105,9 @@ public class MainMenuActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            inputStream.close();
-        }
+            if (inputStream != null) {
+                inputStream.close();
+            }
     }
     @Override
     public void onBackPressed(){
