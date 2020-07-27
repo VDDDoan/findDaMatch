@@ -5,10 +5,12 @@ package com.cmpt276.finddamatch.model;
 
 public class Options {
     private static Options instance;
+    private static final int FLICKR_DECK_INDEX = 2;
     private int imageSetIndex = 0;
     private int numCardsPerSet = 7;
     private int numImagesPerCard = 3;
     private int gameMode = 0;
+
 
 
     public static Options getInstance() {
@@ -55,6 +57,10 @@ public class Options {
 
     public void setGameMode(int gameMode) {
         this.gameMode = gameMode;
+    }
+
+    public int getFlickrIndex() {
+        return FLICKR_DECK_INDEX;
     }
 
 }

@@ -13,27 +13,29 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cmpt276.finddamatch.R;
+import com.cmpt276.finddamatch.model.FlickrImagesManager;
 import com.cmpt276.finddamatch.model.Options;
 
 public class OptionsActivity extends AppCompatActivity {
     private static final int IMAGES_ONLY = 0;
     private static final int WORDS_ONLY = 1;
     private static final int IMAGES_AND_WORDS = 2;
+    private FlickrImagesManager flickrImagesManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
-
+        flickrImagesManager = FlickrImagesManager.getInstance(this);
         updateScreen();
 
-        int[] btnIds = {R.id.btn_imageSet0, R.id.btn_imageSet1, R.id.btn_flickr_imageSet_choose};
+        int[] btnIds = {R.id.btn_imageSet0, R.id.btn_imageSet1,R.id.btn_flickr_imageSet_choose};
 
         for (int i = 0; i < btnIds.length; i++) {
             onClickImgSetListener(btnIds);
         }
 
-        //onClickImgSetListener(R.id.btn_imageSet0, R.id.btn_imageSet1, 0);
-        //onClickImgSetListener(R.id.btn_imageSet1, R.id.btn_imageSet0, 1);
 
         Button orderButton = findViewById(R.id.orderChangeBtn);
         orderButton.setOnClickListener(v -> {
@@ -82,31 +84,34 @@ public class OptionsActivity extends AppCompatActivity {
         for (int i = 0; i < btnDecks.length; i++) {
             btnDecks[i] = findViewById(btnIds[i]);
             int finalI = i;
+            final int temp = i;
             btnDecks[i].setOnClickListener(v -> {
-                Options.getInstance().setImageSetIndex(finalI);
-                btnDecks[finalI].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
-                System.out.println("Options: " + Options.getInstance().getImageSetIndex());
-                for (int j = 0; j < btnDecks.length; j++) {
-                    if (j != finalI) {
-                        btnDecks[j].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoal)));
+                if (btnIds[temp] == R.id.btn_flickr_imageSet_choose){
+                    if (flickrImagesManager.numberOfImages() > Options.getInstance().getNumImagesPerCard()){                        // set a flag here?
+                        btnDecks[finalI].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
+                        originalButtonBackground(btnDecks, finalI);
+                        Options.getInstance().setImageSetIndex(finalI);
+                    } else {
+                        Toast.makeText(this, "Not enough images in Flickr gallery", Toast.LENGTH_LONG).show();
                     }
+                } else {
+                Options.getInstance().setImageSetIndex(finalI);
+                // disable flag here
+                btnDecks[finalI].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
+                originalButtonBackground(btnDecks, finalI);
                 }
             });
         }
     }
 
-    private void onClickImgSetListener(int btnImgSet, int btnOtherImgSet, int selectedIndex) {
-        Button clickedButton = findViewById(btnImgSet);
-        Button otherButton = findViewById(btnOtherImgSet);
-
-        clickedButton.setOnClickListener(v ->{
-            Options.getInstance().setImageSetIndex(selectedIndex);
-            clickedButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
-            otherButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoal)));
-        });
-
-
+    private void originalButtonBackground(Button[] btnDecks, int finalI){
+        for (int j = 0; j < btnDecks.length; j++) {
+            if (j != finalI) {
+                btnDecks[j].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoal)));
+            }
+        }
     }
+
 
     private int[] getDrawPileOptions(int numImagesPerCard) {
         int[] drawPileOptions;
