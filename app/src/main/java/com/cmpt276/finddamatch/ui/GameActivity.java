@@ -339,7 +339,7 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 imageViews[i] = card.findViewWithTag(String.valueOf(i));
                 if(isFlickrDeck()) {
-                    imageViews[i].setImageBitmap(flickrSet.get(i));
+                    imageViews[i].setImageBitmap(flickrSet.get(images[i]));
                 } else {
                     imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
                 }
@@ -409,7 +409,7 @@ public class GameActivity extends AppCompatActivity {
             imageViews[i].setTag(String.valueOf(i));
             imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
             if (isFlickrDeck()) {
-                imageViews[i].setImageBitmap(flickrSet.get(i));
+                imageViews[i].setImageBitmap(flickrSet.get(images[i]));
             } else {
                 imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
             }
