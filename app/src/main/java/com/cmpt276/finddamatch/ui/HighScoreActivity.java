@@ -52,6 +52,7 @@ public class HighScoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_score);
+        rollBackSign = Options.getInstance().getOrderNum();
         orderBtn = findViewById(R.id.btn_orderHS);
         switch(rollBackSign){
             case 2:
@@ -98,6 +99,11 @@ public class HighScoreActivity extends AppCompatActivity {
                     break;
             }
         });
+        try {
+            innerManagerUpdate(rollBackSign);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         populateListView();
     }
 
