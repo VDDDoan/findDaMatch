@@ -336,6 +336,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void createCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
+
         for (int i = 0; i < imageViews.length; i++) {
             final int index = images[i];
             imageViews[i] = new ImageView(this);
@@ -374,8 +375,8 @@ public class GameActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams imageParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        imageParams.height = (int) cardHeight / 2;
-        imageParams.width = (int) cardWidth / 2;
+        setScalingFactor(imageParams,Options.getInstance().getNumImagesPerCard());
+
 
         switch (index) {
             case 0:
@@ -383,8 +384,14 @@ public class GameActivity extends AppCompatActivity {
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 break;
             case 1:
-                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                if (Options.getInstance().getNumImagesPerCard() == 3){
+                    imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                    imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+
+                }else {
+                    imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                    imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                }
                 break;
             case 2:
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -403,6 +410,22 @@ public class GameActivity extends AppCompatActivity {
                 imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         }
         return imageParams;
+    }
+
+    private void setScalingFactor(RelativeLayout.LayoutParams imageParams, int numImagesPerCard) {
+        double scalingFactor;
+        switch (numImagesPerCard){
+            case 4:
+                scalingFactor = 2.5;
+                break;
+            case 6:
+                scalingFactor = 3.0;
+                break;
+            default:
+                scalingFactor = 2.0;
+        }
+        imageParams.height =(int)( (int) cardHeight / scalingFactor);
+        imageParams.width = (int) ((int)cardWidth / scalingFactor);
     }
 
     // gets the images required for the given card and displays them on the card
