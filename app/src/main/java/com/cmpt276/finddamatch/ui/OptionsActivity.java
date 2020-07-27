@@ -24,10 +24,16 @@ public class OptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-
         updateScreen();
-        onClickImgSetLisenter(R.id.btn_imageSet0,R.id.btn_imageSet1, 0);
-        onClickImgSetLisenter(R.id.btn_imageSet1,R.id.btn_imageSet0, 1);
+
+        int[] btnIds = {R.id.btn_imageSet0, R.id.btn_imageSet1, R.id.btn_flickr_imageSet_choose};
+
+        for (int i = 0; i < btnIds.length; i++) {
+            onClickImgSetListener(btnIds);
+        }
+
+        //onClickImgSetListener(R.id.btn_imageSet0, R.id.btn_imageSet1, 0);
+        //onClickImgSetListener(R.id.btn_imageSet1, R.id.btn_imageSet0, 1);
 
         Button orderButton = findViewById(R.id.orderChangeBtn);
         orderButton.setOnClickListener(v -> {
@@ -54,7 +60,7 @@ public class OptionsActivity extends AppCompatActivity {
         drawPileBtn.setOnClickListener(v -> {
             incrementDrawPile();
         });
-        Button flickr = findViewById(R.id.btn_flickr_imageSet);
+        Button flickr = findViewById(R.id.btn_flickr_imageSet_customize);
         flickr.setOnClickListener(v -> {
             Intent intent = new Intent(OptionsActivity.this, FlickrDeckActivity.class);
             startActivity(intent);
@@ -70,7 +76,26 @@ public class OptionsActivity extends AppCompatActivity {
 
     }
 
-    private void onClickImgSetLisenter(int btnImgSet, int btnOtherImgSet, int selectedIndex) {
+    private void onClickImgSetListener(int[] btnIds) {
+        Button[] btnDecks = new Button[btnIds.length];
+
+        for (int i = 0; i < btnDecks.length; i++) {
+            btnDecks[i] = findViewById(btnIds[i]);
+            int finalI = i;
+            btnDecks[i].setOnClickListener(v -> {
+                Options.getInstance().setImageSetIndex(finalI);
+                btnDecks[finalI].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
+                System.out.println("Options: " + Options.getInstance().getImageSetIndex());
+                for (int j = 0; j < btnDecks.length; j++) {
+                    if (j != finalI) {
+                        btnDecks[j].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoal)));
+                    }
+                }
+            });
+        }
+    }
+
+    private void onClickImgSetListener(int btnImgSet, int btnOtherImgSet, int selectedIndex) {
         Button clickedButton = findViewById(btnImgSet);
         Button otherButton = findViewById(btnOtherImgSet);
 

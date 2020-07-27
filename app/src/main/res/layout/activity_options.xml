@@ -32,12 +32,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="328dp"
-        android:layout_height="510dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/menu_bg_card_back"
+        android:paddingVertical="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent=".8">
@@ -46,7 +46,7 @@
             android:id="@+id/optionTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="4dp"
             android:text="@string/string_options"
             android:textColor="@color/colorCharcoal"
             android:textSize="25sp"
@@ -58,14 +58,14 @@
         <Button
             android:id="@+id/btn_imageSet0"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="@color/colorCharcoal"
             android:drawableEnd="@drawable/ic_pineapple"
             android:text="@string/string_fruit_deck"
             android:textColor="@color/colorMintCream"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintHeight_percent=".175"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/optionTitle"
             app:layout_constraintWidth_percent=".8" />
@@ -73,25 +73,44 @@
         <Button
             android:id="@+id/btn_imageSet1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:width="250dp"
             android:backgroundTint="@color/colorCharcoal"
             android:drawableEnd="@drawable/ic_basketball"
             android:text="@string/string_sport_deck"
             android:textColor="@color/colorMintCream"
+            app:layout_constraintHeight_percent=".175"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_imageSet0"
             app:layout_constraintWidth_percent=".8" />
 
         <Button
-            android:id="@+id/btn_flickr_imageSet"
+            android:id="@+id/btn_flickr_imageSet_choose"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:width="250dp"
             android:backgroundTint="@color/colorCharcoal"
-            android:text="Flickr Custom Set"
+            android:text="@string/flickr_custom_set"
             android:textColor="@color/colorMintCream"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHeight_percent=".175"
+            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1"
+            app:layout_constraintWidth_percent=".4" />
+
+        <Button
+            android:id="@+id/btn_flickr_imageSet_customize"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:width="250dp"
+            android:backgroundTint="@color/colorCharcoal"
+            android:text="@string/customize"
+            android:textColor="@color/colorMintCream"
+            app:layout_constraintHeight_percent=".175"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1"
+            app:layout_constraintWidth_percent=".4" />
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1"
@@ -99,29 +118,31 @@
 
         <Button
             android:id="@+id/orderChangeBtn"
-            android:layout_width="264dp"
-            android:layout_height="65dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:width="250dp"
             android:backgroundTint="@color/colorCharcoal"
             android:text="@string/current_order_size"
             android:textColor="@color/colorMintCream"
+            app:layout_constraintHeight_percent=".175"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_flickr_imageSet"
+            app:layout_constraintTop_toBottomOf="@+id/btn_flickr_imageSet_customize"
             app:layout_constraintWidth_percent=".8" />
 
         <Button
             android:id="@+id/numOfCardsBtn"
-            android:layout_width="266dp"
-            android:layout_height="68dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:width="250dp"
             android:backgroundTint="@color/colorCharcoal"
             android:text="@string/current_number_of_cards"
             android:textColor="@color/colorMintCream"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/orderChangeBtn"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintHeight_percent=".175"
             app:layout_constraintWidth_percent=".8" />
 
         <Button
@@ -137,6 +158,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/numOfCardsBtn"
             app:layout_constraintWidth_percent=".8" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
