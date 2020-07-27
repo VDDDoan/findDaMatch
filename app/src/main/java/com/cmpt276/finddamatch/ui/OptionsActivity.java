@@ -91,10 +91,10 @@ public class OptionsActivity extends AppCompatActivity {
                         // the flickrs gallery will be used in the game
                         btnDecks[finalI].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
                         originalButtonBackground(btnDecks, finalI);
-                    }else{
+                    } else {
                         Toast.makeText(this, "Not enough images in Flickr gallery", Toast.LENGTH_LONG).show();
                     }
-                }else{
+                } else {
                 Options.getInstance().setImageSetIndex(finalI);
                 btnDecks[finalI].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
                 originalButtonBackground(btnDecks, finalI);
