@@ -8,6 +8,7 @@ public class Options {
     private int imageSetIndex = 0;
     private int numCardsPerSet = 7;
     private int numImagesPerCard = 3;
+    private int gameMode = 0;
 
     public static Options getInstance() {
         if(instance == null) {
@@ -41,6 +42,14 @@ public class Options {
 
     public void setNumCardsPerSet(int numCardsPerSet) {
         this.numCardsPerSet = numCardsPerSet;
+    }
+
+    public int getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameMode(int gameMode) {
+        this.gameMode = gameMode;
     }
 
 }

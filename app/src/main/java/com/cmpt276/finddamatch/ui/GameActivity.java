@@ -30,7 +30,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmpt276.finddamatch.R;
-import com.cmpt276.finddamatch.model.Configs;
 import com.cmpt276.finddamatch.model.GameLogic;
 import com.cmpt276.finddamatch.model.HighScore;
 import com.cmpt276.finddamatch.model.HighScoreManager;
@@ -245,7 +244,7 @@ public class GameActivity extends AppCompatActivity {
 
     // takes a card plays the animation, switches the background halfway through the animation
     private void flipCardAnim(final CardLayout card) {
-        if (Configs.showType == 0) {
+        if (Options.getInstance().getGameMode() == 0) {
             ObjectAnimator flipAnimationA = ObjectAnimator.ofFloat(card, "rotationX", 0.0f, 180f);
             flipAnimationA.setInterpolator(new AccelerateDecelerateInterpolator());
             flipAnimationA.setDuration(TIME_FLIP_CARD_MS/2);
@@ -643,11 +642,12 @@ public class GameActivity extends AppCompatActivity {
         }
         // if there's no images
         if (card.findViewWithTag("0") == null) {
-            if (Configs.showType == 0) {
+            int gameMode = Options.getInstance().getGameMode();
+            if (gameMode == 0) {
                 createCardImages(card, images);
-            } else if (Configs.showType == 1) {
+            } else if (gameMode == 1) {
                 createCardTexts(card, images);
-            } else if (Configs.showType == 2) {
+            } else if (gameMode == 2) {
                 createCardImagesAndText(card, images);
             }
             startOfGame = false;

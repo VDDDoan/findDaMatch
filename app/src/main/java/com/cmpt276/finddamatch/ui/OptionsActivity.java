@@ -16,7 +16,9 @@ import com.cmpt276.finddamatch.R;
 import com.cmpt276.finddamatch.model.Options;
 
 public class OptionsActivity extends AppCompatActivity {
-
+    private static final int IMAGES_ONLY = 0;
+    private static final int WORDS_ONLY = 1;
+    private static final int IMAGES_AND_WORDS = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,10 @@ public class OptionsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button modeChangeBtn = findViewById(R.id.gameModeChange);
+        modeChangeBtn.setOnClickListener(v->{
+            updateGameMode();
+        });
 
         ImageView returnBtn = findViewById(R.id.btn_options_back);
         returnBtn.setOnClickListener(v -> finish());
@@ -101,6 +107,7 @@ public class OptionsActivity extends AppCompatActivity {
         Button btnImgSet1 = findViewById(R.id.btn_imageSet1);
         Button orderBtn = findViewById(R.id.orderChangeBtn);
         Button drawPileBtn = findViewById(R.id.numOfCardsBtn);
+        Button modeChangeBtn = findViewById(R.id.gameModeChange);
 
         int selectedImgIndex = Options.getInstance().getImageSetIndex();
         switch (selectedImgIndex){
@@ -116,6 +123,21 @@ public class OptionsActivity extends AppCompatActivity {
 
         updateDrawPile();
 
+
+
+        int currentGameMode = Options.getInstance().getGameMode();
+
+        switch (currentGameMode){
+            case 0:
+                modeChangeBtn.setText(R.string.gameModeImages);
+                break;
+            case 1:
+                modeChangeBtn.setText(R.string.gameModeWords);
+                break;
+            case 2:
+                modeChangeBtn.setText(R.string.gameModeWordsAndImages);
+                break;
+        }
 
     }
 
@@ -141,6 +163,27 @@ public class OptionsActivity extends AppCompatActivity {
         if (isNotAnOption){
             cardNumButton.setText(getString(R.string.current_number_of_cards,drawSizeOptions[0]));
             Options.getInstance().setNumCardsPerSet((drawSizeOptions[0]));
+        }
+    }
+
+    private void updateGameMode(){
+        Button modeChangeBtn = findViewById(R.id.gameModeChange);
+
+        int currentGameMode = Options.getInstance().getGameMode();
+
+        switch (currentGameMode){
+            case 0:
+                Options.getInstance().setGameMode(WORDS_ONLY);
+                modeChangeBtn.setText(R.string.gameModeWords);
+                break;
+            case 1:
+                Options.getInstance().setGameMode(IMAGES_AND_WORDS);
+                modeChangeBtn.setText(R.string.gameModeWordsAndImages);
+                break;
+            case 2:
+                Options.getInstance().setGameMode(IMAGES_ONLY);
+                modeChangeBtn.setText(R.string.gameModeImages);
+                break;
         }
     }
 
