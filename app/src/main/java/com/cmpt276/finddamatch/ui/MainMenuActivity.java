@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.cmpt276.finddamatch.R;
 import com.cmpt276.finddamatch.model.HighScore;
 import com.cmpt276.finddamatch.model.HighScoreManager;
+import com.cmpt276.finddamatch.model.Options;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,7 +37,6 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
         if(locker == 0) {
             try {
                 ManagerUpdate();
@@ -45,7 +45,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-         */
         setContentView(R.layout.activity_main_menu);
 
         cloud = findViewById(R.id.img_menu_cloud);
@@ -82,7 +81,8 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void ManagerUpdate() throws IOException {
-        String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//path of file
+        String filename;
+        filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//record the path of file
         File file = new File(filename);
         Scanner inputStream = null;
         FileInputStream fis = null;
@@ -108,7 +108,9 @@ public class MainMenuActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            inputStream.close();
+            if (inputStream != null) {
+                inputStream.close();
+            }
         }
     }
     @Override

@@ -64,13 +64,12 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
         return flickrImages.get(position);
     }
 
-    //says that operations not supported in flickrImages.remove and fileId.remove
     public void deleteImage(String name, int position){
         fileLocation.deleteFile(name);
         flickrImages.remove(position);
         fileId.remove(position);
     }
-    //keep getting out of bounds error
+
     public String returnFileId(int position){
         return fileId.get(position);
     }

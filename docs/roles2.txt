@@ -1,0 +1,25 @@
+SCRUM MASTER:
+Wei Yan
+yanweiy
+--------------------------------
+PRODUCT OWNER:
+Vinesh Reddy
+vineshr
+--------------------------------
+REPOSITORY MANAGER:
+David Doan
+vdoan
+--------------------------------
+TEAM MEMBERS:
+Vinesh Reddy
+vineshr
+
+Wei Yan
+yanweiy
+
+David Doan
+vdoan
+
+Wei Cheng (James) Wang
+wcw10
+--------------------------------

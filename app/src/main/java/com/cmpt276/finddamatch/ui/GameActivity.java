@@ -30,7 +30,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmpt276.finddamatch.R;
-import com.cmpt276.finddamatch.model.Configs;
 import com.cmpt276.finddamatch.model.GameLogic;
 import com.cmpt276.finddamatch.model.HighScore;
 import com.cmpt276.finddamatch.model.HighScoreManager;
@@ -245,7 +244,7 @@ public class GameActivity extends AppCompatActivity {
 
     // takes a card plays the animation, switches the background halfway through the animation
     private void flipCardAnim(final CardLayout card) {
-        if (Configs.showType == 0) {
+        if (Options.getInstance().getGameMode() == 0) {
             ObjectAnimator flipAnimationA = ObjectAnimator.ofFloat(card, "rotationX", 0.0f, 180f);
             flipAnimationA.setInterpolator(new AccelerateDecelerateInterpolator());
             flipAnimationA.setDuration(TIME_FLIP_CARD_MS/2);
@@ -358,7 +357,7 @@ public class GameActivity extends AppCompatActivity {
                             gameLogic.getTime() / 1000,
                             userName.getText().toString(),
                             DateFormat.getDateInstance().format(Calendar.getInstance().getTime()));
-                    HighScoreManager.getInstance().setHighScore(score);
+                    //HighScoreManager.getInstance().setHighScore(score);
                     for (int i = HighScoreManager.getInstance().getHighScores().size() - 1; i >= 0; i--) {
                         if (score.getTime() < HighScoreManager.getInstance().getHighScores().get(i).getTime()) {
                             FileRecord(score);
@@ -372,14 +371,14 @@ public class GameActivity extends AppCompatActivity {
                 });
         builder.setNegativeButton("Don't Record", (dialog, which) -> {
             dialog.cancel();
+            finish();
             Intent intent = new Intent(GameActivity.this, HighScoreActivity.class);
             startActivity(intent);
-            finish();
         });
         builder.setOnDismissListener(dialog -> {
+            finish();
             Intent intent = new Intent(GameActivity.this, HighScoreActivity.class);
             startActivity(intent);
-            finish();
         });
 
         builder.show();
@@ -643,11 +642,12 @@ public class GameActivity extends AppCompatActivity {
         }
         // if there's no images
         if (card.findViewWithTag("0") == null) {
-            if (Configs.showType == 0) {
+            int gameMode = Options.getInstance().getGameMode();
+            if (gameMode == 0) {
                 createCardImages(card, images);
-            } else if (Configs.showType == 1) {
+            } else if (gameMode == 1) {
                 createCardTexts(card, images);
-            } else if (Configs.showType == 2) {
+            } else if (gameMode == 2) {
                 createCardImagesAndText(card, images);
             }
             startOfGame = false;
@@ -657,7 +657,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void FileRecord(HighScore newScore) {
-        String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//record the path of file
+        String filename;
+        if(Options.getInstance().getOrderNum()== 2){
+            filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//record the path of file
+        }
+        else if(Options.getInstance().getOrderNum()== 3){
+            filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord3.txt";//record the path of file
+        }
+        else{
+            filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord5.txt";//record the path of file
+        }
         FileOutputStream fos;
         FileInputStream fis;
         PrintWriter pw = null;
