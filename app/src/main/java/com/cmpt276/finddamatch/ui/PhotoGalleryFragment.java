@@ -12,6 +12,8 @@ import android.graphics.drawable.shapes.RectShape;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -38,16 +40,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PhotoGalleryFragment extends Fragment {
+public class PhotoGalleryFragment extends Fragment implements PhotoGalleryActivity.saveInterface {
 
     private static final String TAG = "PhotoGalleryFragment";
 
     private RecyclerView photoRecyclerView;
     private List<GalleryItem> items = new ArrayList<>();
-    private List<GalleryItem> selectedItems = new ArrayList<>();
+    private List<String> selectedItems;
     private ThumbnailDownloader<PhotoHolder> thumbnailDownloader;
     private FlickrImagesManager flickrManager;
-    private int selectedPosition = RecyclerView.NO_POSITION;
 
     public static PhotoGalleryFragment newInstance() {
         return new PhotoGalleryFragment();
@@ -78,7 +79,19 @@ public class PhotoGalleryFragment extends Fragment {
 
         setupAdapter();
 
+        selectedItems = new ArrayList<>();
+
         return v;
+    }
+
+    @Override
+    public void saveImagesToDeck() {
+        if (selectedItems.size() > 0) {
+            for (int i = 0; i < selectedItems.size(); i++) {
+                new SaveAsyncTask().execute(selectedItems.get(i));
+                System.out.println("selectedname = " + selectedItems.get(i));
+            }
+        }
     }
 
     private void setupAdapter() {
@@ -115,37 +128,15 @@ public class PhotoGalleryFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            // TODO implement the following
-            // if item is in the list
-            //      remove from selected list
-            //      deselect
-            // else
-            //      add to selected list
-            //      ( run async task to save the gallery items )
             int position = getAdapterPosition();
             GalleryItem galleryItem = items.get(position);
             String name = galleryItem.getUrl();
             Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
-            new SaveAsyncTask().execute(name);
-        }
 
-        private class SaveAsyncTask extends AsyncTask<String, Void, Void> {
-
-            @Override
-            protected Void doInBackground(String... strings) {
-                URL url_value = null;
-                try {
-                    url_value = new URL(strings[0]);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    Bitmap imageToSave = BitmapFactory.decodeStream(url_value.openConnection().getInputStream());
-                    flickrManager.add(imageToSave);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
+            if (!selectedItems.contains(name)) {
+                selectedItems.add(name);
+            } else {
+                selectedItems.remove(name);
             }
         }
     }
@@ -168,11 +159,11 @@ public class PhotoGalleryFragment extends Fragment {
         @Override
         public void onBindViewHolder(PhotoHolder photoHolder, int position) {
             GalleryItem galleryItem = galleryItems.get(position);
-            Drawable placeholder = ContextCompat.getDrawable(getActivity(), R.drawable.button_style);;
+            Drawable placeholder = ContextCompat.getDrawable(getActivity(), R.drawable.button_style);
             photoHolder.bindDrawable(placeholder);
-            //photoHolder.itemView.setSelected();
+
             thumbnailDownloader.queueThumbnail(photoHolder, galleryItem.getUrl());
-            if (selectedPosition == position) {
+            if (selectedItems.contains(items.get(position).getUrl())) {
                 ShapeDrawable sd = new ShapeDrawable();
                 sd.setShape(new RectShape());
                 sd.getPaint().setColor(Color.BLUE);
@@ -184,7 +175,6 @@ public class PhotoGalleryFragment extends Fragment {
             }
             photoHolder.itemView.setOnClickListener(v -> {
                 photoHolder.onClick(v);
-                selectedPosition = position;
                 notifyDataSetChanged();
             });
         }
@@ -221,6 +211,27 @@ public class PhotoGalleryFragment extends Fragment {
             setupAdapter();
         }
 
+    }
+
+    private class SaveAsyncTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            URL url_value = null;
+            try {
+                url_value = new URL(strings[0]);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            System.out.println("url = " + url_value);
+            try {
+                Bitmap imageToSave = BitmapFactory.decodeStream(url_value.openConnection().getInputStream());
+                flickrManager.add(imageToSave, url_value);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
 }

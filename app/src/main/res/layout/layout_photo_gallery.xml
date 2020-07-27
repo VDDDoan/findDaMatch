@@ -7,13 +7,28 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_container"
     android:background="@color/colorCharcoalLite">
+
     <ImageView
         android:id="@+id/search_Button"
-        android:layout_width="36dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:tint="@color/colorWhite"
+        app:layout_constraintEnd_toStartOf="@+id/btn_save_images"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/search" />
+
+    <ImageView
+        android:id="@+id/btn_save_images"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_check_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
