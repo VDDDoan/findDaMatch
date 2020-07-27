@@ -357,7 +357,7 @@ public class GameActivity extends AppCompatActivity {
                             gameLogic.getTime() / 1000,
                             userName.getText().toString(),
                             DateFormat.getDateInstance().format(Calendar.getInstance().getTime()));
-                    HighScoreManager.getInstance().setHighScore(score);
+                    //HighScoreManager.getInstance().setHighScore(score);
                     for (int i = HighScoreManager.getInstance().getHighScores().size() - 1; i >= 0; i--) {
                         if (score.getTime() < HighScoreManager.getInstance().getHighScores().get(i).getTime()) {
                             FileRecord(score);
@@ -657,7 +657,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void FileRecord(HighScore newScore) {
-        String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//record the path of file
+        String filename;
+        if(Options.getInstance().getOrderNum()== 2){
+            filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//record the path of file
+        }
+        else if(Options.getInstance().getOrderNum()== 3){
+            filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord3.txt";//record the path of file
+        }
+        else{
+            filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord5.txt";//record the path of file
+        }
         FileOutputStream fos;
         FileInputStream fis;
         PrintWriter pw = null;

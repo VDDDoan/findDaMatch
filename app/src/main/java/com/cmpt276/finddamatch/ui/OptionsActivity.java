@@ -120,7 +120,6 @@ public class OptionsActivity extends AppCompatActivity {
         }
 
         orderBtn.setText(getString(R.string.current_order_size,Options.getInstance().getNumImagesPerCard()-1));
-
         updateDrawPile();
 
 
