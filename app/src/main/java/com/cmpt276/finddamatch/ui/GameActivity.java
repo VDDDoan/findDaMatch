@@ -488,7 +488,11 @@ public class GameActivity extends AppCompatActivity {
             imageViews[i] = new ImageView(this);
             imageViews[i].setTag(String.valueOf(i));
             imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
-            imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+            if (isFlickrDeck()) {
+                imageViews[i].setImageBitmap(flickrSet.get(images[i]));
+            } else {
+                imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+            }
             imageViews[i].setClickable(true);
             imageViews[i].setFocusable(true);
 
