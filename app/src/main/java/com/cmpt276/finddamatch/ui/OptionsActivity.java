@@ -13,7 +13,22 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cmpt276.finddamatch.R;
+import com.cmpt276.finddamatch.model.HighScore;
 import com.cmpt276.finddamatch.model.Options;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class OptionsActivity extends AppCompatActivity {
     private static final int IMAGES_ONLY = 0;
@@ -232,6 +247,7 @@ public class OptionsActivity extends AppCompatActivity {
             }
         }
     }
+
 
     @Override
     public void finish() {
