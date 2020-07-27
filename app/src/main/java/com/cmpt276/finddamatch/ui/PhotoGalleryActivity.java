@@ -15,7 +15,6 @@ import com.cmpt276.finddamatch.R;
 
 public class PhotoGalleryActivity extends AppCompatActivity implements DialogFlickrSearch.SearchDialogListener {
     private static String searchWord;
-    private ImageView search;
 
     public static Intent newIntent(Context packageContext) {
         Intent intent = new Intent(packageContext, PhotoGalleryActivity.class);
@@ -30,14 +29,19 @@ public class PhotoGalleryActivity extends AppCompatActivity implements DialogFli
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_photo_gallery);
-        search = findViewById(R.id.search_Button);
+
+        ImageView search = findViewById(R.id.search_Button);
         search.setColorFilter(Color.argb(255, 255, 255, 255));
         search.setOnClickListener(v->{
             showDialog();
         });
         showDialog();
     }
+    private saveInterface listener;
 
+    public interface saveInterface {
+        void saveImagesToDeck();
+    }
 
     @Override
     public void onFinishSearchDialog(String inputText, boolean newSearch) {
@@ -52,11 +56,24 @@ public class PhotoGalleryActivity extends AppCompatActivity implements DialogFli
                 fm.beginTransaction()
                         .add(R.id.fragment_container, fragment)
                         .commit();
-            }else{
+            } else {
                 fragment = PhotoGalleryFragment.newInstance();
                 fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
             }
+            listener = (saveInterface) fragment;
         }
+
+        ImageView done = findViewById(R.id.btn_save_images);
+        done.setOnClickListener(v -> {
+            listener.saveImagesToDeck();
+            Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     private void showDialog(){

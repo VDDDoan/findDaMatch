@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -37,7 +38,6 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
             //fileLocation.setFileName(fileId[i]);
             System.out.println("load file id at " + i);
             flickrImages.add(fileLocation.load(fileId[i]));
-            System.out.println(i + " size: " + flickrImages.size() + "\n");
         }
     }
 
@@ -47,10 +47,11 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
         return flickrImages.iterator();
     }
 
-    public void add (Bitmap image){
+    public void add(Bitmap image, URL url_value){
         UUID random = UUID.randomUUID();
         //fileLocation.setFileName(random.toString());
         fileLocation.save(image, String.valueOf(image.getByteCount()));
+        flickrImages.add(image);
     }
 
     public List<Bitmap> getBitmaps() {

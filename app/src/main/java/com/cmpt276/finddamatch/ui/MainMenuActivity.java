@@ -36,6 +36,7 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         if(locker == 0) {
             try {
                 ManagerUpdate();
@@ -44,6 +45,8 @@ public class MainMenuActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+         */
         setContentView(R.layout.activity_main_menu);
 
         cloud = findViewById(R.id.img_menu_cloud);
@@ -78,6 +81,7 @@ public class MainMenuActivity extends AppCompatActivity {
         animationX.setRepeatCount(ObjectAnimator.INFINITE);
         animationX.start();
     }
+
     private void ManagerUpdate() throws IOException {
         String filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/gameRecord.txt";//path of file
         File file = new File(filename);
