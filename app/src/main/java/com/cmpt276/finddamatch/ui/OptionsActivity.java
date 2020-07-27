@@ -27,7 +27,7 @@ public class OptionsActivity extends AppCompatActivity {
 
         Button flickr = findViewById(R.id.btn_flickr_imageSet);
         flickr.setOnClickListener(v -> {
-            Intent intent = new Intent(OptionsActivity.this, PhotoGalleryActivity.class);
+            Intent intent = new Intent(OptionsActivity.this, FlickrDeckActivity.class);
             startActivity(intent);
         });
 

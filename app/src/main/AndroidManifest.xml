@@ -11,16 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.FlickrDeckActivity"></activity>
         <activity
             android:name=".ui.PhotoGalleryActivity"
             android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:exported="true"/>
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.GameActivity"
             android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:exported="true"/>
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.HelpActivity" />
         <activity android:name=".ui.OptionsActivity" />
         <activity android:name=".ui.HighScoreActivity" />

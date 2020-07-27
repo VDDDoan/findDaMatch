@@ -25,13 +25,13 @@ public class DialogFlickrSearch extends DialogFragment {
 
 
 
-    public interface SearchDialogListener{
+    public interface SearchDialogListener {
         void onFinishSearchDialog(String inputText, boolean newSearch);
     }
 
     private SearchDialogListener listener;
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
         listener = (SearchDialogListener) context;
     }

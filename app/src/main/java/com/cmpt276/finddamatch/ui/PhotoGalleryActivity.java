@@ -2,6 +2,7 @@ package com.cmpt276.finddamatch.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -28,8 +29,9 @@ public class PhotoGalleryActivity extends AppCompatActivity implements DialogFli
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.flickr_container);
+        setContentView(R.layout.layout_photo_gallery);
         search = findViewById(R.id.search_Button);
+        search.setColorFilter(Color.argb(255, 255, 255, 255));
         search.setOnClickListener(v->{
             showDialog();
         });
