@@ -18,6 +18,8 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -28,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmpt276.finddamatch.R;
+import com.cmpt276.finddamatch.model.Configs;
 import com.cmpt276.finddamatch.model.GameLogic;
 import com.cmpt276.finddamatch.model.HighScore;
 import com.cmpt276.finddamatch.model.HighScoreManager;
@@ -69,6 +72,7 @@ public class GameActivity extends AppCompatActivity {
     private boolean isDealing;
 
     private TypedArray imageSetUI;
+    private TypedArray imageSets;
 
     private float boardHeight;
     private float boardWidth;
@@ -242,12 +246,25 @@ public class GameActivity extends AppCompatActivity {
 
     // takes a card plays the animation, switches the background halfway through the animation
     private void flipCardAnim(final CardLayout card) {
-        ObjectAnimator flipAnimation = ObjectAnimator.ofFloat(card, "rotationX", 0.0f, 180f);
-        flipAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        flipAnimation.setDuration(TIME_FLIP_CARD_MS);
-        flipAnimation.start();
-        card.setRotation(180f);
+        if (Configs.showType == 0) {
+            ObjectAnimator flipAnimationA = ObjectAnimator.ofFloat(card, "rotationX", 0.0f, 180f);
+            flipAnimationA.setInterpolator(new AccelerateDecelerateInterpolator());
+            flipAnimationA.setDuration(TIME_FLIP_CARD_MS/2);
+            flipAnimationA.start();
+            card.setRotation(180f);
+        }
+        else{
+            ObjectAnimator flipAnimationA = ObjectAnimator.ofFloat(card, "rotationX", 0.0f, 90f);
+            ObjectAnimator flipAnimationB = ObjectAnimator.ofFloat(card, "rotationX", -90f, 0.0f);
+            flipAnimationA.setInterpolator(new AccelerateDecelerateInterpolator());
+            flipAnimationA.setDuration(TIME_FLIP_CARD_MS/2);
+            flipAnimationA.start();
+            flipAnimationB.setInterpolator(new AccelerateDecelerateInterpolator());
+            flipAnimationB.setDuration(TIME_FLIP_CARD_MS/2);
+            flipAnimationB.start();
+            card.setRotation(360f);
 
+        }
         final Handler handler = new Handler();
         handler.postDelayed(() -> flipCard(card), TIME_FLIP_CARD_MS / 2);
     }
@@ -265,31 +282,66 @@ public class GameActivity extends AppCompatActivity {
 
     private void resetImageViews(CardLayout card) {
         ImageView[] imageViews = new ImageView[Options.getInstance().getNumImagesPerCard()];
+        TextView[] textViews = new TextView[Options.getInstance().getNumImagesPerCard()];
         for (int i = 0; i < imageViews.length; i++) {
-            imageViews[i] = card.findViewWithTag(String.valueOf(i));
-            imageViews[i].setImageResource(android.R.color.transparent);
+            if(card.findViewWithTag(String.valueOf(i)) instanceof TextView){
+                textViews[i] = card.findViewWithTag(String.valueOf(i));
+                //textViews[i].setImageResource(android.R.color.transparent);
+            }else{
+                imageViews[i] = card.findViewWithTag(String.valueOf(i));
+                imageViews[i].setImageResource(android.R.color.transparent);
+            }
         }
     }
 
     private void applyCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
+        TextView[] textViews=new TextView[images.length];
         for (int i = 0; i < imageViews.length; i++) {
             final int index = images[i];
-            imageViews[i] = card.findViewWithTag(String.valueOf(i));
-            imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+            if(card.findViewWithTag(String.valueOf(i)) instanceof TextView){
+                textViews[i] = card.findViewWithTag(String.valueOf(i));
 
-            if (!startOfGame && gameLogic.isMatch(index) && card == uiDeck[CARD_PLAY]) {
-                if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
-                    imageViews[i].setOnClickListener(v -> {
-                        if (!isDealing) {
-                            dealCard(uiDeck[CARD_PLAY]);
-                        }
-                    });
+                //textViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+                textViews[i].setText(imageSetUI.getResourceId(images[i], i));
+                String name = textViews[i].getText().toString().substring(textViews[i].getText().toString().lastIndexOf("/") + 1, textViews[i].getText().toString().lastIndexOf("."));
+                name = name.replace("ic_", "");
+                textViews[i].setText(name);
+                textViews[i].setGravity(Gravity.CENTER);
+                textViews[i].setTextSize(20F);
+                textViews[i].setClickable(true);
+                textViews[i].setFocusable(true);
+
+                if (!startOfGame && gameLogic.isMatch(index) && card == uiDeck[CARD_PLAY]) {
+                    if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
+                        textViews[i].setOnClickListener(v -> {
+                            if (!isDealing) {
+                                dealCard(uiDeck[CARD_PLAY]);
+                            }
+                        });
+                    } else {
+                        textViews[i].setOnClickListener(null);
+                    }
+                } else {
+                    textViews[i].setOnClickListener(null);
+                }
+            }else{
+                imageViews[i] = card.findViewWithTag(String.valueOf(i));
+                imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+
+                if (!startOfGame && gameLogic.isMatch(index) && card == uiDeck[CARD_PLAY]) {
+                    if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
+                        imageViews[i].setOnClickListener(v -> {
+                            if (!isDealing) {
+                                dealCard(uiDeck[CARD_PLAY]);
+                            }
+                        });
+                    } else {
+                        imageViews[i].setOnClickListener(null);
+                    }
                 } else {
                     imageViews[i].setOnClickListener(null);
                 }
-            } else {
-                imageViews[i].setOnClickListener(null);
             }
         }
     }
@@ -370,7 +422,157 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+
+    private void createCardTexts(CardLayout card, int[] images) {
+        TextView[] textViews = new TextView[images.length];
+        for (int i = 0; i < textViews.length; i++) {
+            final int index = images[i];
+            textViews[i] = new TextView(this);
+            textViews[i].setTag(String.valueOf(i));
+            textViews[i].setLayoutParams(generateTextPosition(i));
+            //textViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+            textViews[i].setText(imageSetUI.getResourceId(images[i], i));
+            String name = textViews[i].getText().toString().substring(textViews[i].getText().toString().lastIndexOf("/") + 1, textViews[i].getText().toString().lastIndexOf("."));
+            name = name.replace("ic_", "");
+            textViews[i].setText(name);
+            textViews[i].setGravity(Gravity.CENTER);
+            textViews[i].setTextSize(20F);
+            textViews[i].setClickable(true);
+            textViews[i].setFocusable(true);
+            card.addView(textViews[i]);
+            if (!startOfGame && gameLogic.isMatch(index)) {
+                if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
+                    textViews[i].setOnClickListener(v -> {
+                        if (!isDealing) {
+                            dealCard(uiDeck[CARD_PLAY]);
+                        }
+                    });
+                } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
+                    textViews[i].setOnClickListener((v -> {
+                        if (!isDealing) {
+                            uiDeck[CARD_DECK].setTranslationZ(3);
+                            dealCard(uiDeck[CARD_DECK]);
+                            // win screen and times up
+                            gameLogic.stopTimer(timer);
+                            showGameOver();
+                        }
+                    }));
+                }
+            }
+        }
+    }
+
+
+    private void createCardImagesAndText(CardLayout card, int[] images) {
+        ImageView[] imageViews = new ImageView[images.length];
+        TextView[] textViews = new TextView[images.length];
+        for (int i = 0; i < imageViews.length; i++) {
+            final int index = images[i];
+            imageViews[i] = new ImageView(this);
+            imageViews[i].setTag(String.valueOf(i));
+            imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
+            imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+            imageViews[i].setClickable(true);
+            imageViews[i].setFocusable(true);
+
+            textViews[i] = new TextView(this);
+            textViews[i].setTag(String.valueOf(i));
+            textViews[i].setLayoutParams(generateTextPosition(i));
+            //textViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+            textViews[i].setText(imageSetUI.getResourceId(images[i], i));
+            String name = textViews[i].getText().toString().substring(textViews[i].getText().toString().lastIndexOf("/") + 1, textViews[i].getText().toString().lastIndexOf("."));
+            name = name.replace("ic_", "");
+            textViews[i].setText(name);
+            textViews[i].setGravity(Gravity.CENTER);
+            textViews[i].setTextSize(20F);
+            textViews[i].setClickable(true);
+            textViews[i].setFocusable(true);
+
+            if (new Random().nextBoolean()) {
+                card.addView(imageViews[i]);
+                if (!startOfGame && gameLogic.isMatch(index)) {
+                    if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
+                        imageViews[i].setOnClickListener(v -> {
+                            if (!isDealing) {
+                                dealCard(uiDeck[CARD_PLAY]);
+                            }
+                        });
+                    } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
+                        imageViews[i].setOnClickListener((v -> {
+                            if (!isDealing) {
+                                uiDeck[CARD_DECK].setTranslationZ(3);
+                                dealCard(uiDeck[CARD_DECK]);
+                                // win screen and times up
+                                gameLogic.stopTimer(timer);
+                                showGameOver();
+                            }
+
+                        }));
+                    }
+                }
+            } else {
+                card.addView(textViews[i]);
+                if (!startOfGame && gameLogic.isMatch(index)) {
+                    if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
+                        textViews[i].setOnClickListener(v -> {
+                            if (!isDealing) {
+                                dealCard(uiDeck[CARD_PLAY]);
+                            }
+                        });
+                    } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
+                        textViews[i].setOnClickListener((v -> {
+                            if (!isDealing) {
+                                uiDeck[CARD_DECK].setTranslationZ(3);
+                                dealCard(uiDeck[CARD_DECK]);
+                                // win screen and times up
+                                gameLogic.stopTimer(timer);
+                                showGameOver();
+                            }
+                        }));
+                    }
+                }
+            }
+        }
+    }
+
+
     private RelativeLayout.LayoutParams generateImagePosition(ImageView[] imageViews, int index) {
+        RelativeLayout.LayoutParams imageParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        imageParams.height = (int) cardHeight / 2;
+        imageParams.width = (int) cardWidth / 2;
+
+        switch (index) {
+            case 0:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                break;
+            case 1:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                break;
+            case 2:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                break;
+            case 3:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                break;
+            case 4:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                break;
+            case 5:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        }
+        return imageParams;
+    }
+
+
+    private RelativeLayout.LayoutParams generateTextPosition(int index) {
         RelativeLayout.LayoutParams imageParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -404,7 +606,13 @@ public class GameActivity extends AppCompatActivity {
         }
         // if there's no images
         if (card.findViewWithTag("0") == null) {
-            createCardImages(card, images);
+            if (Configs.showType == 0) {
+                createCardImages(card, images);
+            } else if (Configs.showType == 1) {
+                createCardTexts(card, images);
+            } else if (Configs.showType == 2) {
+                createCardImagesAndText(card, images);
+            }
             startOfGame = false;
         } else {
             applyCardImages(card, images);

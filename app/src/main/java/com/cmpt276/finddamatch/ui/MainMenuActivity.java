@@ -45,7 +45,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
          */
         setContentView(R.layout.activity_main_menu);
 
