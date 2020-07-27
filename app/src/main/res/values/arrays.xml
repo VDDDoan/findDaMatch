@@ -7,6 +7,7 @@
     </integer-array>
 
     <integer-array name="fruitImageSet">
+
         <item>@drawable/ic_apple</item>
         <item>@drawable/bananas</item>
         <item>@drawable/blueberry</item>
@@ -15,35 +16,33 @@
         <item>@drawable/pineapple</item>
         <item>@drawable/strawberry</item>
         <item>@drawable/watermelon</item>
-        <item>@drawable/badminton</item>
-        <item>@drawable/baseball</item>
-        <item>@drawable/hockey</item>
-        <item>@drawable/soccerball</item>
-        <item>@drawable/tennisball</item>
-        <item>@drawable/volleyball</item>
-        <item>@drawable/basketball</item>
-        <item>@drawable/worryfacepalm</item>
-        <item>@drawable/worryfingers</item>
-        <item>@drawable/worryfrog</item>
-        <item>@drawable/worryfu</item>
-        <item>@drawable/worryhands</item>
-        <item>@drawable/worryheart</item>
-        <item>@drawable/worryjudge</item>
-        <item>@drawable/worrystudy</item>
-        <item>@drawable/worrysweat</item>
-        <item>@drawable/worrythumbsup</item>
-        <item>@drawable/worrywow</item>
-        <item>@drawable/worryyes</item>
-        <item>@drawable/cursedimage1</item>
-        <item>@drawable/cursedimage2</item>
-        <item>@drawable/cursedimage3</item>
-        <item>@drawable/cursedimage4</item>
-        <item>@drawable/cursedimage5</item>
-        <item>@drawable/cursedimage6</item>
-        <item>@drawable/cursedimage7</item>
-        <item>@drawable/cursedimage8</item>
-        <item>@drawable/cursedimage9</item>
-        <item>@drawable/cursedimage10</item>
+        <item>@drawable/avocado</item>
+        <item>@drawable/blackberry</item>
+        <item>@drawable/broccoli</item>
+        <item>@drawable/carrot</item>
+        <item>@drawable/cauliflower</item>
+        <item>@drawable/cherries</item>
+        <item>@drawable/coconut</item>
+        <item>@drawable/durian</item>
+        <item>@drawable/eggplant</item>
+        <item>@drawable/ginger</item>
+        <item>@drawable/kiwi</item>
+        <item>@drawable/leek</item>
+        <item>@drawable/lemon</item>
+        <item>@drawable/lettuce</item>
+        <item>@drawable/lime</item>
+        <item>@drawable/mushroom</item>
+        <item>@drawable/onion</item>
+        <item>@drawable/peach</item>
+        <item>@drawable/pear</item>
+        <item>@drawable/peas</item>
+        <item>@drawable/pomegranate</item>
+        <item>@drawable/potato</item>
+        <item>@drawable/pumpkin</item>
+        <item>@drawable/tomato</item>
+        <item>@drawable/turnip</item>
+
+
     </integer-array>
 
     <integer-array name="sportImageSet">
@@ -54,36 +53,6 @@
         <item>@drawable/tennisball</item>
         <item>@drawable/volleyball</item>
         <item>@drawable/basketball</item>
-        <item>@drawable/cursedimage1</item>
-        <item>@drawable/cursedimage2</item>
-        <item>@drawable/cursedimage3</item>
-        <item>@drawable/cursedimage4</item>
-        <item>@drawable/cursedimage5</item>
-        <item>@drawable/cursedimage6</item>
-        <item>@drawable/cursedimage7</item>
-        <item>@drawable/cursedimage8</item>
-        <item>@drawable/cursedimage9</item>
-        <item>@drawable/cursedimage10</item>
-        <item>@drawable/cursedimage11</item>
-        <item>@drawable/cursedimage12</item>
-        <item>@drawable/cursedimage13</item>
-        <item>@drawable/cursedimage14</item>
-        <item>@drawable/cursedimage15</item>
-        <item>@drawable/cursedimage16</item>
-        <item>@drawable/cursedimage17</item>
-        <item>@drawable/cursedimage18</item>
-        <item>@drawable/cursedimage19</item>
-        <item>@drawable/cursedimage20</item>
-        <item>@drawable/worryfacepalm</item>
-        <item>@drawable/worryfingers</item>
-        <item>@drawable/worryfrog</item>
-        <item>@drawable/worryfu</item>
-        <item>@drawable/worryhands</item>
-        <item>@drawable/worryheart</item>
-        <item>@drawable/worryjudge</item>
-        <item>@drawable/worrystudy</item>
-        <item>@drawable/worrysweat</item>
-        <item>@drawable/worrythumbsup</item>
     </integer-array>
 
     <integer-array name="gameOrderSizes">
