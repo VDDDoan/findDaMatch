@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -14,12 +15,13 @@ import java.util.UUID;
 public class FlickrImagesManager implements Iterable<Bitmap> {
     private static FlickrImagesManager FlickrImagesManager;
     private List<Bitmap> flickrImages;
-    private String[] fileId;
+    private List<String> fileId;
     private SaveImages fileLocation;
     private Context context;
     
     private FlickrImagesManager(Context context){
         flickrImages = new ArrayList<>();
+        fileId = new ArrayList<>();
         this.context = context;
         fileLocation = new SaveImages(context);
         update();
@@ -33,11 +35,11 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
     }
 
     public void update() {
-        fileId = fileLocation.getFileNames();
-        for (int i = 0; i < fileId.length; i++){
-            //fileLocation.setFileName(fileId[i]);
+        String[] temp = fileLocation.getFileNames();
+        fileId = Arrays.asList(temp);
+        for (int i = 0; i < fileId.size(); i++){
             System.out.println("load file id at " + i);
-            flickrImages.add(fileLocation.load(fileId[i]));
+            flickrImages.add(fileLocation.load(fileId.get(i)));
         }
     }
 
@@ -60,5 +62,16 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
 
     public Bitmap getBitmapAt(int position) {
         return flickrImages.get(position);
+    }
+
+    //says that operations not supported in flickrImages.remove and fileId.remove
+    public void deleteImage(String name, int position){
+        fileLocation.deleteFile(name);
+        flickrImages.remove(position);
+        fileId.remove(position);
+    }
+    //keep getting out of bounds error
+    public String returnFileId(int position){
+        return fileId.get(position);
     }
 }

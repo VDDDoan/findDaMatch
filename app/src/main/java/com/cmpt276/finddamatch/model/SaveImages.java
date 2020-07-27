@@ -93,6 +93,8 @@ public class SaveImages {
     }
 
     public void deleteFile (String fileName){
-        context.deleteFile(fileName);
+        String FILENAME = fileName;
+        File file=new File(context.getFilesDir().getAbsolutePath()+"/"+FILENAME);
+        boolean deleted = file.delete();
     }
 }
