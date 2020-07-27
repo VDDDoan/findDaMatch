@@ -111,6 +111,7 @@ public class MainMenuActivity extends AppCompatActivity {
             if (inputStream != null) {
                 inputStream.close();
             }
+        }
     }
     @Override
     public void onBackPressed(){
