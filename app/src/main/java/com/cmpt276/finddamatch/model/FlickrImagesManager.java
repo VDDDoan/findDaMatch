@@ -73,4 +73,8 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
     public String returnFileId(int position){
         return fileId.get(position);
     }
+
+    public int numberOfImages(){
+        return fileId.size();
+    }
 }

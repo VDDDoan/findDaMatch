@@ -15,10 +15,10 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmpt276.finddamatch.R;
+import com.cmpt276.finddamatch.model.FlickrImagesManager;
 import com.cmpt276.finddamatch.model.GameLogic;
 import com.cmpt276.finddamatch.model.HighScore;
 import com.cmpt276.finddamatch.model.HighScoreManager;
@@ -49,6 +50,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -71,6 +73,7 @@ public class GameActivity extends AppCompatActivity {
     private boolean isDealing;
 
     private TypedArray imageSetUI;
+    private List<Bitmap> flickrSet;
 
     private float boardHeight;
     private float boardWidth;
@@ -128,9 +131,21 @@ public class GameActivity extends AppCompatActivity {
             cardWidth = (float) uiDeck[0].getWidth();
         });
 
-        TypedArray imageSets = getResources().obtainTypedArray(R.array.imageSets);
-        int resId = imageSets.getResourceId(Options.getInstance().getImageSetIndex(), 0);
-        imageSetUI = getResources().obtainTypedArray(resId);
+        // if the option selected was 2 (flickr deck)
+        if (isFlickrDeck()) {
+            //flickr
+            flickrSet = FlickrImagesManager.getInstance(GameActivity.this).getBitmaps();
+        } else {
+            //regular
+            TypedArray imageSets = getResources().obtainTypedArray(R.array.imageSets);
+            int resId = imageSets.getResourceId(Options.getInstance().getImageSetIndex(), 0);
+            imageSetUI = getResources().obtainTypedArray(resId);
+        }
+
+    }
+
+    private boolean isFlickrDeck() {
+        return Options.getInstance().getImageSetIndex() == Options.getInstance().getFlickrIndex();
     }
 
     // generates random float between +max and min
@@ -294,13 +309,11 @@ public class GameActivity extends AppCompatActivity {
 
     private void applyCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
-        TextView[] textViews=new TextView[images.length];
+        TextView[] textViews = new TextView[images.length];
         for (int i = 0; i < imageViews.length; i++) {
             final int index = images[i];
-            if(card.findViewWithTag(String.valueOf(i)) instanceof TextView){
+            if(card.findViewWithTag(String.valueOf(i)) instanceof TextView) {
                 textViews[i] = card.findViewWithTag(String.valueOf(i));
-
-                //textViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
                 textViews[i].setText(imageSetUI.getResourceId(images[i], i));
                 String name = textViews[i].getText().toString().substring(textViews[i].getText().toString().lastIndexOf("/") + 1, textViews[i].getText().toString().lastIndexOf("."));
                 name = name.replace("ic_", "");
@@ -323,9 +336,13 @@ public class GameActivity extends AppCompatActivity {
                 } else {
                     textViews[i].setOnClickListener(null);
                 }
-            }else{
+            } else {
                 imageViews[i] = card.findViewWithTag(String.valueOf(i));
-                imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+                if(isFlickrDeck()) {
+                    imageViews[i].setImageBitmap(flickrSet.get(images[i]));
+                } else {
+                    imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+                }
 
                 if (!startOfGame && gameLogic.isMatch(index) && card == uiDeck[CARD_PLAY]) {
                     if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
@@ -391,9 +408,11 @@ public class GameActivity extends AppCompatActivity {
             imageViews[i] = new ImageView(this);
             imageViews[i].setTag(String.valueOf(i));
             imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
-            System.out.println(i);
-            System.out.println(images[i]);
-            imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+            if (isFlickrDeck()) {
+                imageViews[i].setImageBitmap(flickrSet.get(images[i]));
+            } else {
+                imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+            }
             imageViews[i].setClickable(true);
             imageViews[i].setFocusable(true);
             card.addView(imageViews[i]);
@@ -469,7 +488,11 @@ public class GameActivity extends AppCompatActivity {
             imageViews[i] = new ImageView(this);
             imageViews[i].setTag(String.valueOf(i));
             imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
-            imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+            if (isFlickrDeck()) {
+                imageViews[i].setImageBitmap(flickrSet.get(images[i]));
+            } else {
+                imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
+            }
             imageViews[i].setClickable(true);
             imageViews[i].setFocusable(true);
 
@@ -539,7 +562,6 @@ public class GameActivity extends AppCompatActivity {
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         setScalingFactor(imageParams,Options.getInstance().getNumImagesPerCard());
-
 
         switch (index) {
             case 0:
