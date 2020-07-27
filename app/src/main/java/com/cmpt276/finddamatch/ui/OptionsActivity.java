@@ -87,15 +87,16 @@ public class OptionsActivity extends AppCompatActivity {
             final int temp = i;
             btnDecks[i].setOnClickListener(v -> {
                 if (btnIds[temp] == R.id.btn_flickr_imageSet_choose){
-                    if (flickrImagesManager.numberOfImages() > Options.getInstance().getNumImagesPerCard()){
-                        // the flickrs gallery will be used in the game
+                    if (flickrImagesManager.numberOfImages() > Options.getInstance().getNumImagesPerCard()){                        // set a flag here?
                         btnDecks[finalI].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
                         originalButtonBackground(btnDecks, finalI);
+                        Options.getInstance().setImageSetIndex(finalI);
                     } else {
                         Toast.makeText(this, "Not enough images in Flickr gallery", Toast.LENGTH_LONG).show();
                     }
                 } else {
                 Options.getInstance().setImageSetIndex(finalI);
+                // disable flag here
                 btnDecks[finalI].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
                 originalButtonBackground(btnDecks, finalI);
                 }
