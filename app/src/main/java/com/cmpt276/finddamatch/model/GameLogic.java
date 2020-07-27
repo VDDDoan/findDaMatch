@@ -18,7 +18,7 @@ public class GameLogic {
         return numImagesPerCard;
     }
 
-    private int numImagesPerCard = Options.getInstance().getNumImagesPerCard();
+    private int numImagesPerCard= Options.getInstance().getNumImagesPerCard();
 
     private long time;
 

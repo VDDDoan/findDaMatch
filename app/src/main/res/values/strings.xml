@@ -23,7 +23,13 @@
     <string name="string_fruit_deck">Fruit Deck</string>
     <string name="eye">eye</string>
     <string name="cloud">cloud</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="current_order_size">Current Order Size: %1d</string>
+    <string name="current_number_of_cards">Current Number of Cards: %1d</string>
+    <string name="drawPileAllOption">Current Number of Cards: All</string>
+    <string name="search_hint">Keyword(s)</string>
+    <string name="search_title">Enter search words</string>
+    <string name="string_search">Search</string>
+    <string name="string_cancel">Cancel</string>
+    <string name="stringAddButtonDes">button to add images to flickr deck</string>
 
 </resources>

@@ -15,6 +15,35 @@
         <item>@drawable/pineapple</item>
         <item>@drawable/strawberry</item>
         <item>@drawable/watermelon</item>
+        <item>@drawable/badminton</item>
+        <item>@drawable/baseball</item>
+        <item>@drawable/hockey</item>
+        <item>@drawable/soccerball</item>
+        <item>@drawable/tennisball</item>
+        <item>@drawable/volleyball</item>
+        <item>@drawable/basketball</item>
+        <item>@drawable/worryfacepalm</item>
+        <item>@drawable/worryfingers</item>
+        <item>@drawable/worryfrog</item>
+        <item>@drawable/worryfu</item>
+        <item>@drawable/worryhands</item>
+        <item>@drawable/worryheart</item>
+        <item>@drawable/worryjudge</item>
+        <item>@drawable/worrystudy</item>
+        <item>@drawable/worrysweat</item>
+        <item>@drawable/worrythumbsup</item>
+        <item>@drawable/worrywow</item>
+        <item>@drawable/worryyes</item>
+        <item>@drawable/cursedimage1</item>
+        <item>@drawable/cursedimage2</item>
+        <item>@drawable/cursedimage3</item>
+        <item>@drawable/cursedimage4</item>
+        <item>@drawable/cursedimage5</item>
+        <item>@drawable/cursedimage6</item>
+        <item>@drawable/cursedimage7</item>
+        <item>@drawable/cursedimage8</item>
+        <item>@drawable/cursedimage9</item>
+        <item>@drawable/cursedimage10</item>
     </integer-array>
 
     <integer-array name="sportImageSet">
@@ -25,5 +54,62 @@
         <item>@drawable/tennisball</item>
         <item>@drawable/volleyball</item>
         <item>@drawable/basketball</item>
+        <item>@drawable/cursedimage1</item>
+        <item>@drawable/cursedimage2</item>
+        <item>@drawable/cursedimage3</item>
+        <item>@drawable/cursedimage4</item>
+        <item>@drawable/cursedimage5</item>
+        <item>@drawable/cursedimage6</item>
+        <item>@drawable/cursedimage7</item>
+        <item>@drawable/cursedimage8</item>
+        <item>@drawable/cursedimage9</item>
+        <item>@drawable/cursedimage10</item>
+        <item>@drawable/cursedimage11</item>
+        <item>@drawable/cursedimage12</item>
+        <item>@drawable/cursedimage13</item>
+        <item>@drawable/cursedimage14</item>
+        <item>@drawable/cursedimage15</item>
+        <item>@drawable/cursedimage16</item>
+        <item>@drawable/cursedimage17</item>
+        <item>@drawable/cursedimage18</item>
+        <item>@drawable/cursedimage19</item>
+        <item>@drawable/cursedimage20</item>
+        <item>@drawable/worryfacepalm</item>
+        <item>@drawable/worryfingers</item>
+        <item>@drawable/worryfrog</item>
+        <item>@drawable/worryfu</item>
+        <item>@drawable/worryhands</item>
+        <item>@drawable/worryheart</item>
+        <item>@drawable/worryjudge</item>
+        <item>@drawable/worrystudy</item>
+        <item>@drawable/worrysweat</item>
+        <item>@drawable/worrythumbsup</item>
     </integer-array>
+
+    <integer-array name="gameOrderSizes">
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+    </integer-array>
+
+
+    <integer-array name="drawPileOrder3">
+        <item>5</item>
+        <item>10</item>
+        <item>13</item>
+    </integer-array>
+
+    <integer-array name="drawPileOrder2">
+        <item>5</item>
+        <item>7</item>
+    </integer-array>
+
+    <integer-array name="drawPileOrder5">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>31</item>
+    </integer-array>
+
 </resources>

@@ -130,8 +130,7 @@ public class GameActivity extends AppCompatActivity {
             cardWidth = (float) uiDeck[0].getWidth();
         });
 
-        //image resources initial
-        imageSets = getResources().obtainTypedArray(R.array.imageSets);
+        TypedArray imageSets = getResources().obtainTypedArray(R.array.imageSets);
         int resId = imageSets.getResourceId(Options.getInstance().getImageSetIndex(), 0);
         imageSetUI = getResources().obtainTypedArray(resId);
     }
@@ -185,7 +184,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void dealFirstCard() {
         dealCard(uiDeck[CARD_HAND]);
@@ -388,7 +386,6 @@ public class GameActivity extends AppCompatActivity {
         builder.show();
     }
 
-
     private void createCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
         for (int i = 0; i < imageViews.length; i++) {
@@ -396,6 +393,8 @@ public class GameActivity extends AppCompatActivity {
             imageViews[i] = new ImageView(this);
             imageViews[i].setTag(String.valueOf(i));
             imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
+            System.out.println(i);
+            System.out.println(images[i]);
             imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
             imageViews[i].setClickable(true);
             imageViews[i].setFocusable(true);
@@ -551,12 +550,23 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case 1:
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 break;
             case 2:
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 break;
+            case 3:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                break;
+            case 4:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                break;
+            case 5:
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                imageParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         }
         return imageParams;
     }

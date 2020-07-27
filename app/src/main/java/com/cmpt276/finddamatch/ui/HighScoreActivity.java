@@ -5,7 +5,6 @@ package com.cmpt276.finddamatch.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -31,11 +30,8 @@ import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class HighScoreActivity extends AppCompatActivity {
     private ListView listView;
@@ -61,7 +57,7 @@ public class HighScoreActivity extends AppCompatActivity {
         System.out.println(scoreText);
         //Build Adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, R.layout.da_item, scoreText);
+                this, R.layout.layout_da_item, scoreText);
 
 
         //Configure the list view
