@@ -53,6 +53,31 @@
         <item>@drawable/tennisball</item>
         <item>@drawable/volleyball</item>
         <item>@drawable/basketball</item>
+        <item>@drawable/archery</item>
+        <item>@drawable/bowling</item>
+        <item>@drawable/boxing</item>
+        <item>@drawable/cycling</item>
+        <item>@drawable/football</item>
+        <item>@drawable/glove</item>
+        <item>@drawable/darts</item>
+        <item>@drawable/goggles</item>
+        <item>@drawable/hoop</item>
+        <item>@drawable/puck</item>
+        <item>@drawable/rowing</item>
+        <item>@drawable/bat</item>
+        <item>@drawable/cricket</item>
+        <item>@drawable/fencing</item>
+        <item>@drawable/golfball</item>
+        <item>@drawable/horseracing</item>
+        <item>@drawable/pingpong</item>
+        <item>@drawable/skates</item>
+        <item>@drawable/skiing</item>
+        <item>@drawable/snowboard</item>
+        <item>@drawable/karate</item>
+        <item>@drawable/rugby</item>
+        <item>@drawable/gymnastics</item>
+        <item>@drawable/frisbee</item>
+        <item>@drawable/croquet</item>
     </integer-array>
 
     <integer-array name="gameOrderSizes">
