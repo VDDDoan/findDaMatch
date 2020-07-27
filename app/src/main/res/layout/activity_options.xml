@@ -32,8 +32,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="328dp"
+        android:layout_height="510dp"
         android:background="@drawable/menu_bg_card_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,13 +76,14 @@
             android:layout_height="wrap_content"
             android:width="250dp"
             android:backgroundTint="@color/colorCharcoal"
-            android:text="@string/string_sport_deck"
             android:drawableEnd="@drawable/ic_basketball"
+            android:text="@string/string_sport_deck"
             android:textColor="@color/colorMintCream"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_imageSet0"
             app:layout_constraintWidth_percent=".8" />
+
         <Button
             android:id="@+id/btn_flickr_imageSet"
             android:layout_width="0dp"
@@ -93,8 +94,9 @@
             android:textColor="@color/colorMintCream"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent=".8"
-            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1"
+            app:layout_constraintWidth_percent=".8" />
+
         <Button
             android:id="@+id/orderChangeBtn"
             android:layout_width="264dp"
@@ -116,16 +118,25 @@
             android:backgroundTint="@color/colorCharcoal"
             android:text="@string/current_number_of_cards"
             android:textColor="@color/colorMintCream"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/orderChangeBtn"
-            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_percent=".8" />
 
-        app:layout_constraintWidth_percent=".8"
-            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet0" />
+        <Button
+            android:id="@+id/gameModeChange"
+            android:layout_width="266dp"
+            android:layout_height="68dp"
+            android:width="250dp"
+            android:backgroundTint="@color/colorCharcoal"
+            android:text=""
+            android:textColor="@color/colorMintCream"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/numOfCardsBtn"
+            app:layout_constraintWidth_percent=".8" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

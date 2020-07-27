@@ -31,5 +31,8 @@
     <string name="string_search">Search</string>
     <string name="string_cancel">Cancel</string>
     <string name="stringAddButtonDes">button to add images to flickr deck</string>
+    <string name="gameModeWords">Game Mode: Words</string>
+    <string name="gameModeImages">Game Mode: Images</string>
+    <string name="gameModeWordsAndImages">Game Mode: Words + Images</string>
 
 </resources>
