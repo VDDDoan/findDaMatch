@@ -47,15 +47,11 @@ public class FlickrDeckActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (deckRecyclerView.getAdapter() != null) {
-            Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
-            FlickrImagesManager.getInstance(FlickrDeckActivity.this).update();
             images = FlickrImagesManager.getInstance(FlickrDeckActivity.this).getBitmaps();
             deckRecyclerView.setAdapter(new FlickrDeckActivity.DeckImgAdapter(images));
             deckRecyclerView.getAdapter().notifyDataSetChanged();
         }
     }
-
-
 
     private class DeckImgAdapter extends RecyclerView.Adapter<DeckImgAdapter.DeckImgHolder> {
         private List<Bitmap> images;
@@ -84,12 +80,11 @@ public class FlickrDeckActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull DeckImgHolder holder, int position) {
             Bitmap deckImg = images.get(position);
             holder.itemImageView.setImageBitmap(deckImg);
-            System.out.println("image set");
         }
 
         @Override
         public int getItemCount() {
-            System.out.println(images.size());
+            System.out.println("size = " + images.size());
             return images.size();
         }
     }

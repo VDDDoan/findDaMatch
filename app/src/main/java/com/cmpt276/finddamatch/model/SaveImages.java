@@ -37,13 +37,12 @@ public class SaveImages {
         return this;
     }
 
-    public void save(Bitmap bitmapImage, String nameFile) {
+    public void save(Bitmap bitmapImage, String fileName) {
         FileOutputStream fos = null;
         try {
             //fos = new FileOutputStream(createFile());
-            fos = context.openFileOutput(nameFile, Context.MODE_PRIVATE);
+            fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            System.out.println("saved");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
