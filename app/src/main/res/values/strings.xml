@@ -34,5 +34,8 @@
     <string name="gameModeWords">Game Mode: Words</string>
     <string name="gameModeImages">Game Mode: Images</string>
     <string name="gameModeWordsAndImages">Game Mode: Words + Images</string>
+    <string name="order_2">Order : 2</string>
+    <string name="order_3">Order : 3</string>
+    <string name="order_5">Order : 5</string>
 
 </resources>
