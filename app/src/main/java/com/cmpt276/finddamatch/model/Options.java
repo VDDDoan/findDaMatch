@@ -6,8 +6,8 @@ package com.cmpt276.finddamatch.model;
 public class Options {
     private static Options instance;
     private int imageSetIndex = 0;
-    private static final int NUM_CARDS_PER_SET = 7;
-    private static final int NUM_IMAGES_PER_CARD = 3;
+    private int numCardsPerSet = 7;
+    private int numImagesPerCard = 3;
 
     public static Options getInstance() {
         if(instance == null) {
@@ -20,11 +20,11 @@ public class Options {
     }
 
     public int getNumImagesPerCard() {
-        return NUM_IMAGES_PER_CARD;
+        return numImagesPerCard;
     }
 
     public int getNumCardsPerSet() {
-        return NUM_CARDS_PER_SET;
+        return numCardsPerSet;
     }
 
     public int getImageSetIndex() {
@@ -35,5 +35,12 @@ public class Options {
         this.imageSetIndex = imageSetIndex;
     }
 
+    public void setNumImagesPerCard(int numOfImages) {
+        this.numImagesPerCard = numOfImages;
+    }
+
+    public void setNumCardsPerSet(int numCardsPerSet) {
+        this.numCardsPerSet = numCardsPerSet;
+    }
 
 }

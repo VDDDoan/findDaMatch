@@ -23,6 +23,9 @@
     <string name="string_fruit_deck">Fruit Deck</string>
     <string name="eye">eye</string>
     <string name="cloud">cloud</string>
+    <string name="current_order_size">Current Order Size: %1d</string>
+    <string name="current_number_of_cards">Current Number of Cards: %1d</string>
+    <string name="drawPileAllOption">Current Number of Cards: All</string>
     <string name="search_hint">Keyword(s)</string>
     <string name="search_title">Enter search words</string>
     <string name="string_search">Search</string>
