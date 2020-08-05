@@ -1,6 +1,5 @@
 package com.cmpt276.finddamatch.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -59,11 +58,11 @@ public class DialogFlickrSearch extends DialogFragment {
             }
         });
 
-        cancelButton = view.findViewById(R.id.cancel_button);
+        cancelButton = view.findViewById(R.id.yes_button);
         cancelButton.setOnClickListener(v->{
             getActivity().onBackPressed();
         });
-        searchButton = view.findViewById(R.id.search_button);
+        searchButton = view.findViewById(R.id.no_button);
         searchButton.setOnClickListener(v->{
             if(!errorFunc()){
                 listener.onFinishSearchDialog(searchWord, true);

@@ -13,6 +13,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -54,7 +55,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements DialogExportImage.ExportDialogListener {
     private static final int TIME_FLIP_CARD_MS = 500;
     private static final int TIME_DEAL_CARD_MS = 500;
     private static final int TIME_SHUFFLE_CARD_MS = 500;
@@ -71,6 +72,7 @@ public class GameActivity extends AppCompatActivity {
     private boolean isShuffled;
     private boolean startOfGame;
     private boolean isDealing;
+    private boolean exportImageFlag;
 
     private TypedArray imageSetUI;
     private List<Bitmap> flickrSet;
@@ -90,8 +92,8 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         initGame();
-
         handCardListener();
+        showDialog();
     }
 
     @Override
@@ -746,5 +748,16 @@ public class GameActivity extends AppCompatActivity {
             assert pw != null;
             pw.close();
         }
+    }
+
+    private void showDialog(){
+        DialogExportImage dialog = new DialogExportImage();
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(),"dialog");
+    }
+
+    @Override
+    public void onFinishExportDialog(boolean flag) {
+        exportImageFlag = flag;
     }
 }
