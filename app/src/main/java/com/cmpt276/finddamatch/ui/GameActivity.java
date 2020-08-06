@@ -31,6 +31,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmpt276.finddamatch.R;
+import com.cmpt276.finddamatch.model.ExportImages;
 import com.cmpt276.finddamatch.model.FlickrImagesManager;
 import com.cmpt276.finddamatch.model.GameLogic;
 import com.cmpt276.finddamatch.model.HighScore;
@@ -86,6 +87,7 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
     private Chronometer timer;
     private TextView txtNumCardsRemaining;
     private CardLayout[] uiDeck;
+    private ExportImages exportImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,6 +284,7 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
         }
         final Handler handler = new Handler();
         handler.postDelayed(() -> flipCard(card), TIME_FLIP_CARD_MS / 2);
+
     }
 
     private void flipCard(CardLayout card) {
@@ -289,6 +292,9 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
             card.setTag(TAG_CARD_FACE);
             card.setBackgroundResource(R.drawable.menu_bg_card_face);
             drawCardImages(card);
+            if(exportImageFlag){
+                exportImage = new ExportImages(card,this);
+            }
         } else if (card.getTag() == TAG_CARD_FACE) {
             card.setTag(TAG_CARD_BACK);
             card.setBackgroundResource(R.drawable.menu_bg_card_back);
