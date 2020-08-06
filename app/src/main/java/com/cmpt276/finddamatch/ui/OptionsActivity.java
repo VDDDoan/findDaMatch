@@ -88,7 +88,7 @@ public class OptionsActivity extends AppCompatActivity {
             final int finalI = i;
             btnDecks[i].setOnClickListener(v -> {
                 if (btnIds[finalI] == R.id.btn_custom_imageSet_choose) {
-                    if (isFlickrDeckBigEnough()) {                        // set a flag here?
+                    if (isCustomDeckBigEnough()) {                        // set a flag here?
                         setSelected(btnDecks, finalI);
                     } else {
                         Toast.makeText(this, "Not enough images in Custom Deck", Toast.LENGTH_LONG).show();
@@ -100,8 +100,8 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isFlickrDeckBigEnough() {
-        return customImagesManager.numberOfImages() > Options.getInstance().getNumImagesPerCard();
+    private boolean isCustomDeckBigEnough() {
+        return customImagesManager.numberOfImages() >= Options.getInstance().getNumCardsPerSet();
     }
 
     private void setSelected(Button[] btnDecks, int selectedIndex) {

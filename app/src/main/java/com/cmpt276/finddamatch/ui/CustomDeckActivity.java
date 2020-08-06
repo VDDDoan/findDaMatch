@@ -104,10 +104,15 @@ public class CustomDeckActivity extends AppCompatActivity {
     }
 
     private void saveUriAsBitmap(Uri imageUri) {
-        Bitmap bitmap;
         try {
-            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-            customImagesManager.add(bitmap, imageUri.toString());
+            Bitmap bitmapRaw = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(
+                    BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri)),
+                    (int) (bitmapRaw.getWidth() * 0.3),
+                    (int) (bitmapRaw.getHeight() * 0.3),
+                    true);
+
+            customImagesManager.add(scaledBitmap, imageUri.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
