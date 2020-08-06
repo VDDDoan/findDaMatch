@@ -56,20 +56,20 @@ public class HighScoreActivity extends AppCompatActivity {
         orderBtn = findViewById(R.id.btn_orderHS);
         switch(rollBackSign){
             case 2:
-                orderBtn.setText(R.string.order_2);
+                orderBtn.setText(R.string.string_order_2);
                 break;
             case 3:
-                orderBtn.setText(R.string.order_3);
+                orderBtn.setText(R.string.string_order_3);
                 break;
             case 5:
-                orderBtn.setText(R.string.order_5);
+                orderBtn.setText(R.string.string_order_5);
                 break;
         }
         orderBtn.setOnClickListener(v -> {
             switch (rollBackSign) {
                 case 2:
                     rollBackSign = 3;
-                    orderBtn.setText(R.string.order_3);
+                    orderBtn.setText(R.string.string_order_3);
                     try {
                         innerManagerUpdate(3);
                         populateListView();
@@ -79,7 +79,7 @@ public class HighScoreActivity extends AppCompatActivity {
                     break;
                 case 3:
                     rollBackSign = 5;
-                    orderBtn.setText(R.string.order_5);
+                    orderBtn.setText(R.string.string_order_5);
                     try {
                         innerManagerUpdate(5);
                         populateListView();
@@ -89,7 +89,7 @@ public class HighScoreActivity extends AppCompatActivity {
                     break;
                 case 5:
                     rollBackSign = 2;
-                    orderBtn.setText(R.string.order_2);
+                    orderBtn.setText(R.string.string_order_2);
                     try {
                         innerManagerUpdate(2);
                         populateListView();
@@ -114,9 +114,8 @@ public class HighScoreActivity extends AppCompatActivity {
         for(int i = 0; i < HighScoreManager.getNumHighScores(); i++) {
             scoreText[i] = HighScoreManager.getInstance().getHighScores().get(i).toString();
         }
-        System.out.println(scoreText);
         //Build Adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.layout_da_item, scoreText);
 
 

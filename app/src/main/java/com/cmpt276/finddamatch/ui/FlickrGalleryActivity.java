@@ -13,12 +13,11 @@ import androidx.fragment.app.FragmentManager;
 
 import com.cmpt276.finddamatch.R;
 
-public class PhotoGalleryActivity extends AppCompatActivity implements DialogFlickrSearch.SearchDialogListener {
+public class FlickrGalleryActivity extends AppCompatActivity implements DialogFlickrSearch.SearchDialogListener {
     private static String searchWord;
 
     public static Intent newIntent(Context packageContext) {
-        Intent intent = new Intent(packageContext, PhotoGalleryActivity.class);
-        return intent;
+        return new Intent(packageContext, FlickrGalleryActivity.class);
     }
 
     public static String getWords(){
@@ -32,9 +31,7 @@ public class PhotoGalleryActivity extends AppCompatActivity implements DialogFli
 
         ImageView search = findViewById(R.id.search_Button);
         search.setColorFilter(Color.argb(255, 255, 255, 255));
-        search.setOnClickListener(v->{
-            showDialog();
-        });
+        search.setOnClickListener(v-> showDialog());
         showDialog();
     }
     private saveInterface listener;
@@ -52,12 +49,12 @@ public class PhotoGalleryActivity extends AppCompatActivity implements DialogFli
             Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
             if (fragment == null) {
-                fragment = PhotoGalleryFragment.newInstance();
+                fragment = FlickrGalleryFragment.newInstance();
                 fm.beginTransaction()
                         .add(R.id.fragment_container, fragment)
                         .commit();
             } else {
-                fragment = PhotoGalleryFragment.newInstance();
+                fragment = FlickrGalleryFragment.newInstance();
                 fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
             }
             listener = (saveInterface) fragment;

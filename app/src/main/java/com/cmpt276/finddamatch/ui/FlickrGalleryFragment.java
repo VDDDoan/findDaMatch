@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -40,9 +39,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PhotoGalleryFragment extends Fragment implements PhotoGalleryActivity.saveInterface {
+public class FlickrGalleryFragment extends Fragment implements FlickrGalleryActivity.saveInterface {
 
-    private static final String TAG = "PhotoGalleryFragment";
+    private static final String TAG = "FlickrGalleryFragment";
 
     private RecyclerView photoRecyclerView;
     private List<GalleryItem> items = new ArrayList<>();
@@ -50,8 +49,8 @@ public class PhotoGalleryFragment extends Fragment implements PhotoGalleryActivi
     private ThumbnailDownloader<PhotoHolder> thumbnailDownloader;
     private FlickrImagesManager flickrManager;
 
-    public static PhotoGalleryFragment newInstance() {
-        return new PhotoGalleryFragment();
+    public static FlickrGalleryFragment newInstance() {
+        return new FlickrGalleryFragment();
     }
 
     @Override
@@ -149,8 +148,9 @@ public class PhotoGalleryFragment extends Fragment implements PhotoGalleryActivi
             this.galleryItems = galleryItems;
         }
 
+        @NonNull
         @Override
-        public PhotoHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        public PhotoHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
             View view = inflater.inflate(R.layout.layout_gallery_list_item, viewGroup, false);
             return new PhotoHolder(view);
@@ -185,7 +185,7 @@ public class PhotoGalleryFragment extends Fragment implements PhotoGalleryActivi
         }
     }
     private void updateItems(){
-        String query = PhotoGalleryActivity.getWords();
+        String query = FlickrGalleryActivity.getWords();
         new FetchItemsTask(query).execute();
     }
 
@@ -207,7 +207,7 @@ public class PhotoGalleryFragment extends Fragment implements PhotoGalleryActivi
 
         @Override
         protected void onPostExecute(List<GalleryItem> items) {
-            PhotoGalleryFragment.this.items = items;
+            FlickrGalleryFragment.this.items = items;
             setupAdapter();
         }
 

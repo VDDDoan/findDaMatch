@@ -2,7 +2,7 @@
     <string name="string_app_name">Find daMatch</string>
     <string name="string_skip">skip</string>
     <string name="string_high_score">High Score</string>
-    <string name="reference_cup_image">https://www.freepik.com/premium-vector/prize-cup-hand-win-congrats_6221374.htm</string>
+    <string name="string_reference_cup_image">https://www.freepik.com/premium-vector/prize-cup-hand-win-congrats_6221374.htm</string>
     <string name="string_record">Details</string>
     <string name="string_reset">Reset</string>
     <string name="string_back">Back</string>
@@ -18,27 +18,28 @@
     <string name="string_howtoplay_des">
         Find the matching symbol! At the start of the game you will be given a card. Each card will have three symbols, Click the symbol on your card that is shared with the top card on the deck! Go through all seven cards as fast as you can for a higher score!
     </string>
-    <string name="stringEnterName">Congratulations!\nEnter your name:</string>
+    <string name="string_enter_name">Congratulations!\nEnter your name:</string>
     <string name="string_sport_deck">Sport Deck</string>
     <string name="string_fruit_deck">Fruit and Veggie Deck</string>
-    <string name="eye">eye</string>
-    <string name="cloud">cloud</string>
-    <string name="current_order_size">Current Order Size: %1d</string>
-    <string name="current_number_of_cards">Current Number of Cards: %1d</string>
-    <string name="drawPileAllOption">Current Number of Cards: All</string>
-    <string name="search_hint">Keyword(s)</string>
-    <string name="search_title">Enter search words</string>
+    <string name="string_eye">eye</string>
+    <string name="string_cloud">cloud</string>
+    <string name="string_current_order_size">Current Order Size: %1d</string>
+    <string name="string_current_number_of_cards">Current Number of Cards: %1d</string>
+    <string name="string_draw_pile_all_option">Current Number of Cards: All</string>
+    <string name="string_search_hint">Keyword(s)</string>
+    <string name="string_search_title">Enter search words</string>
     <string name="string_search">Search</string>
     <string name="string_cancel">Cancel</string>
-    <string name="stringAddButtonDes">button to add images to flickr deck</string>
-    <string name="flickr_custom_set">Flickr Deck</string>
-    <string name="customize">Customize</string>
-    <string name="gameModeWords">Game Mode: Words</string>
-    <string name="gameModeImages">Game Mode: Images</string>
-    <string name="gameModeWordsAndImages">Game Mode: Words + Images</string>
-    <string name="order_2">Order : 2</string>
-    <string name="order_3">Order : 3</string>
-    <string name="order_5">Order : 5</string>
+    <string name="string_add_button_des">button to add images to flickr deck</string>
+    <string name="string_custom_deck">Custom Deck</string>
+    <string name="string_customize">Customize</string>
+    <string name="string_game_mode_words">Game Mode: Words</string>
+    <string name="string_game_mode_images">Game Mode: Images</string>
+    <string name="string_game_mode_words_and_images">Game Mode: Words + Images</string>
+    <string name="string_order_2">Order : 2</string>
+    <string name="string_order_3">Order : 3</string>
+    <string name="string_order_5">Order : 5</string>
     <string name="string_user_photo_deck">Your Image Deck</string>
+    <string name="string_delete_button">Delete Button</string>
 
 </resources>
