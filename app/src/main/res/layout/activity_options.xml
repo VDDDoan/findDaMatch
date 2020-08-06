@@ -31,6 +31,7 @@
         app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -45,7 +46,7 @@
 
         <TextView
             android:id="@+id/optionTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/string_options"
@@ -54,7 +55,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".8"/>
 
         <Button
             android:id="@+id/btn_imageSet0"
@@ -87,6 +89,21 @@
             app:layout_constraintWidth_percent=".8" />
 
         <Button
+            android:id="@+id/btn_userImageSet"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:width="250dp"
+            android:backgroundTint="@color/colorCharcoal"
+            android:drawableEnd="@drawable/camera"
+            android:text="@string/string_user_photo_deck"
+            android:textColor="@color/colorMintCream"
+            app:layout_constraintHeight_percent=".15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1"
+            app:layout_constraintWidth_percent=".8" />
+
+        <Button
             android:id="@+id/btn_flickr_imageSet_choose"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -96,7 +113,7 @@
             android:textColor="@color/colorMintCream"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHeight_percent=".15"
-            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1"
+            app:layout_constraintTop_toBottomOf="@+id/btn_userImageSet"
             app:layout_constraintWidth_percent=".4" />
 
         <Button
@@ -109,7 +126,7 @@
             android:textColor="@color/colorMintCream"
             app:layout_constraintHeight_percent=".15"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/btn_imageSet1"
+            app:layout_constraintTop_toBottomOf="@+id/btn_userImageSet"
             app:layout_constraintWidth_percent=".4" />
 
         <Button
@@ -120,7 +137,7 @@
             android:backgroundTint="@color/colorCharcoal"
             android:text="@string/current_order_size"
             android:textColor="@color/colorMintCream"
-            app:layout_constraintHeight_percent=".15"
+            app:layout_constraintHeight_percent=".10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_flickr_imageSet_customize"
@@ -137,7 +154,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/orderChangeBtn"
-            app:layout_constraintHeight_percent=".15"
+            app:layout_constraintHeight_percent=".10"
             app:layout_constraintWidth_percent=".8" />
 
         <Button
@@ -151,7 +168,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/numOfCardsBtn"
-            app:layout_constraintHeight_percent=".15"
+            app:layout_constraintHeight_percent=".10"
             app:layout_constraintWidth_percent=".8" />
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -159,6 +176,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".5" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

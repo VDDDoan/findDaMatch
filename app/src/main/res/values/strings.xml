@@ -39,5 +39,6 @@
     <string name="order_2">Order : 2</string>
     <string name="order_3">Order : 3</string>
     <string name="order_5">Order : 5</string>
+    <string name="string_user_photo_deck">Your Image Deck</string>
 
 </resources>
