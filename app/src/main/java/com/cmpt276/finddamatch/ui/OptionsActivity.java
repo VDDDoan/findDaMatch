@@ -16,6 +16,14 @@ import com.cmpt276.finddamatch.R;
 import com.cmpt276.finddamatch.model.CustomImagesManager;
 import com.cmpt276.finddamatch.model.Options;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.util.Objects;
+
 public class OptionsActivity extends AppCompatActivity {
     private static final int IMAGES_ONLY = 0;
     private static final int WORDS_ONLY = 1;
