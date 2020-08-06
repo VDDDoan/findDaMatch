@@ -321,6 +321,7 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
     private void applyCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
         TextView[] textViews = new TextView[images.length];
+        soundInstance = SoundPoolUtil.getInstance(this);
         for (int i = 0; i < imageViews.length; i++) {
             final int index = images[i];
             if(card.findViewWithTag(String.valueOf(i)) instanceof TextView) {
@@ -337,16 +338,19 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
                 if (!startOfGame && gameLogic.isMatch(index) && card == uiDeck[CARD_PLAY]) {
                     if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                         textViews[i].setOnClickListener(v -> {
+                            soundInstance.play(1);
                             if (!isDealing) {
                                 dealCard(uiDeck[CARD_PLAY]);
                             }
                         });
                     } else {
-                        textViews[i].setOnClickListener(null);
-                    }
+                        textViews[i].setOnClickListener((v -> {
+                            soundInstance.play(2);
+                        }));}
                 } else {
-                    textViews[i].setOnClickListener(null);
-                }
+                    textViews[i].setOnClickListener((v -> {
+                        soundInstance.play(2);
+                    }));}
             } else {
                 imageViews[i] = card.findViewWithTag(String.valueOf(i));
                 if(isFlickrDeck()) {
@@ -358,16 +362,19 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
                 if (!startOfGame && gameLogic.isMatch(index) && card == uiDeck[CARD_PLAY]) {
                     if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                         imageViews[i].setOnClickListener(v -> {
+                            soundInstance.play(1);
                             if (!isDealing) {
                                 dealCard(uiDeck[CARD_PLAY]);
                             }
                         });
                     } else {
-                        imageViews[i].setOnClickListener(null);
-                    }
+                        imageViews[i].setOnClickListener((v -> {
+                            soundInstance.play(2);
+                        }));}
                 } else {
-                    imageViews[i].setOnClickListener(null);
-                }
+                    imageViews[i].setOnClickListener((v -> {
+                        soundInstance.play(2);
+                    }));}
             }
         }
     }
@@ -472,6 +479,7 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
 
     private void createCardTexts(CardLayout card, int[] images) {
         TextView[] textViews = new TextView[images.length];
+        soundInstance = SoundPoolUtil.getInstance(this);
         for (int i = 0; i < textViews.length; i++) {
             final int index = images[i];
             textViews[i] = new TextView(this);
@@ -490,12 +498,14 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
             if (!startOfGame && gameLogic.isMatch(index)) {
                 if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                     textViews[i].setOnClickListener(v -> {
+                        this.soundInstance.play(1);
                         if (!isDealing) {
                             dealCard(uiDeck[CARD_PLAY]);
                         }
                     });
                 } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
                     textViews[i].setOnClickListener((v -> {
+                        this.soundInstance.play(1);
                         if (!isDealing) {
                             uiDeck[CARD_DECK].setTranslationZ(3);
                             dealCard(uiDeck[CARD_DECK]);
@@ -505,6 +515,11 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
                         }
                     }));
                 }
+            }
+            else if(gameLogic.isMatch(index)==false){
+                textViews[i].setOnClickListener((V->{
+                    this.soundInstance.play(2);
+                }));
             }
         }
     }
