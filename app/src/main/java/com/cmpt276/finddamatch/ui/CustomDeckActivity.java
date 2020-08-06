@@ -31,6 +31,7 @@ import java.util.List;
 
 public class CustomDeckActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_SELECT_MULTIPLE = 1;
     private RecyclerView deckRecyclerView;
     private List<Bitmap> images;
     private CustomImagesManager customImagesManager;
@@ -82,22 +83,33 @@ public class CustomDeckActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1);
+        startActivityForResult(Intent.createChooser(intent,"Select Picture"), REQUEST_CODE_SELECT_MULTIPLE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK){
-            Uri targetUri = data.getData();
-            Bitmap bitmap;
-            try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                customImagesManager.add(bitmap, targetUri.toString());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        if (requestCode == REQUEST_CODE_SELECT_MULTIPLE) {
+            if (resultCode == RESULT_OK) {
+                if (data.getClipData() != null) {
+                    for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                        saveUriAsBitmap(data.getClipData().getItemAt(i).getUri());
+                    }
+                } else if (data.getData() != null) {
+                    saveUriAsBitmap(data.getData());
+                }
             }
+        }
+    }
+
+    private void saveUriAsBitmap(Uri imageUri) {
+        Bitmap bitmap;
+        try {
+            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+            customImagesManager.add(bitmap, imageUri.toString());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
