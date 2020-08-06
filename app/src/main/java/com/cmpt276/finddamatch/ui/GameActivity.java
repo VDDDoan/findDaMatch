@@ -122,10 +122,12 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
         uiDeck[CARD_HAND] = findViewById(R.id.view_card_hand);
         uiDeck[CARD_PLAY] = findViewById(R.id.view_card_play);
         uiDeck[CARD_DECK] = findViewById(R.id.view_card_deck);
+
+        // intro music play
         soundInstance = SoundPoolUtil.getInstance(this);
         soundInstance.play(3);
-       // MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.intro2);
-       // mediaPlayer.start();
+        // MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.intro2);
+        // mediaPlayer.start();
         for (int i = 0; i < NUM_CARDS_IN_ACTIVITY; i++) {
             uiDeck[i].setTranslationZ(NUM_CARDS_IN_ACTIVITY - i);
             uiDeck[i].setTag(TAG_CARD_BACK);
@@ -373,6 +375,8 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void showGameOver() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // win sound play
         soundInstance = SoundPoolUtil.getInstance(this);
         this.soundInstance.play(0);
         View view = getLayoutInflater().inflate(R.layout.dialog_gameover, null);
@@ -411,6 +415,9 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * Bug almost here, the immediate image could not set the sound effect up
+     */
     private void createCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
         soundInstance = SoundPoolUtil.getInstance(this);
@@ -431,14 +438,18 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
             if (!startOfGame && gameLogic.isMatch(index)) {
                 if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                     imageViews[i].setOnClickListener(v -> {
+
                         this.soundInstance.play(1);
+
                         if (!isDealing) {
                             dealCard(uiDeck[CARD_PLAY]);
                         }
                     });
                 } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
                     imageViews[i].setOnClickListener((v -> {
+
                         this.soundInstance.play(1);
+
                         uiDeck[CARD_DECK].setTranslationZ(3);
                         if (!isDealing) {
                             dealCard(uiDeck[CARD_DECK]);
