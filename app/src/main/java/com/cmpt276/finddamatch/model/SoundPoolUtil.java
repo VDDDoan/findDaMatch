@@ -39,12 +39,12 @@ public class SoundPoolUtil {
     }
 
     public void play(int num) {
-        // This is for load check, but seems useless
+
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId,
-                                       int status) {
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 boolean loaded = true;
+                //soundPool.play(soundmap.get(num), 1, 1, 0, 0, 1);
             }
         });
         soundPool.play(soundmap.get(num), 1, 1, 0, 0, 1);

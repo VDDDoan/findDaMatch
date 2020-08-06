@@ -122,12 +122,14 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
         uiDeck[CARD_HAND] = findViewById(R.id.view_card_hand);
         uiDeck[CARD_PLAY] = findViewById(R.id.view_card_play);
         uiDeck[CARD_DECK] = findViewById(R.id.view_card_deck);
-
+        /**
+        *  get two funny way to solve this loading problem, one is using MediaPlayer, the second way is add another play() in onLoadComplete (even i don't know why this is okay)
+        */
         // intro music play
-        soundInstance = SoundPoolUtil.getInstance(this);
-        soundInstance.play(3);
-        // MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.intro2);
-        // mediaPlayer.start();
+        //soundInstance = SoundPoolUtil.getInstance(this);
+        //soundInstance.play(3);
+         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.intro2);
+         mediaPlayer.start();
         for (int i = 0; i < NUM_CARDS_IN_ACTIVITY; i++) {
             uiDeck[i].setTranslationZ(NUM_CARDS_IN_ACTIVITY - i);
             uiDeck[i].setTag(TAG_CARD_BACK);
@@ -422,9 +424,6 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
         builder.show();
     }
 
-    /**
-     * Bug almost here, the immediate image could not set the sound effect up
-     */
     private void createCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
         soundInstance = SoundPoolUtil.getInstance(this);
