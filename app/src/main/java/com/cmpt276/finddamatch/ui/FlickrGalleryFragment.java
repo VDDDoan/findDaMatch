@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cmpt276.finddamatch.model.FlickrFetchr;
-import com.cmpt276.finddamatch.model.FlickrImagesManager;
+import com.cmpt276.finddamatch.model.CustomImagesManager;
 import com.cmpt276.finddamatch.model.GalleryItem;
 import com.cmpt276.finddamatch.R;
 import com.cmpt276.finddamatch.model.ThumbnailDownloader;
@@ -47,7 +47,7 @@ public class FlickrGalleryFragment extends Fragment implements FlickrGalleryActi
     private List<GalleryItem> items = new ArrayList<>();
     private List<String> selectedItems;
     private ThumbnailDownloader<PhotoHolder> thumbnailDownloader;
-    private FlickrImagesManager flickrManager;
+    private CustomImagesManager flickrManager;
 
     public static FlickrGalleryFragment newInstance() {
         return new FlickrGalleryFragment();
@@ -57,7 +57,7 @@ public class FlickrGalleryFragment extends Fragment implements FlickrGalleryActi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         updateItems();
-        flickrManager = FlickrImagesManager.getInstance(getActivity());
+        flickrManager = CustomImagesManager.getInstance(getActivity());
         Handler responseHandler = new Handler();
         thumbnailDownloader = new ThumbnailDownloader<>(responseHandler);
         thumbnailDownloader.setThumbnailDownloadListener(
@@ -226,7 +226,7 @@ public class FlickrGalleryFragment extends Fragment implements FlickrGalleryActi
             System.out.println("url = " + url_value);
             try {
                 Bitmap imageToSave = BitmapFactory.decodeStream(url_value.openConnection().getInputStream());
-                flickrManager.add(imageToSave, url_value);
+                flickrManager.add(imageToSave, url_value.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -13,20 +13,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cmpt276.finddamatch.R;
-import com.cmpt276.finddamatch.model.FlickrImagesManager;
+import com.cmpt276.finddamatch.model.CustomImagesManager;
 import com.cmpt276.finddamatch.model.Options;
 
 public class OptionsActivity extends AppCompatActivity {
     private static final int IMAGES_ONLY = 0;
     private static final int WORDS_ONLY = 1;
     private static final int IMAGES_AND_WORDS = 2;
-    private FlickrImagesManager flickrImagesManager;
+    private CustomImagesManager customImagesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
-        flickrImagesManager = FlickrImagesManager.getInstance(this);
+        customImagesManager = CustomImagesManager.getInstance(this);
         updateScreen();
 
         int[] btnIds = {R.id.btn_imageSet0, R.id.btn_imageSet1, R.id.btn_custom_imageSet_choose};
@@ -93,7 +93,7 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private boolean isFlickrDeckBigEnough() {
-        return flickrImagesManager.numberOfImages() > Options.getInstance().getNumImagesPerCard();
+        return customImagesManager.numberOfImages() > Options.getInstance().getNumImagesPerCard();
     }
 
     private void setSelected(Button[] btnDecks, int selectedIndex) {

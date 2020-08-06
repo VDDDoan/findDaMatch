@@ -30,7 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmpt276.finddamatch.R;
-import com.cmpt276.finddamatch.model.FlickrImagesManager;
+import com.cmpt276.finddamatch.model.CustomImagesManager;
 import com.cmpt276.finddamatch.model.GameLogic;
 import com.cmpt276.finddamatch.model.HighScore;
 import com.cmpt276.finddamatch.model.HighScoreManager;
@@ -134,7 +134,7 @@ public class GameActivity extends AppCompatActivity {
         // if the option selected was 2 (flickr deck)
         if (isFlickrDeck()) {
             //flickr
-            flickrSet = FlickrImagesManager.getInstance(GameActivity.this).getBitmaps();
+            flickrSet = CustomImagesManager.getInstance(GameActivity.this).getBitmaps();
         } else {
             //regular
             TypedArray imageSets = getResources().obtainTypedArray(R.array.imageSets);

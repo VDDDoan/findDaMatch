@@ -10,28 +10,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
-public class FlickrImagesManager implements Iterable<Bitmap> {
-    private static FlickrImagesManager FlickrImagesManager;
-    private List<Bitmap> flickrImages;
+public class CustomImagesManager implements Iterable<Bitmap> {
+    private static CustomImagesManager CustomImagesManager;
+    private List<Bitmap> customImages;
     private List<String> fileId;
     private SaveImages fileLocation;
     private Context context;
     
-    private FlickrImagesManager(Context context){
-        flickrImages = new ArrayList<>();
+    private CustomImagesManager(Context context){
+        customImages = new ArrayList<>();
         fileId = new ArrayList<>();
         this.context = context;
         fileLocation = new SaveImages(context);
         update();
     }
 
-    public static FlickrImagesManager getInstance(Context context){
-        if(FlickrImagesManager == null){
-            FlickrImagesManager = new FlickrImagesManager(context);
+    public static CustomImagesManager getInstance(Context context){
+        if(CustomImagesManager == null){
+            CustomImagesManager = new CustomImagesManager(context);
         }
-        return FlickrImagesManager;
+        return CustomImagesManager;
     }
 
     public void update() {
@@ -40,33 +39,33 @@ public class FlickrImagesManager implements Iterable<Bitmap> {
         System.out.println("manager id size = " + fileId.size());
         for (int i = 0; i < fileId.size(); i++){
             System.out.println("load file id at " + i);
-            flickrImages.add(fileLocation.load(fileId.get(i)));
+            customImages.add(fileLocation.load(fileId.get(i)));
         }
     }
 
     @NonNull
     @Override
     public Iterator<Bitmap> iterator() {
-        return flickrImages.iterator();
+        return customImages.iterator();
     }
 
-    public void add(Bitmap image, URL url_value){
-        fileLocation.save(image, url_value.toString());
-        flickrImages.add(image);
-        fileId.add(url_value.toString());
+    public void add(Bitmap image, String imageName){
+        fileLocation.save(image, imageName);
+        customImages.add(image);
+        fileId.add(imageName);
     }
 
     public List<Bitmap> getBitmaps() {
-        return flickrImages;
+        return customImages;
     }
 
     public Bitmap getBitmapAt(int position) {
-        return flickrImages.get(position);
+        return customImages.get(position);
     }
 
     public void deleteImage(String name, int position){
         fileLocation.deleteFile(name);
-        flickrImages.remove(position);
+        customImages.remove(position);
         fileId.remove(position);
     }
 
