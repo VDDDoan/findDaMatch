@@ -239,10 +239,51 @@ public class OptionsActivity extends AppCompatActivity {
             }
         }
     }
+    public void Configs(int orderNum, int showType, int size) {
+        String filename;
+        filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/Configs.txt";//record the path of file
+        FileOutputStream fos;
+        FileInputStream fis;
+        PrintWriter pw = null;
+        BufferedReader br = null;
+        //if the director path not exist, then build it
+        File file = new File(getExternalCacheDir().getAbsolutePath());
+        if(file.exists()){
+            try{
+                File dir = new File(filename);
+                dir.delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        try {
+            File dir = new File(filename);
+            dir.createNewFile();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        //record the new configs
+        try {
+            fos = new FileOutputStream(filename, true);
+            pw = new PrintWriter(fos);
+            pw.println(String.valueOf(orderNum) + ' ' + String.valueOf(showType) + ' ' + String.valueOf(size));
+            pw.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            assert pw != null;
+            pw.close();
+        }
+    }
+
 
 
     @Override
     public void finish() {
+        Configs(Options.getInstance().getOrderNum(),Options.getInstance().getGameMode(),Options.getInstance().getNumCardsPerSet());
         super.finish();
         overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_top);
     }

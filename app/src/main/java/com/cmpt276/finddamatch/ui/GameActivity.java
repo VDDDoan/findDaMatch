@@ -16,6 +16,9 @@ import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +38,7 @@ import com.cmpt276.finddamatch.model.GameLogic;
 import com.cmpt276.finddamatch.model.HighScore;
 import com.cmpt276.finddamatch.model.HighScoreManager;
 import com.cmpt276.finddamatch.model.Options;
+import com.cmpt276.finddamatch.model.SoundPoolUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -50,11 +54,12 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity<soundInstance> extends AppCompatActivity {
     private static final int TIME_FLIP_CARD_MS = 500;
     private static final int TIME_DEAL_CARD_MS = 500;
     private static final int TIME_SHUFFLE_CARD_MS = 500;
@@ -84,6 +89,7 @@ public class GameActivity extends AppCompatActivity {
     private Chronometer timer;
     private TextView txtNumCardsRemaining;
     private CardLayout[] uiDeck;
+    private SoundPoolUtil soundInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +107,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void initGame() {
+
         gameLogic = new GameLogic();
 
         isShuffled = false;
@@ -110,13 +117,19 @@ public class GameActivity extends AppCompatActivity {
         timer = findViewById(R.id.timer_game);
 
         txtNumCardsRemaining.setText("Cards Remaining: " + (numCardsPerSet - gameLogic.getCurrentCardIndex()));
-
         uiDeck = new CardLayout[NUM_CARDS_IN_ACTIVITY];
 
         uiDeck[CARD_HAND] = findViewById(R.id.view_card_hand);
         uiDeck[CARD_PLAY] = findViewById(R.id.view_card_play);
         uiDeck[CARD_DECK] = findViewById(R.id.view_card_deck);
-
+        /**
+        *  get two funny way to solve this loading problem, one is using MediaPlayer, the second way is add another play() in onLoadComplete (even i don't know why this is okay)
+        */
+        // intro music play
+        //soundInstance = SoundPoolUtil.getInstance(this);
+        //soundInstance.play(3);
+         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.intro2);
+         mediaPlayer.start();
         for (int i = 0; i < NUM_CARDS_IN_ACTIVITY; i++) {
             uiDeck[i].setTranslationZ(NUM_CARDS_IN_ACTIVITY - i);
             uiDeck[i].setTag(TAG_CARD_BACK);
@@ -310,6 +323,7 @@ public class GameActivity extends AppCompatActivity {
     private void applyCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
         TextView[] textViews = new TextView[images.length];
+        soundInstance = SoundPoolUtil.getInstance(this);
         for (int i = 0; i < imageViews.length; i++) {
             final int index = images[i];
             if(card.findViewWithTag(String.valueOf(i)) instanceof TextView) {
@@ -326,16 +340,19 @@ public class GameActivity extends AppCompatActivity {
                 if (!startOfGame && gameLogic.isMatch(index) && card == uiDeck[CARD_PLAY]) {
                     if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                         textViews[i].setOnClickListener(v -> {
+                            soundInstance.play(1);
                             if (!isDealing) {
                                 dealCard(uiDeck[CARD_PLAY]);
                             }
                         });
                     } else {
-                        textViews[i].setOnClickListener(null);
-                    }
+                        textViews[i].setOnClickListener((v -> {
+                            soundInstance.play(2);
+                        }));}
                 } else {
-                    textViews[i].setOnClickListener(null);
-                }
+                    textViews[i].setOnClickListener((v -> {
+                        soundInstance.play(2);
+                    }));}
             } else {
                 imageViews[i] = card.findViewWithTag(String.valueOf(i));
                 if(isFlickrDeck()) {
@@ -347,16 +364,19 @@ public class GameActivity extends AppCompatActivity {
                 if (!startOfGame && gameLogic.isMatch(index) && card == uiDeck[CARD_PLAY]) {
                     if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                         imageViews[i].setOnClickListener(v -> {
+                            soundInstance.play(1);
                             if (!isDealing) {
                                 dealCard(uiDeck[CARD_PLAY]);
                             }
                         });
                     } else {
-                        imageViews[i].setOnClickListener(null);
-                    }
+                        imageViews[i].setOnClickListener((v -> {
+                            soundInstance.play(2);
+                        }));}
                 } else {
-                    imageViews[i].setOnClickListener(null);
-                }
+                    imageViews[i].setOnClickListener((v -> {
+                        soundInstance.play(2);
+                    }));}
             }
         }
     }
@@ -365,6 +385,9 @@ public class GameActivity extends AppCompatActivity {
     private void showGameOver() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        // win sound play
+        soundInstance = SoundPoolUtil.getInstance(this);
+        this.soundInstance.play(0);
         View view = getLayoutInflater().inflate(R.layout.dialog_gameover, null);
         builder.setView(view).
                 //add action button
@@ -403,6 +426,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void createCardImages(CardLayout card, int[] images) {
         ImageView[] imageViews = new ImageView[images.length];
+        soundInstance = SoundPoolUtil.getInstance(this);
+
         for (int i = 0; i < imageViews.length; i++) {
             final int index = images[i];
             imageViews[i] = new ImageView(this);
@@ -419,14 +444,20 @@ public class GameActivity extends AppCompatActivity {
             if (!startOfGame && gameLogic.isMatch(index)) {
                 if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                     imageViews[i].setOnClickListener(v -> {
+
+                        this.soundInstance.play(1);
+
                         if (!isDealing) {
                             dealCard(uiDeck[CARD_PLAY]);
                         }
                     });
                 } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
                     imageViews[i].setOnClickListener((v -> {
+
+                        this.soundInstance.play(1);
+
+                        uiDeck[CARD_DECK].setTranslationZ(3);
                         if (!isDealing) {
-                            uiDeck[CARD_DECK].setTranslationZ(3);
                             dealCard(uiDeck[CARD_DECK]);
                             // win screen and times up
                             gameLogic.stopTimer(timer);
@@ -436,12 +467,18 @@ public class GameActivity extends AppCompatActivity {
                     }));
                 }
             }
+            else if(gameLogic.isMatch(index)==false){
+                imageViews[i].setOnClickListener((V->{
+                    this.soundInstance.play(2);
+                }));
+            }
         }
     }
 
 
     private void createCardTexts(CardLayout card, int[] images) {
         TextView[] textViews = new TextView[images.length];
+        soundInstance = SoundPoolUtil.getInstance(this);
         for (int i = 0; i < textViews.length; i++) {
             final int index = images[i];
             textViews[i] = new TextView(this);
@@ -460,12 +497,14 @@ public class GameActivity extends AppCompatActivity {
             if (!startOfGame && gameLogic.isMatch(index)) {
                 if (gameLogic.getCurrentCardIndex() < numCardsPerSet - 1) {
                     textViews[i].setOnClickListener(v -> {
+                        this.soundInstance.play(1);
                         if (!isDealing) {
                             dealCard(uiDeck[CARD_PLAY]);
                         }
                     });
                 } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
                     textViews[i].setOnClickListener((v -> {
+                        this.soundInstance.play(1);
                         if (!isDealing) {
                             uiDeck[CARD_DECK].setTranslationZ(3);
                             dealCard(uiDeck[CARD_DECK]);
@@ -475,6 +514,11 @@ public class GameActivity extends AppCompatActivity {
                         }
                     }));
                 }
+            }
+            else if(gameLogic.isMatch(index)==false){
+                textViews[i].setOnClickListener((V->{
+                    this.soundInstance.play(2);
+                }));
             }
         }
     }
