@@ -11,9 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.FlickrDeckActivity"></activity>
+        <activity android:name=".ui.CustomDeckActivity" />
         <activity
-            android:name=".ui.PhotoGalleryActivity"
+            android:name=".ui.FlickrGalleryActivity"
             android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />

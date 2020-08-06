@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorCharcoalLite"
-    tools:context=".ui.FlickrDeckActivity">
+    tools:context=".ui.CustomDeckActivity">
 
     <ImageView
         android:id="@+id/btn_addtoflickrdeck"
@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_24"
-        android:contentDescription="@string/stringAddButtonDes" />
+        android:contentDescription="@string/string_add_button_des" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_flickrdeck"
@@ -34,6 +34,7 @@
         android:layout_marginEnd="25dp"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view_flickrdeck"
         app:layout_constraintEnd_toStartOf="@+id/btn_addtoflickrdeck"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        android:contentDescription="@string/string_delete_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
         android:layout_marginTop="16dp"
         android:width="128dp"
         android:gravity="center"
-        android:text="@string/stringEnterName"
+        android:text="@string/string_enter_name"
         android:textColor="@color/colorCharcoal"
         app:layout_constraintStart_toStartOf="@+id/e_text_username"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,5 +26,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_game_flavour"
-        android:autofillHints="" />
+        android:autofillHints=""
+        tools:ignore="LabelFor" />
 </androidx.constraintlayout.widget.ConstraintLayout>

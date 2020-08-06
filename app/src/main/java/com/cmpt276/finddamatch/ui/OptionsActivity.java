@@ -13,43 +13,25 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cmpt276.finddamatch.R;
-import com.cmpt276.finddamatch.model.HighScore;
-import com.cmpt276.finddamatch.model.FlickrImagesManager;
+import com.cmpt276.finddamatch.model.CustomImagesManager;
 import com.cmpt276.finddamatch.model.Options;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class OptionsActivity extends AppCompatActivity {
     private static final int IMAGES_ONLY = 0;
     private static final int WORDS_ONLY = 1;
     private static final int IMAGES_AND_WORDS = 2;
-    private FlickrImagesManager flickrImagesManager;
-
+    private CustomImagesManager customImagesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
-        flickrImagesManager = FlickrImagesManager.getInstance(this);
+        customImagesManager = CustomImagesManager.getInstance(this);
         updateScreen();
 
-        int[] btnIds = {R.id.btn_imageSet0, R.id.btn_imageSet1,R.id.btn_flickr_imageSet_choose};
+        int[] btnIds = {R.id.btn_imageSet0, R.id.btn_imageSet1, R.id.btn_custom_imageSet_choose};
 
-        for (int i = 0; i < btnIds.length; i++) {
-            onClickImgSetListener(btnIds);
-        }
+        onClickImgSetListener(btnIds);
 
 
         Button orderButton = findViewById(R.id.orderChangeBtn);
@@ -59,11 +41,11 @@ public class OptionsActivity extends AppCompatActivity {
             for (int i = 0; i < orderOptions.length; i++){
                 if(currentOrder == (orderOptions[i] + 1)){
                     if (i == orderOptions.length-1){
-                        orderButton.setText(getString(R.string.current_order_size,orderOptions[0]));
+                        orderButton.setText(getString(R.string.string_current_order_size,orderOptions[0]));
                         Options.getInstance().setNumImagesPerCard(orderOptions[0]+1);
                     }
                     else{
-                        orderButton.setText(getString(R.string.current_order_size,orderOptions[i+1]));
+                        orderButton.setText(getString(R.string.string_current_order_size,orderOptions[i+1]));
                         Options.getInstance().setNumImagesPerCard(orderOptions[i+1]+1);
                     }
 
@@ -74,19 +56,16 @@ public class OptionsActivity extends AppCompatActivity {
         });
 
         Button drawPileBtn = findViewById(R.id.numOfCardsBtn);
-        drawPileBtn.setOnClickListener(v -> {
-            incrementDrawPile();
-        });
-        Button flickr = findViewById(R.id.btn_flickr_imageSet_customize);
-        flickr.setOnClickListener(v -> {
-            Intent intent = new Intent(OptionsActivity.this, FlickrDeckActivity.class);
+        drawPileBtn.setOnClickListener(v -> incrementDrawPile());
+
+        Button flickrCustomize = findViewById(R.id.btn_flickr_imageSet_customize);
+        flickrCustomize.setOnClickListener(v -> {
+            Intent intent = new Intent(OptionsActivity.this, CustomDeckActivity.class);
             startActivity(intent);
         });
 
         Button modeChangeBtn = findViewById(R.id.gameModeChange);
-        modeChangeBtn.setOnClickListener(v->{
-            updateGameMode();
-        });
+        modeChangeBtn.setOnClickListener(v-> updateGameMode());
 
         ImageView returnBtn = findViewById(R.id.btn_options_back);
         returnBtn.setOnClickListener(v -> finish());
@@ -98,29 +77,38 @@ public class OptionsActivity extends AppCompatActivity {
 
         for (int i = 0; i < btnDecks.length; i++) {
             btnDecks[i] = findViewById(btnIds[i]);
-            int finalI = i;
-            final int temp = i;
+            final int finalI = i;
             btnDecks[i].setOnClickListener(v -> {
-                if (btnIds[temp] == R.id.btn_flickr_imageSet_choose){
-                    if (flickrImagesManager.numberOfImages() > Options.getInstance().getNumImagesPerCard()){                        // set a flag here?
-                        btnDecks[finalI].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
-                        originalButtonBackground(btnDecks, finalI);
-                        Options.getInstance().setImageSetIndex(finalI);
+                if (btnIds[finalI] == R.id.btn_custom_imageSet_choose) {
+                    if (isFlickrDeckBigEnough()) {                        // set a flag here?
+                        setSelected(btnDecks, finalI);
                     } else {
-                        Toast.makeText(this, "Not enough images in Flickr gallery", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Not enough images in Custom Deck", Toast.LENGTH_LONG).show();
                     }
-                } else {
-                Options.getInstance().setImageSetIndex(finalI);
-                btnDecks[finalI].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
-                originalButtonBackground(btnDecks, finalI);
+                }else {
+                    setSelected(btnDecks, finalI);
                 }
             });
         }
     }
 
-    private void originalButtonBackground(Button[] btnDecks, int finalI){
+    private boolean isFlickrDeckBigEnough() {
+        return customImagesManager.numberOfImages() > Options.getInstance().getNumImagesPerCard();
+    }
+
+    private void setSelected(Button[] btnDecks, int selectedIndex) {
+        Options.getInstance().setImageSetIndex(selectedIndex);
+        setClickedBackground(btnDecks[selectedIndex]);
+        setUnclickedBackground(btnDecks, selectedIndex);
+    }
+
+    private void setClickedBackground(Button btnSelected) {
+        btnSelected.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoalLite)));
+    }
+
+    private void setUnclickedBackground(Button[] btnDecks, int selectedIndex){
         for (int j = 0; j < btnDecks.length; j++) {
-            if (j != finalI) {
+            if (j != selectedIndex) {
                 btnDecks[j].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorCharcoal)));
             }
         }
@@ -163,7 +151,7 @@ public class OptionsActivity extends AppCompatActivity {
                 break;
         }
 
-        orderBtn.setText(getString(R.string.current_order_size,Options.getInstance().getNumImagesPerCard()-1));
+        orderBtn.setText(getString(R.string.string_current_order_size,Options.getInstance().getNumImagesPerCard()-1));
         updateDrawPile();
 
 
@@ -172,13 +160,13 @@ public class OptionsActivity extends AppCompatActivity {
 
         switch (currentGameMode){
             case 0:
-                modeChangeBtn.setText(R.string.gameModeImages);
+                modeChangeBtn.setText(R.string.string_game_mode_images);
                 break;
             case 1:
-                modeChangeBtn.setText(R.string.gameModeWords);
+                modeChangeBtn.setText(R.string.string_game_mode_words);
                 break;
             case 2:
-                modeChangeBtn.setText(R.string.gameModeWordsAndImages);
+                modeChangeBtn.setText(R.string.string_game_mode_words_and_images);
                 break;
         }
 
@@ -194,9 +182,9 @@ public class OptionsActivity extends AppCompatActivity {
         for (int i = 0; i < drawSizeOptions.length; i++) {
             if (currentDrawSize == drawSizeOptions[i]) {
                 if (i == drawSizeOptions.length-1){
-                    cardNumButton.setText(R.string.drawPileAllOption);
+                    cardNumButton.setText(R.string.string_draw_pile_all_option);
                 }else{
-                    cardNumButton.setText(getString(R.string.current_number_of_cards,drawSizeOptions[i]));
+                    cardNumButton.setText(getString(R.string.string_current_number_of_cards,drawSizeOptions[i]));
                 }
                 Options.getInstance().setNumCardsPerSet(drawSizeOptions[i]);
                 isNotAnOption = false;
@@ -204,7 +192,7 @@ public class OptionsActivity extends AppCompatActivity {
         }
 
         if (isNotAnOption){
-            cardNumButton.setText(getString(R.string.current_number_of_cards,drawSizeOptions[0]));
+            cardNumButton.setText(getString(R.string.string_current_number_of_cards,drawSizeOptions[0]));
             Options.getInstance().setNumCardsPerSet((drawSizeOptions[0]));
         }
     }
@@ -217,15 +205,15 @@ public class OptionsActivity extends AppCompatActivity {
         switch (currentGameMode){
             case 0:
                 Options.getInstance().setGameMode(WORDS_ONLY);
-                modeChangeBtn.setText(R.string.gameModeWords);
+                modeChangeBtn.setText(R.string.string_game_mode_words);
                 break;
             case 1:
                 Options.getInstance().setGameMode(IMAGES_AND_WORDS);
-                modeChangeBtn.setText(R.string.gameModeWordsAndImages);
+                modeChangeBtn.setText(R.string.string_game_mode_words_and_images);
                 break;
             case 2:
                 Options.getInstance().setGameMode(IMAGES_ONLY);
-                modeChangeBtn.setText(R.string.gameModeImages);
+                modeChangeBtn.setText(R.string.string_game_mode_images);
                 break;
         }
     }
@@ -239,13 +227,13 @@ public class OptionsActivity extends AppCompatActivity {
         for (int i = 0; i < drawSizeOptions.length; i++) {
             if (currentDrawSize == drawSizeOptions[i]) {
                 if (i == drawSizeOptions.length - 1) {
-                    drawPileBtn.setText(getString(R.string.current_number_of_cards, drawSizeOptions[0]));
+                    drawPileBtn.setText(getString(R.string.string_current_number_of_cards, drawSizeOptions[0]));
                     Options.getInstance().setNumCardsPerSet(drawSizeOptions[0]);
                 } else if (i == drawSizeOptions.length - 2) {
-                    drawPileBtn.setText(R.string.drawPileAllOption);
+                    drawPileBtn.setText(R.string.string_draw_pile_all_option);
                     Options.getInstance().setNumCardsPerSet(drawSizeOptions[i + 1]);
                 } else {
-                    drawPileBtn.setText(getString(R.string.current_number_of_cards, drawSizeOptions[i + 1]));
+                    drawPileBtn.setText(getString(R.string.string_current_number_of_cards, drawSizeOptions[i + 1]));
                     Options.getInstance().setNumCardsPerSet(drawSizeOptions[i + 1]);
                 }
             }

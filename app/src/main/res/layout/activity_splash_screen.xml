@@ -82,7 +82,7 @@
 
     <ImageView
         android:id="@+id/sauron_eye"
-        android:contentDescription="@string/eye"
+        android:contentDescription="@string/string_eye"
         android:layout_width="140dp"
         android:layout_height="122dp"
         app:layout_constraintCircle="@+id/Title"
