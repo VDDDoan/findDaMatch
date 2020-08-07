@@ -442,6 +442,9 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
                         if (!isDealing) {
                             uiDeck[CARD_DECK].setTranslationZ(3);
                             dealCard(uiDeck[CARD_DECK]);
+                            if(exportImageFlag){
+                                exportImage = new ExportImages(uiDeck[CARD_DECK],GameActivity.this);
+                            }
                             // win screen and times up
                             gameLogic.stopTimer(timer);
                             showGameOver();
@@ -539,6 +542,9 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
                             if (!isDealing) {
                                 uiDeck[CARD_DECK].setTranslationZ(3);
                                 dealCard(uiDeck[CARD_DECK]);
+                                if(exportImageFlag){
+                                    exportImage = new ExportImages(uiDeck[CARD_DECK],GameActivity.this);
+                                }
                                 // win screen and times up
                                 gameLogic.stopTimer(timer);
                                 showGameOver();
@@ -561,6 +567,9 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
                             if (!isDealing) {
                                 uiDeck[CARD_DECK].setTranslationZ(3);
                                 dealCard(uiDeck[CARD_DECK]);
+                                if(exportImageFlag){
+                                    exportImage = new ExportImages(uiDeck[CARD_DECK],GameActivity.this);
+                                }
                                 // win screen and times up
                                 gameLogic.stopTimer(timer);
                                 showGameOver();
