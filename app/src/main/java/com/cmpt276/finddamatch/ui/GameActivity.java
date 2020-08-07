@@ -209,6 +209,9 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
             gameLogic.startTimer(timer);
             flipCardAnim(uiDeck[CARD_PLAY]);
             uiDeck[CARD_HAND].setTranslationZ(0);
+            if(exportImageFlag){
+                exportImage = new ExportImages(uiDeck[CARD_HAND],this);
+            }
         }, TIME_DEAL_CARD_MS + TIME_FLIP_CARD_MS);
     }
 
@@ -226,6 +229,9 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
         CardLayout nextCard = uiDeck[CARD_PLAY];
         // show images that were on the PLAY CARD on the HAND CARD
         applyCardImages(prevCard, gameLogic.getCard(gameLogic.getCurrentCardIndex() - 1));
+        if(exportImageFlag){
+            exportImage = new ExportImages(uiDeck[CARD_HAND],this);
+        }
         // flip PLAY CARD to face down
         flipCard(nextCard);
         // move PLAY CARD back to draw pile (DECK CARD)
@@ -250,6 +256,9 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
                     revealNextMiddleCard();
                 } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
                     flipCardAnim(uiDeck[CARD_DECK]);
+                    if(exportImageFlag){
+                        exportImage = new ExportImages(uiDeck[CARD_PLAY],GameActivity.this);
+                    }
                 }
                 isDealing = false;
             }
@@ -283,7 +292,9 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
 
         }
         final Handler handler = new Handler();
-        handler.postDelayed(() -> flipCard(card), TIME_FLIP_CARD_MS / 2);
+        handler.postDelayed(() -> {
+            flipCard(card);
+        }, TIME_FLIP_CARD_MS / 2);
     }
 
     private void flipCard(CardLayout card) {
@@ -361,9 +372,6 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
                     imageViews[i].setOnClickListener(null);
                 }
             }
-        }
-        if(exportImageFlag){
-            exportImage = new ExportImages(card,this);
         }
     }
 
@@ -453,7 +461,6 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
             textViews[i] = new TextView(this);
             textViews[i].setTag(String.valueOf(i));
             textViews[i].setLayoutParams(generateTextPosition(i));
-            //textViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
             textViews[i].setText(imageSetUI.getResourceId(images[i], i));
             String name = textViews[i].getText().toString().substring(textViews[i].getText().toString().lastIndexOf("/") + 1, textViews[i].getText().toString().lastIndexOf("."));
             name = name.replace("ic_", "");
@@ -475,6 +482,9 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
                         if (!isDealing) {
                             uiDeck[CARD_DECK].setTranslationZ(3);
                             dealCard(uiDeck[CARD_DECK]);
+                            if(exportImageFlag){
+                                exportImage = new ExportImages(uiDeck[CARD_DECK],GameActivity.this);
+                            }
                             // win screen and times up
                             gameLogic.stopTimer(timer);
                             showGameOver();
