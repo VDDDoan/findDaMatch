@@ -7,12 +7,14 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -41,24 +43,34 @@ public class ExportImages {
     public ExportImages(View view, Context context) {
         this.context = context;
         exportLayout = view;
-        exportImage = generateBitmap(context, exportLayout);
+        exportImage = generateBitmap(exportLayout);
         if (checkPermissionREAD_EXTERNAL_STORAGE(context)) {
             saveImage(exportImage);
         }
     }
-    private Bitmap generateBitmap(Context context, View view) {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        view.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+    private Bitmap generateBitmap(View view) {
 
-        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
-        view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
-        view.buildDrawingCache();
-        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        // Create a bitmap with same dimensions as view
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
 
+        // Create a canvas using bitmap
         Canvas canvas = new Canvas(bitmap);
+
+        /**
+         We need to check if view as backround image.
+         It is important in case of overlays like photo frame feature
+         */
+        Drawable background = view.getBackground();
+        if (background != null) {
+            background.draw(canvas);
+        } else {
+            canvas.drawColor(Color.WHITE);
+        }
+
+        // draw the view on the canvas
         view.draw(canvas);
 
+        // final bitmap
         return bitmap;
     }
 
@@ -75,7 +87,7 @@ public class ExportImages {
         // Generate a random file name for image
         @SuppressLint("SimpleDateFormat") String imageName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".jpeg";
         File localFile = new File(imgDir, imageName);
-
+        String path = "file://" + externalStorageDirectory.getAbsolutePath() + "/" + dstFolder;
         MediaStore.Images.Media.insertImage(context.getContentResolver(), exportImage, imageName , null);
 
         try {
@@ -83,6 +95,7 @@ public class ExportImages {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
+            context.sendBroadcast(new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE", Uri.fromFile(new File(path))));
         } catch (Exception e)  {
             e.printStackTrace();
         }
