@@ -1,0 +1,25 @@
+SCRUM MASTER:
+David Doan
+vdoan
+--------------------------------
+PRODUCT OWNER:
+Wei Cheng (James) Wang
+wcw10
+--------------------------------
+REPOSITORY MANAGER:
+Vinesh Reddy
+vineshr
+--------------------------------
+TEAM MEMBERS:
+Vinesh Reddy
+vineshr
+
+Wei Yan
+yanweiy
+
+David Doan
+vdoan
+
+Wei Cheng (James) Wang
+wcw10
+--------------------------------
