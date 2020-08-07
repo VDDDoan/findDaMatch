@@ -41,5 +41,7 @@
     <string name="string_order_5">Order : 5</string>
     <string name="string_user_photo_deck">Your Image Deck</string>
     <string name="string_delete_button">Delete Button</string>
-
+    <string name="save_prompt">Export cards to android photo gallery?</string>
+    <string name="string_yes">Yes</string>
+    <string name="string_no">No</string>
 </resources>

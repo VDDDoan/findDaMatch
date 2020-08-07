@@ -13,6 +13,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -34,6 +35,8 @@ import android.widget.TextView;
 
 import com.cmpt276.finddamatch.R;
 import com.cmpt276.finddamatch.model.CustomImagesManager;
+import com.cmpt276.finddamatch.model.ExportImages;
+//import com.cmpt276.finddamatch.model.FlickrImagesManager;
 import com.cmpt276.finddamatch.model.GameLogic;
 import com.cmpt276.finddamatch.model.HighScore;
 import com.cmpt276.finddamatch.model.HighScoreManager;
@@ -59,7 +62,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class GameActivity<soundInstance> extends AppCompatActivity {
+public class GameActivity<soundInstance> extends AppCompatActivity implements DialogExportImage.ExportDialogListener {
     private static final int TIME_FLIP_CARD_MS = 500;
     private static final int TIME_DEAL_CARD_MS = 500;
     private static final int TIME_SHUFFLE_CARD_MS = 500;
@@ -76,6 +79,7 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
     private boolean isShuffled;
     private boolean startOfGame;
     private boolean isDealing;
+    private boolean exportImageFlag;
 
     private TypedArray imageSetUI;
     private List<Bitmap> flickrSet;
@@ -89,6 +93,7 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
     private Chronometer timer;
     private TextView txtNumCardsRemaining;
     private CardLayout[] uiDeck;
+    private ExportImages exportImage;
     private SoundPoolUtil soundInstance;
 
     @Override
@@ -96,8 +101,8 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         initGame();
-
         handCardListener();
+        showDialog();
     }
 
     @Override
@@ -218,6 +223,9 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
             gameLogic.startTimer(timer);
             flipCardAnim(uiDeck[CARD_PLAY]);
             uiDeck[CARD_HAND].setTranslationZ(0);
+            if(exportImageFlag){
+                exportImage = new ExportImages(uiDeck[CARD_HAND],this);
+            }
         }, TIME_DEAL_CARD_MS + TIME_FLIP_CARD_MS);
     }
 
@@ -235,6 +243,9 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
         CardLayout nextCard = uiDeck[CARD_PLAY];
         // show images that were on the PLAY CARD on the HAND CARD
         applyCardImages(prevCard, gameLogic.getCard(gameLogic.getCurrentCardIndex() - 1));
+        if(exportImageFlag){
+            exportImage = new ExportImages(uiDeck[CARD_HAND],this);
+        }
         // flip PLAY CARD to face down
         flipCard(nextCard);
         // move PLAY CARD back to draw pile (DECK CARD)
@@ -259,6 +270,9 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
                     revealNextMiddleCard();
                 } else if (gameLogic.getCurrentCardIndex() == numCardsPerSet - 1) {
                     flipCardAnim(uiDeck[CARD_DECK]);
+                    if(exportImageFlag){
+                        exportImage = new ExportImages(uiDeck[CARD_PLAY],GameActivity.this);
+                    }
                 }
                 isDealing = false;
             }
@@ -292,7 +306,9 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
 
         }
         final Handler handler = new Handler();
-        handler.postDelayed(() -> flipCard(card), TIME_FLIP_CARD_MS / 2);
+        handler.postDelayed(() -> {
+            flipCard(card);
+        }, TIME_FLIP_CARD_MS / 2);
     }
 
     private void flipCard(CardLayout card) {
@@ -459,6 +475,9 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
                         uiDeck[CARD_DECK].setTranslationZ(3);
                         if (!isDealing) {
                             dealCard(uiDeck[CARD_DECK]);
+                            if(exportImageFlag){
+                                exportImage = new ExportImages(uiDeck[CARD_DECK],GameActivity.this);
+                            }
                             // win screen and times up
                             gameLogic.stopTimer(timer);
                             showGameOver();
@@ -508,6 +527,9 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
                         if (!isDealing) {
                             uiDeck[CARD_DECK].setTranslationZ(3);
                             dealCard(uiDeck[CARD_DECK]);
+                            if(exportImageFlag){
+                                exportImage = new ExportImages(uiDeck[CARD_DECK],GameActivity.this);
+                            }
                             // win screen and times up
                             gameLogic.stopTimer(timer);
                             showGameOver();
@@ -567,6 +589,9 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
                             if (!isDealing) {
                                 uiDeck[CARD_DECK].setTranslationZ(3);
                                 dealCard(uiDeck[CARD_DECK]);
+                                if(exportImageFlag){
+                                    exportImage = new ExportImages(uiDeck[CARD_DECK],GameActivity.this);
+                                }
                                 // win screen and times up
                                 gameLogic.stopTimer(timer);
                                 showGameOver();
@@ -589,6 +614,9 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
                             if (!isDealing) {
                                 uiDeck[CARD_DECK].setTranslationZ(3);
                                 dealCard(uiDeck[CARD_DECK]);
+                                if(exportImageFlag){
+                                    exportImage = new ExportImages(uiDeck[CARD_DECK],GameActivity.this);
+                                }
                                 // win screen and times up
                                 gameLogic.stopTimer(timer);
                                 showGameOver();
@@ -790,5 +818,16 @@ public class GameActivity<soundInstance> extends AppCompatActivity {
             assert pw != null;
             pw.close();
         }
+    }
+
+    private void showDialog(){
+        DialogExportImage dialog = new DialogExportImage();
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(),"dialog");
+    }
+
+    @Override
+    public void onFinishExportDialog(boolean flag) {
+        exportImageFlag = flag;
     }
 }
