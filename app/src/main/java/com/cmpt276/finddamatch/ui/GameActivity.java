@@ -284,7 +284,6 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
         }
         final Handler handler = new Handler();
         handler.postDelayed(() -> flipCard(card), TIME_FLIP_CARD_MS / 2);
-
     }
 
     private void flipCard(CardLayout card) {
@@ -292,9 +291,6 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
             card.setTag(TAG_CARD_FACE);
             card.setBackgroundResource(R.drawable.menu_bg_card_face);
             drawCardImages(card);
-            if(exportImageFlag){
-                exportImage = new ExportImages(card,this);
-            }
         } else if (card.getTag() == TAG_CARD_FACE) {
             card.setTag(TAG_CARD_BACK);
             card.setBackgroundResource(R.drawable.menu_bg_card_back);
@@ -307,7 +303,6 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
         for (int i = 0; i < imageViews.length; i++) {
             if(card.findViewWithTag(String.valueOf(i)) instanceof TextView){
                 textViews[i] = card.findViewWithTag(String.valueOf(i));
-                //textViews[i].setImageResource(android.R.color.transparent);
             }else{
                 imageViews[i] = card.findViewWithTag(String.valueOf(i));
                 imageViews[i].setImageResource(android.R.color.transparent);
@@ -366,6 +361,9 @@ public class GameActivity extends AppCompatActivity implements DialogExportImage
                     imageViews[i].setOnClickListener(null);
                 }
             }
+        }
+        if(exportImageFlag){
+            exportImage = new ExportImages(card,this);
         }
     }
 
