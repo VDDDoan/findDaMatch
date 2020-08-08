@@ -70,6 +70,7 @@ public class GameActivity<soundInstance> extends AppCompatActivity implements Di
     private static final int CARD_PLAY = 1;
     private static final int CARD_DECK = 2;
     private static final int NUM_CARDS_IN_ACTIVITY = 3;
+    private static final int HARD_DIFFICULTY = 2;
     private static final float MAX_SHUFFLE_DISPLACEMENT = 50.0f;
     private static final String TAG_CARD_FACE = "face";
     private static final String TAG_CARD_BACK = "back";
@@ -633,7 +634,7 @@ public class GameActivity<soundInstance> extends AppCompatActivity implements Di
         RelativeLayout.LayoutParams imageParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        setScalingFactor(imageParams,Options.getInstance().getNumImagesPerCard());
+        setScalingFactor(imageParams,Options.getInstance().getNumImagesPerCard(), Options.getInstance().getGameDifficulty());
 
         switch (index) {
             case 0:
@@ -669,20 +670,38 @@ public class GameActivity<soundInstance> extends AppCompatActivity implements Di
         return imageParams;
     }
 
-    private void setScalingFactor(RelativeLayout.LayoutParams imageParams, int numImagesPerCard) {
+    private void setScalingFactor(RelativeLayout.LayoutParams imageParams, int numImagesPerCard, int difficulty) {
         double scalingFactor;
-        switch (numImagesPerCard){
-            case 4:
-                scalingFactor = 2.5;
-                break;
-            case 6:
-                scalingFactor = 3.0;
-                break;
-            default:
-                scalingFactor = 2.0;
+        if (difficulty != HARD_DIFFICULTY) {
+            switch (numImagesPerCard) {
+                case 4:
+                    scalingFactor = 2.5;
+                    break;
+                case 6:
+                    scalingFactor = 3.0;
+                    break;
+                default:
+                    scalingFactor = 2.0;
+            }
+        }else{
+            switch (numImagesPerCard) {
+                case 4:
+                    scalingFactor = numberGenerator(1.75,3.0);
+                    break;
+                case 6:
+                    scalingFactor = numberGenerator(2.0,3.5);
+                    break;
+                default:
+                    scalingFactor = numberGenerator(1.50,2.5);
+            }
+
         }
         imageParams.height =(int)( (int) cardHeight / scalingFactor);
         imageParams.width = (int) ((int)cardWidth / scalingFactor);
+    }
+
+    private double numberGenerator(double min, double max) {
+        return (Math.random()*(max-min+1)+min);
     }
 
 
@@ -690,7 +709,7 @@ public class GameActivity<soundInstance> extends AppCompatActivity implements Di
         RelativeLayout.LayoutParams imageParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        setScalingFactor(imageParams,Options.getInstance().getNumImagesPerCard());
+        setScalingFactor(imageParams,Options.getInstance().getNumImagesPerCard(),Options.getInstance().getGameDifficulty());
 
         switch (index) {
             case 0:
