@@ -28,6 +28,9 @@ public class OptionsActivity extends AppCompatActivity {
     private static final int IMAGES_ONLY = 0;
     private static final int WORDS_ONLY = 1;
     private static final int IMAGES_AND_WORDS = 2;
+    private static final int EASY_DIFFICULTY = 0;
+    private static final int NORMAL_DIFFICULTY = 1;
+    private static final int HARD_DIFFICULTY = 2;
     private CustomImagesManager customImagesManager;
 
     @Override
@@ -75,10 +78,15 @@ public class OptionsActivity extends AppCompatActivity {
         Button modeChangeBtn = findViewById(R.id.gameModeChange);
         modeChangeBtn.setOnClickListener(v-> updateGameMode());
 
+        Button difficultyChange = findViewById(R.id.gameDifficultyChange);
+        difficultyChange.setOnClickListener(v-> updateGameDifficulty());
+
         ImageView returnBtn = findViewById(R.id.btn_options_back);
         returnBtn.setOnClickListener(v -> finish());
 
     }
+
+
 
     private void onClickImgSetListener(int[] btnIds) {
         Button[] btnDecks = new Button[btnIds.length];
@@ -148,6 +156,7 @@ public class OptionsActivity extends AppCompatActivity {
         Button orderBtn = findViewById(R.id.orderChangeBtn);
         Button drawPileBtn = findViewById(R.id.numOfCardsBtn);
         Button modeChangeBtn = findViewById(R.id.gameModeChange);
+        Button gameDifficulty = findViewById(R.id.gameDifficultyChange);
 
         int selectedImgIndex = Options.getInstance().getImageSetIndex();
         switch (selectedImgIndex){
@@ -178,6 +187,19 @@ public class OptionsActivity extends AppCompatActivity {
                 break;
         }
 
+        int currentDifficulty = Options.getInstance().getGameDifficulty();
+
+        switch (currentDifficulty){
+            case 0:
+                gameDifficulty.setText(R.string.string_easy);
+                break;
+            case 1:
+                gameDifficulty.setText(R.string.string_normal);
+                break;
+            case 2:
+                gameDifficulty.setText(R.string.string_hard);
+                break;
+        }
     }
 
     private void updateDrawPile(){
@@ -226,6 +248,24 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
+    private void updateGameDifficulty() {
+        Button difficultyChange = findViewById(R.id.gameDifficultyChange);
+        int currentGameDifficulty = Options.getInstance().getGameDifficulty();
+        switch (currentGameDifficulty){
+            case 0:
+                difficultyChange.setText(R.string.string_normal);
+                Options.getInstance().setGameDifficulty(NORMAL_DIFFICULTY);
+                break;
+            case 1:
+                difficultyChange.setText(R.string.string_hard);
+                Options.getInstance().setGameDifficulty(HARD_DIFFICULTY);
+                break;
+            case 2:
+                difficultyChange.setText(R.string.string_easy);
+                Options.getInstance().setGameDifficulty(EASY_DIFFICULTY);
+        }
+    }
+
     private void incrementDrawPile(){
         Button drawPileBtn = findViewById(R.id.numOfCardsBtn);
 
@@ -247,7 +287,9 @@ public class OptionsActivity extends AppCompatActivity {
             }
         }
     }
-    public void Configs(int orderNum, int showType, int size) {
+
+
+    public void Configs(int orderNum, int showType, int size, int difficulty) {
         String filename;
         filename = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/Configs.txt";//record the path of file
         FileOutputStream fos;
@@ -277,7 +319,7 @@ public class OptionsActivity extends AppCompatActivity {
         try {
             fos = new FileOutputStream(filename, true);
             pw = new PrintWriter(fos);
-            pw.println(String.valueOf(orderNum) + ' ' + String.valueOf(showType) + ' ' + String.valueOf(size));
+            pw.println(String.valueOf(orderNum) + ' ' + String.valueOf(showType) + ' ' + String.valueOf(size) + ' ' + String.valueOf(difficulty));
             pw.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -291,7 +333,7 @@ public class OptionsActivity extends AppCompatActivity {
 
     @Override
     public void finish() {
-        Configs(Options.getInstance().getOrderNum(),Options.getInstance().getGameMode(),Options.getInstance().getNumCardsPerSet());
+        Configs(Options.getInstance().getOrderNum(),Options.getInstance().getGameMode(),Options.getInstance().getNumCardsPerSet(),Options.getInstance().getGameDifficulty());
         super.finish();
         overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_top);
     }
