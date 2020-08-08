@@ -142,6 +142,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 Options.getInstance().setNumImagesPerCard(Integer.parseInt(configs.get(0)) + 1);
                 Options.getInstance().setGameMode(Integer.parseInt(configs.get(1)));
                 Options.getInstance().setNumCardsPerSet(Integer.parseInt(configs.get(2)));
+                Options.getInstance().setGameDifficulty(Integer.parseInt(configs.get(3)));
             }
             fis.close();
             br.close();

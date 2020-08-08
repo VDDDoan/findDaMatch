@@ -525,6 +525,13 @@ public class GameActivity<soundInstance> extends AppCompatActivity implements Di
             textViews[i].setText(name);
             textViews[i].setGravity(Gravity.CENTER);
             textViews[i].setTextSize(20F);
+            float randomAngle;
+            if (Options.getInstance().getGameDifficulty() > EASY_DIFFICULTY){
+                randomAngle = generateRandomBetween(360,0);
+            }else{
+                randomAngle = 0;
+            }
+            textViews[i].setRotation(randomAngle);
             textViews[i].setClickable(true);
             textViews[i].setFocusable(true);
             card.addView(textViews[i]);
@@ -566,6 +573,13 @@ public class GameActivity<soundInstance> extends AppCompatActivity implements Di
         TextView[] textViews = new TextView[images.length];
         for (int i = 0; i < imageViews.length; i++) {
             final int index = images[i];
+            float randomAngle;
+            if (Options.getInstance().getGameDifficulty() > EASY_DIFFICULTY){
+                randomAngle = generateRandomBetween(360,0);
+            }else{
+                randomAngle = 0;
+            }
+
             imageViews[i] = new ImageView(this);
             imageViews[i].setTag(String.valueOf(i));
             imageViews[i].setLayoutParams(generateImagePosition(imageViews, i));
@@ -574,6 +588,7 @@ public class GameActivity<soundInstance> extends AppCompatActivity implements Di
             } else {
                 imageViews[i].setImageResource(imageSetUI.getResourceId(images[i], i));
             }
+            imageViews[i].setRotation(randomAngle);
             imageViews[i].setClickable(true);
             imageViews[i].setFocusable(true);
 
@@ -587,6 +602,8 @@ public class GameActivity<soundInstance> extends AppCompatActivity implements Di
             textViews[i].setText(name);
             textViews[i].setGravity(Gravity.CENTER);
             textViews[i].setTextSize(20F);
+
+            textViews[i].setRotation(randomAngle);
             textViews[i].setClickable(true);
             textViews[i].setFocusable(true);
 
