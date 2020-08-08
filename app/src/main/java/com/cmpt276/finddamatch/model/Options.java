@@ -10,6 +10,9 @@ public class Options {
     private int numCardsPerSet = 7;
     private int numImagesPerCard = 3;
     private int gameMode = 0;
+    private int gameDifficulty = 0;
+
+
 
     public static Options getInstance() {
         if(instance == null) {
@@ -59,6 +62,14 @@ public class Options {
 
     public int getFlickrIndex() {
         return FLICKR_DECK_INDEX;
+    }
+
+    public int getGameDifficulty() {
+        return gameDifficulty;
+    }
+
+    public void setGameDifficulty(int gameDifficulty) {
+        this.gameDifficulty = gameDifficulty;
     }
 
 }

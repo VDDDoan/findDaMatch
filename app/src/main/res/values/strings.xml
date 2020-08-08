@@ -44,4 +44,7 @@
     <string name="save_prompt">Export cards to android photo gallery?</string>
     <string name="string_yes">Yes</string>
     <string name="string_no">No</string>
+    <string name="string_normal">Normal</string>
+    <string name="string_hard">Hard</string>
+    <string name="string_easy">Easy</string>
 </resources>

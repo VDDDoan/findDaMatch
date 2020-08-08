@@ -8,6 +8,7 @@
     android:background="@color/colorCharcoal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -15,48 +16,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent=".8">
-    <ImageView
-        android:id="@+id/btn_options_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/string_back"
-        android:src="@drawable/ic_baseline_arrow_upward_24"
-        android:tint="@color/colorMintCream"
-        android:paddingVertical="16dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_options_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/string_back"
+            android:paddingVertical="16dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="16dp"
+            android:src="@drawable/ic_baseline_arrow_upward_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorMintCream" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="314dp"
+        android:layout_height="582dp"
         android:background="@drawable/menu_bg_card_back"
         android:paddingVertical="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHeight_percent=".8"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
         app:layout_constraintWidth_percent=".8">
 
         <TextView
             android:id="@+id/optionTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:text="@string/string_options"
             android:textColor="@color/colorCharcoal"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent=".8"/>
+            app:layout_constraintWidth_percent=".8" />
 
         <Button
             android:id="@+id/btn_imageSet0"
@@ -82,8 +85,8 @@
             android:drawableEnd="@drawable/ic_basketball"
             android:text="@string/string_sport_deck"
             android:textColor="@color/colorMintCream"
-            app:layout_constraintHeight_percent=".15"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_imageSet0"
             app:layout_constraintWidth_percent=".8" />
@@ -122,8 +125,8 @@
             android:backgroundTint="@color/colorCharcoal"
             android:text="@string/string_current_order_size"
             android:textColor="@color/colorMintCream"
-            app:layout_constraintHeight_percent=".15"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_flickr_imageSet_customize"
             app:layout_constraintWidth_percent=".8" />
@@ -137,9 +140,9 @@
             android:text="@string/string_current_number_of_cards"
             android:textColor="@color/colorMintCream"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/orderChangeBtn"
-            app:layout_constraintHeight_percent=".15"
             app:layout_constraintWidth_percent=".8" />
 
         <Button
@@ -150,11 +153,25 @@
             android:backgroundTint="@color/colorCharcoal"
             android:text=""
             android:textColor="@color/colorMintCream"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/numOfCardsBtn"
             app:layout_constraintHeight_percent=".15"
-            app:layout_constraintWidth_percent=".8" />
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/numOfCardsBtn"
+            app:layout_constraintWidth_percent=".4" />
+
+        <Button
+            android:id="@+id/gameDifficultyChange"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:width="250dp"
+            android:backgroundTint="@color/colorCharcoal"
+            android:text=""
+            android:textColor="@color/colorMintCream"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHeight_percent=".15"
+            app:layout_constraintTop_toBottomOf="@id/numOfCardsBtn"
+            app:layout_constraintWidth_percent=".4" />
+
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
