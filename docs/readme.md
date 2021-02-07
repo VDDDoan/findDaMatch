@@ -2,6 +2,7 @@
 Find DaMatch is a single-player game based on SpotIt!
 ## Installation
 Clone this repository and import into **Android Studio**
+
 `git clone git@github.com:VDDDoan/findDaMatch.git`
 ## Configuration
 Project requires Android Studio 4.1 or higher
