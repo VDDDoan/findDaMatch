@@ -1,2 +1,0 @@
-Project requires Android Studio 4.1 or higher for lamda expressions
-If a previous version with app is installed, the game will crash after the splash screen due to a out of bound error in the singleton class. The bug disappears if the app is re-installed.
